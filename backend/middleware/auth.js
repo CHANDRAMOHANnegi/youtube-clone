@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
   if (Object.keys(req.body).length === 0) {
     return next();
   }
-  // console.log(req.body);
+  console.log(res);
 
   const authHeader = req.body.variables['Authorization'];
 

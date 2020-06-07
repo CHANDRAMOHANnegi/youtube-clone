@@ -41,8 +41,6 @@ module.exports = buildSchema(`
 
     type Photo {
         fileLocation: String,
-        description: String,
-        tags: String
     }
 
     type RootQuery{

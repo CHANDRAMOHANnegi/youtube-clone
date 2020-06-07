@@ -5,22 +5,30 @@ const multer = require('multer');
 
 const Question = require('../../src/models/Question');
 const User = require('../../src/models/User');
+const fs = require('fs');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        console.log(req.body, file);
-        let dir = `./uploads/${req.body.userHandle}`;
+        console.log("-------------->>>>>>>>>>>>>>>>>.--");
+
+        // console.log(req.body, file);
+        let dir = `./src/uploads/${req.body.userHandle}`;
         fs.exists(dir, exist => {
             if (!exist) return fs.mkdir(dir, error => cb(error, dir));
             return cb(null, dir);
         });
     },
     filename: (req, file, cb) => {
+        console.log("->>>>>>>>>>>>>>>>.--");
+
         cb(null, new Date().toISOString() + file.originalname);
     },
 });
 
 const fileFilter = (req, file, cb) => {
+
+    console.log("----------------");
+
     if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
         cb(null, true);
     } else {
@@ -35,27 +43,23 @@ const upload = multer({
     fileFilter
 }).single('userImage');
 
-exports.uploadImage = (req, res) => {
-    console.log(req.body);
-    upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            return res.status(500).json(err)
-        } else if (err) {
-            return res.status(500).json(err)
-        }
-        User.findOneAndUpdate({ userHandle: req.body.userHandle }, { userImage: req.file.path })
-            .then((data) => {
-                return res.json({
-                    success: true,
-                    user: data
-                });
-            }).catch(err => {
-                return res.json({
-                    success: true,
-                    user: user
-                });
+
+
+const storeFS = ({ stream, filename }) => {
+    const uploadDir = '../backend/photos';
+    const path = `${uploadDir}/${filename}`;
+    return new Promise((resolve, reject) =>
+        stream
+            .on('error', error => {
+                if (stream.truncated)
+                    // delete the truncated file
+                    fs.unlinkSync(path);
+                reject(error);
             })
-    });
+            .pipe(fs.createWriteStream(path))
+            .on('error', error => reject(error))
+            .on('finish', () => resolve({ path }))
+    );
 }
 
 
@@ -108,29 +112,44 @@ module.exports = {
             tokenExp: 1
         }
     },
-    addPhoto: async (args, req) => {
-        console.log(args, req.user);
-        const { filename, mimetype, encoding } = args;
+    addPhoto: async (args, req, res) => {
+        console.log(args);
+        const { filename, mimetype } = args.file;
         const { email } = req.user;
 
-        upload(filename, mimetype, function (err) {
+        console.log(res);
+        
+
+        upload(req, res, function (err) {
             if (err instanceof multer.MulterError) {
-                return res.status(500).json(err)
+                throw new Error('error')
             } else if (err) {
-                return res.status(500).json(err)
+                console.log("------?", err);
+                throw new Error('error')
             }
-            User.findOneAndUpdate({ email }, { image: filename })
+
+            User.update({ image: filename },
+                { where: { email } })
                 .then((data) => {
-                    return res.json({
-                        success: true,
-                        user: data
-                    });
+                    console.log("00000000000000", data);
+                    return {
+                        fileLocation: filename
+                    };
                 }).catch(err => {
-                    return res.json({
-                        success: true,
-                        user: user
-                    });
+                    console.log("----------------->>>>>>>>>>>>", err);
+                    throw new Error('error')
                 })
+
+                //  const { filename, mimetype, createReadStream } = await args.file;
+                // const stream = createReadStream();
+                // const pathObj = await storeFS({ stream, filename });
+                // const fileLocation = pathObj.path;
+                // const photo = await models.Photo.create({
+                //     fileLocation,
+                //     description,
+                //     tags
+                // })
+                // return photo
         });
     }
 };
