@@ -1,12 +1,12 @@
-
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
 
-  if (Object.keys(req.body).length === 0) {
+  console.log("=======>",req.body.variables);
+
+  if (Object.keys(req.body).length === 0 || req.body.variables==null) {
     return next();
   }
-  console.log(res);
 
   const authHeader = req.body.variables['Authorization'];
 

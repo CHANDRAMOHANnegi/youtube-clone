@@ -11,7 +11,7 @@ export function registerUser(dataToSubmit) {
 
     const { email, password, name, lastname, image } = dataToSubmit;
 
-    const requestBody =  `
+    const requestBody = `
         mutation{
            createUser(userInput:{email:"${email}",password:"${password}",name:"${name}",lastname:${lastname},image:"${image}"}){
             id
@@ -35,13 +35,32 @@ export function registerUser(dataToSubmit) {
 }
 
 export function loginUser(dataToSubmit) {
-    const request = axios.post(`${USER_SERVER}/login`, dataToSubmit)
-        .then(response => response.data);
 
-    return {
-        type: LOGIN_USER,
-        payload: request
+    console.log(dataToSubmit);
+
+    const { email, password } = dataToSubmit;
+
+    const requestBody = `
+    query{
+       login(email:"${email}",password:"${password}"){
+        userId,
+        token,
+        tokenExp
     }
+}`;
+
+    const request = axios.post('http://localhost:4000/api', {
+        query: requestBody,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        return {
+            type: LOGIN_USER,
+            payload: request.data.login
+        }
+        return response.data;
+    }).catch(err => console.log(err));
 }
 
 export function auth() {

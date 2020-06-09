@@ -2,6 +2,7 @@ const { buildSchema } = require('graphql');
 const gql = require('graphql-tag');
 const graphql = require('graphql');
 
+
 // const {
 //     GraphQLObjectType,
 //     GraphQLSchema,
@@ -11,7 +12,7 @@ const graphql = require('graphql');
 // } = graphql;
 
 module.exports = buildSchema(`
- 
+
     type User {
         id:ID!,
         email:String!,
@@ -44,12 +45,12 @@ module.exports = buildSchema(`
     }
 
     type RootQuery{
-         login(email:String!,password:String!):AuthData!
+     login(email:String!,password:String!):AuthData!
     }
     
     type RootMutation{
         createUser(userInput:UserInput!):User
-        addPhoto(file: File!): Photo
+        addPhoto(file: File!): Boolean
     }
 
     schema{

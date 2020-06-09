@@ -38,11 +38,11 @@ class UploadVideoPage extends Component {
 
                   fileLocation
             }}
-   `;
+        `;
         axios.post('http://localhost:4000/api', {
             query: requestBody,
             variables: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoibW1AbW0ubW0iLCJpYXQiOjE1OTE0ODAzOTQsImV4cCI6MTU5MTQ4Mzk5NH0.xVYg0FNFjmF9suzubsgDDhBVCyD1O_aodM3-czQF9KM'
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoibW1AbW0ubW0iLCJpYXQiOjE1OTE3MTExNTAsImV4cCI6MTU5MTcxNDc1MH0.d6mUGnkZaGifMr93ZxBkma4W0f99fsjncaXfIyNiwX0'
             }
         }).then(response => {
             console.log(response);
