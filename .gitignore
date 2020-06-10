@@ -23,9 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 /connection
-/migrations/*
+*/migrations/*
 /connection/*
 connection.js
 
-/.env
-.env
+*/.env
