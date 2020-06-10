@@ -25,6 +25,6 @@ yarn-error.log*
 /connection
 */migrations/*
 /connection/*
-connection.js
+*/connection.js
 
 */.env
