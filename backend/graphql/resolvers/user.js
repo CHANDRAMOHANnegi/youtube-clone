@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const fs = require("fs");
 const multer = require('multer');
 
-const Question = require('../../src/models/Question');
-const User = require('../../src/models/User');
+const Question = require('../../database/models/Question');
+const User = require('../../database/models/User');
 
 const cloudinary = require('cloudinary');
 
@@ -45,10 +45,8 @@ module.exports = {
         }
     },
     login: async ({ email, password }) => {
-        
 
-        console.log("-----<",email,password);
-        
+        console.log("-----<", email, password);
 
         const user = await User.findOne({ email });
         if (!user) {
@@ -101,7 +99,7 @@ module.exports = {
 };
 
 
-// asset_id: '239277f93bf0c9dc0211210c77c4dafd',
+//   asset_id: '239277f93bf0c9dc0211210c77c4dafd',
 //   public_id: 'gn4tz1x5ltv0vvwbxhoj',
 //   version: 1591735228,
 //   version_id: 'bc1b9577c17f00a812e76f12e644176e',

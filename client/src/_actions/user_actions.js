@@ -65,7 +65,6 @@ export function loginUser(dataToSubmit) {
 
 export function auth() {
 
-
     // const requestBody = {
     //     query: `
     //     query{
@@ -83,6 +82,7 @@ export function auth() {
     //     type: AUTH_USER,
     //     payload: request
     // }
+    
 }
 
 export function logoutUser() {

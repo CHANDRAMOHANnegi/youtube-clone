@@ -26,6 +26,5 @@ module.exports = async () => {
         where: { email: "cm@cm.com" }, include:
             [{ model: Question, as: "Question" }]
     }).catch(errorHandler)
-
-    // console.log(users);
+ 
 }

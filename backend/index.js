@@ -13,7 +13,7 @@ const graphQlResolvers = require('./graphql/resolvers/index');
 
 const isAuth = require('./middleware/auth');
 const app = express();
-require('./src/database/connecton');
+require('./database/connection/connecton');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
