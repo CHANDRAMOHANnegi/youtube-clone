@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING(200),
         allowNull: false,
       },
-      name: {
+      firstname: {
         type: Sequelize.STRING(20),
         allowNull: false,
       }, role: {
@@ -28,10 +28,6 @@ module.exports = {
       lastname: {
         type: Sequelize.STRING(20),
       },
-      // token: Sequelize.STRING(1110),
-      // tokenExp: {
-      //   type: Sequelize.INTEGER(),
-      // },
       image: Sequelize.STRING(20),
       createdAt: Sequelize.DATE(),
       updatedAt: Sequelize.DATE()

@@ -30,9 +30,15 @@ module.exports = buildSchema(`
     }
 
     type AuthData {
-        userId: ID!
-        token: String!
-        tokenExp: Int!
+        
+        userId: ID!,
+        token: String!,
+        tokenExp: Int!,
+        firstname:String!,
+        lastname:String,
+        email:String!,
+        role:Int!
+
     }
 
     input File {

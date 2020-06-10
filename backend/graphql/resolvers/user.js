@@ -8,69 +8,11 @@ const User = require('../../src/models/User');
 
 const cloudinary = require('cloudinary');
 
-
-
 cloudinary.config({
     cloud_name: 'dksme2kao',
     api_key: '359145757282132',
     api_secret: 'mA4OeukQz_rmXJtVdN9pPGlDSas',
 });
-
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         console.log("-------------->>>>>>>>>>>>>>>>>.--");
-
-//         // console.log(req.body, file);
-//         let dir = `./src/uploads/${req.body.userHandle}`;
-//         fs.exists(dir, exist => {
-//             if (!exist) return fs.mkdir(dir, error => cb(error, dir));
-//             return cb(null, dir);
-//         });
-//     },
-//     filename: (req, file, cb) => {
-//         console.log("->>>>>>>>>>>>>>>>.--");
-
-//         cb(null, new Date().toISOString() + file.originalname);
-//     },
-// });
-
-// const fileFilter = (req, file, cb) => {
-
-//     console.log("----------------");
-
-//     if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
-//         cb(null, true);
-//     } else {
-//         cb(null, false);
-//         return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
-//     }
-// }
-
-// const upload = multer({
-//     storage: storage,
-//     limits: { fileSize: 10000000 },
-//     fileFilter
-// }).single('userImage');
-
-
-
-// const storeFS = ({ stream, filename }) => {
-//     const uploadDir = '../backend/photos';
-//     const path = `${uploadDir}/${filename}`;
-//     return new Promise((resolve, reject) =>
-//         stream
-//             .on('error', error => {
-//                 if (stream.truncated)
-//                     // delete the truncated file
-//                     fs.unlinkSync(path);
-//                 reject(error);
-//             })
-//             .pipe(fs.createWriteStream(path))
-//             .on('error', error => reject(error))
-//             .on('finish', () => resolve({ path }))
-//     );
-// }
-
 
 module.exports = {
     createUser: async (args) => {

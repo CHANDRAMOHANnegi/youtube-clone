@@ -1,6 +1,11 @@
 const Sequelize = require('sequelize');
 
-module.exports = new Sequelize(
+
+const user = require('../models/User');
+const video = require('../models/Video');
+
+
+const sequelize = new Sequelize(
     'youtubedb',
     'root',
     'dhampoo1@',
@@ -10,4 +15,16 @@ module.exports = new Sequelize(
         operatorsAliases: false
     }
 );
- 
+
+const db = {};
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+user.hasMany(video, { foreignKey: "userId", as: "videos" });
+video.belongsTo(user, { foreignKey: "userId", as: "user", });
+
+db.user = user;
+db.video = video;
+module.exports = db;
+

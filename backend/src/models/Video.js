@@ -1,29 +1,28 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database/connecton');
 
-module.exports = sequelize.define('user', {
-
-    firstname: {
+module.exports = sequelize.define('video', {
+    title: {
         type: Sequelize.STRING(20),
         maxlength: 50,
         allowNull: false,
     },
-    lastname: {
+    description: {
+        type: Sequelize.TEXT,
+    },
+    url: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+    },
+    category: {
         type: Sequelize.STRING(20),
-    },
-    email: {
-        type: Sequelize.STRING(30),
-        unique: true,
-        allowNull: false,
-    }, password: {
-        type: Sequelize.STRING(200),
         allowNull: false,
     },
-    role: {
-        type: Sequelize.INTEGER(11),
+    views: {
+        type: Sequelize.INTEGER,
         default: 0
     },
-    image: Sequelize.STRING(200),
+    thumbnail: Sequelize.TEXT,
 }, {
     timestamps: true,
     freezeTableName: true,

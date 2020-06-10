@@ -27,18 +27,16 @@ class UploadVideoPage extends Component {
     _handleSubmit(e) {
         e.preventDefault();
         const image = this.state.file;
+        const { name: filename, type: mimetype } = image
 
-        const{name:filename,type:mimetype}=image
-
-        console.log('////////////////////////',  this.state.file);
+        console.log('////////////////////////', this.state.file);
 
         const requestBody = `
             mutation {
                 addPhoto(file: {filename:"${filename}",mimetype:"${mimetype}"}) {
 
                   fileLocation
-            }}
-        `;
+            }}`;
         axios.post('http://localhost:4000/api', {
             query: requestBody,
             variables: {
@@ -48,8 +46,7 @@ class UploadVideoPage extends Component {
             console.log(response);
             return response.data;
         }).catch(err => console.log(err));
-
-    }
+    };
 
 
     render() {
