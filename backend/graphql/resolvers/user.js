@@ -68,7 +68,7 @@ module.exports = {
     },
     addPhoto: async (args, req) => {
         console.log(args);
-        let { filename, mimetype } = args.file;
+        let { filename, mimetype } = args.image;
         console.log({ filename, mimetype });
         const { email } = req.user;
 

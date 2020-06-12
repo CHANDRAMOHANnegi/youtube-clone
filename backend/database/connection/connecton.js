@@ -1,10 +1,5 @@
 const Sequelize = require('sequelize');
 
-
-const user = require('../models/User');
-const video = require('../models/Video');
-
-
 const sequelize = new Sequelize(
     'youtubedb',
     'root',
@@ -21,8 +16,8 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-user.hasMany(video, { foreignKey: "userId", as: "videos" });
-video.belongsTo(user, { foreignKey: "userId", as: "user", });
+const user = require('../models/User')(sequelize, Sequelize);
+const video = require('../models/Video')(sequelize, Sequelize);
 
 db.user = user;
 db.video = video;
