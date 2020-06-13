@@ -1,9 +1,9 @@
- module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, Sequelize) => {
     const Video = sequelize.define('Video', {
         title: {
             type: Sequelize.STRING(20),
             maxlength: 50,
-            allowNull: false,
+            allowNull: false
         },
         description: {
             type: Sequelize.TEXT,

@@ -17,49 +17,55 @@ cloudinary.config({
 module.exports = {
     createUser: async (args) => {
         try {
-            const { email, name, lastname, password } = args.userInput;
+            const { email, firstname, lastname, password } = args.userInput;
             const existingUser = await User.findOne({
                 where: { email: email }
             });
             if (existingUser) {
-                throw new Error("user already exist")
+                const error = new Error("user already exist");
+                throw error;
             }
             const hashedPassword = await bcrypt.hash(password, 12);
-
             const user = new User({
                 email,
                 password: hashedPassword,
-                name,
+                firstname,
                 lastname,
             })
             const result = await user.save();
             return {
                 id: result.dataValues.id,
                 email,
-                name,
+                firstname,
                 lastname,
-                createdAt: result.dataValues.createdAt
+                createdAt: result.dataValues.createdAt,
+                role: result.dataValues.createdAt
             }
         } catch (error) {
-            console.log("====>", error);
+            console.log(error);
         }
     },
     login: async ({ email, password }) => {
 
-        console.log("-----<", email, password);
-
         const user = await User.findOne({ email });
         if (!user) {
-            throw new Error("user does not exist")
+            const error = new Error("user does not exist");
+            error.code = 401;
+            return error;
         }
+
         const isequal = await bcrypt.compare(password, user.password);
         if (!isequal) {
-            throw new Error('Password is incorrect')
+            const error = new Error('Password is incorrect')
+            error.code = 401;
+            return error;
         }
+
         const token = jwt.sign({
             userId: user.id,
             email: email
         }, 'secretKey', { expiresIn: '1h' });
+
         return {
             userId: user.id,
             token,

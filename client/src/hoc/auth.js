@@ -9,7 +9,6 @@ export default function (ComposedClass, reload, adminRoute = null) {
         const dispatch = useDispatch();
 
         useEffect(() => {
-
             dispatch(auth()).then(async response => {
                 if (await !response.payload.isAuth) {
                     if (reload) {
@@ -26,7 +25,7 @@ export default function (ComposedClass, reload, adminRoute = null) {
                     }
                 }
             })
-            
+
         }, [dispatch, props.history, user.googleAuth])
 
         return (

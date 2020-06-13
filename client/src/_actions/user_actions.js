@@ -9,11 +9,13 @@ import { USER_SERVER } from '../components/Config.js';
 
 export function registerUser(dataToSubmit) {
 
-    const { email, password, name, lastname, image } = dataToSubmit;
+    const { email, password, firstname, lastname } = dataToSubmit;
 
     const requestBody = `
         mutation{
-           createUser(userInput:{email:"${email}",password:"${password}",name:"${name}",lastname:${lastname},image:"${image}"}){
+           createUser(userInput:{email:"${email}",
+           password:"${password}",firstname:"${firstname}",
+           lastname:${lastname}}){
             id
             email
         }
@@ -26,6 +28,8 @@ export function registerUser(dataToSubmit) {
     }).then(response => {
         console.log(response.data);
         return response.data;
+    }).catch(err => {
+        console.log(err);
     });
 
     return {
@@ -36,18 +40,17 @@ export function registerUser(dataToSubmit) {
 
 export function loginUser(dataToSubmit) {
 
-    console.log(dataToSubmit);
-
     const { email, password } = dataToSubmit;
-
-    const requestBody = `
-    query{
-       login(email:"${email}",password:"${password}"){
-        userId,
-        token,
-        tokenExp
-    }
-}`;
+    const requestBody = {
+        query: `
+            {
+                login(email:"${email}",password:"${password}"){
+                    userId,
+                    token,
+                    tokenExp
+            }
+        `
+    };
 
     const request = axios.post('http://localhost:4000/api', {
         query: requestBody,
@@ -59,7 +62,6 @@ export function loginUser(dataToSubmit) {
             type: LOGIN_USER,
             payload: request.data.login
         }
-        return response.data;
     }).catch(err => console.log(err));
 }
 
@@ -75,14 +77,14 @@ export function auth() {
     // }
     // `};
 
-    // const request = axios.get(`${USER_SERVER}/auth`)
-    //     .then(response => response.data);
+    const request = axios.get(`${USER_SERVER}/auth`)
+        .then(response => response.data);
 
-    // return {
-    //     type: AUTH_USER,
-    //     payload: request
-    // }
-    
+    return {
+        type: AUTH_USER,
+        payload: request
+    }
+
 }
 
 export function logoutUser() {

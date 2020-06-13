@@ -5,7 +5,7 @@ import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
-const Upload = require('../../../../assets/images/upload.png');
+const Upload = require('../../../../images/upload.png');
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
@@ -15,7 +15,7 @@ function RightMenu(props) {
       if (response.status === 200) {
         props.history.push("/login");
       } else {
-        alert('Log Out Failed')
+        alert('Log Out Failed');
       }
     });
   };
