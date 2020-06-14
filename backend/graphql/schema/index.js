@@ -8,7 +8,7 @@ module.exports = buildSchema(`
         firstname:String!,
         lastname:String!,
         createdAt:String!,
-        role:Int
+      
      }
 
     input UserInput{
@@ -16,8 +16,7 @@ module.exports = buildSchema(`
         password:String!,
         firstname:String!,
         lastname:String,
-        image:String
-    }
+     }
 
     type AuthData {
         userId: ID!,

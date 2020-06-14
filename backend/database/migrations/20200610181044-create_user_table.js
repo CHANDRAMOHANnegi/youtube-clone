@@ -16,11 +16,11 @@ module.exports = {
       firstname: {
         type: Sequelize.STRING(20),
         allowNull: false,
-      }, role: {
+      }, 
+      role: {
         type: Sequelize.INTEGER(20),
         defaultValue: 0,
-        allowNull: false,
-      },
+       },
       email: {
         type: Sequelize.STRING(20),
         allowNull: false,

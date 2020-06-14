@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from "react-router-dom";
-import Auth from "../hoc/auth";
+// import Auth from "../hoc/auth";
 // pages for this product
 import LandingPage from "./views/LandingPage/LandingPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
@@ -16,12 +16,12 @@ function App() {
       <NavBar />
       <div style={{ paddingTop: '75px', minHeight: 'calc(100vh - 80px)' }}>
         <Switch>
-          <Route exact path="/" component={Auth(LandingPage, null)} />
-          <Route exact path="/login" component={Auth(LoginPage, false)} />
-          <Route exact path="/register" component={Auth(RegisterPage, false)} />
-          <Route exact path="/video/upload" component={Auth(UploadVideoPage, true)} />
-          <Route exact path="/video/:videoId" component={Auth(DetailVideoPage, null)} />
-          <Route exact path="/subscription" component={Auth(SubscriptionPage, null)} />
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
+          <Route exact path="/video/upload" component={UploadVideoPage} />
+          <Route exact path="/video/:videoId" component={DetailVideoPage} />
+          <Route exact path="/subscription" component={SubscriptionPage} />
         </Switch>
       </div>
       <Footer />

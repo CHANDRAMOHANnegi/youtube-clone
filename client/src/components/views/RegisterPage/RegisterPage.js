@@ -40,16 +40,16 @@ function RegisterPage(props) {
 
     <Formik
       initialValues={{
-        email: '',
-        lastName: '',
-        name: '',
-        password: '',
-        confirmPassword: ''
+        email: 'cm@mm.com',
+        lastname: 'mm',
+        firstname: 'cm',
+        password: '12345678',
+        confirmPassword: '12345678'
       }}
       validationSchema={Yup.object().shape({
-        name: Yup.string()
+        firstname: Yup.string()
           .required('Name is required'),
-        lastName: Yup.string()
+        lastname: Yup.string()
           .required('Last Name is required'),
         email: Yup.string()
           .email('Email is invalid')
@@ -67,7 +67,7 @@ function RegisterPage(props) {
           let dataToSubmit = {
             email: values.email,
             password: values.password,
-            name: values.name,
+            firstname: values.firstname,
             lastname: values.lastname,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
           };
@@ -103,35 +103,35 @@ function RegisterPage(props) {
 
               <Form.Item required label="Name">
                 <Input
-                  id="name"
+                  id="firstname"
                   placeholder="Enter your name"
                   type="text"
-                  value={values.name}
+                  value={values.firstname}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.name && touched.name ? 'text-input error' : 'text-input'
+                    errors.firstname && touched.firstname ? 'text-input error' : 'text-input'
                   }
                 />
-                {errors.name && touched.name && (
-                  <div className="input-feedback">{errors.name}</div>
+                {errors.firstname && touched.firstname && (
+                  <div className="input-feedback">{errors.firstname}</div>
                 )}
               </Form.Item>
 
               <Form.Item required label="Last Name">
                 <Input
-                  id="lastName"
+                  id="lastname"
                   placeholder="Enter your Last Name"
                   type="text"
-                  value={values.lastName}
+                  value={values.lastname}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.lastName && touched.lastName ? 'text-input error' : 'text-input'
+                    errors.lastname && touched.lastname ? 'text-input error' : 'text-input'
                   }
                 />
-                {errors.lastName && touched.lastName && (
-                  <div className="input-feedback">{errors.lastName}</div>
+                {errors.lastname && touched.lastname && (
+                  <div className="input-feedback">{errors.lastname}</div>
                 )}
               </Form.Item>
 

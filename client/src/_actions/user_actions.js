@@ -10,57 +10,55 @@ import { USER_SERVER } from '../components/Config.js';
 export function registerUser(dataToSubmit) {
 
     const { email, password, firstname, lastname } = dataToSubmit;
-
     const requestBody = `
         mutation{
-           createUser(userInput:{email:"${email}",
-           password:"${password}",firstname:"${firstname}",
-           lastname:${lastname}}){
-            id
+           createUser(userInput:{email:"${email}",password:"${password}",firstname:"${firstname}",lastname:"${lastname}"}){
             email
         }
     }`;
-    const request = axios.post('http://localhost:4000/api', {
-        query: JSON.stringify(requestBody),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(response => {
-        console.log(response.data);
-        return response.data;
-    }).catch(err => {
-        console.log(err);
-    });
-
-    return {
-        type: REGISTER_USER,
-        payload: request
-    }
-}
-
-export function loginUser(dataToSubmit) {
-
-    const { email, password } = dataToSubmit;
-    const requestBody = {
-        query: `
-            {
-                login(email:"${email}",password:"${password}"){
-                    userId,
-                    token,
-                    tokenExp
-            }
-        `
-    };
-
-    const request = axios.post('http://localhost:4000/api', {
+    axios.post('http://localhost:4000/api', {
         query: requestBody,
         headers: {
             'Content-Type': 'application/json'
         }
     }).then(response => {
+        console.log(response.data);
+        return {
+            type: REGISTER_USER,
+            payload: response.data
+        }
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
+export function loginUser(dataToSubmit) {
+
+    const { email, password } = dataToSubmit;
+    console.log(dataToSubmit);
+
+    const requestBody = `{
+                login(email:"${email}",password:"${password}"){
+                    userId,
+                    token,
+                    tokenExp,
+                    firstname,
+                    lastname,role,
+                    image,
+                    email
+            }}
+            `;
+
+    axios.post('http://localhost:4000/api', {
+        query: requestBody,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        console.log(response);
         return {
             type: LOGIN_USER,
-            payload: request.data.login
+            payload: response.data.login
         }
     }).catch(err => console.log(err));
 }

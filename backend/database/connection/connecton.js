@@ -19,7 +19,7 @@ db.sequelize = sequelize;
 const user = require('../models/User')(sequelize, Sequelize);
 const video = require('../models/Video')(sequelize, Sequelize);
 
-db.user = user;
-db.video = video;
+db.User = user;
+db.Video = video;
 module.exports = db;
 

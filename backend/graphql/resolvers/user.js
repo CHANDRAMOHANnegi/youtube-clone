@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const fs = require("fs");
 const multer = require('multer');
 
-const Question = require('../../database/models/Question');
-const User = require('../../database/models/User');
+// const Question = require('../../database/models/Question');
+const User = require('../../database/connection/connecton').User;
 
 const cloudinary = require('cloudinary');
 
@@ -16,6 +16,7 @@ cloudinary.config({
 
 module.exports = {
     createUser: async (args) => {
+        console.log(args);
         try {
             const { email, firstname, lastname, password } = args.userInput;
             const existingUser = await User.findOne({
@@ -31,15 +32,15 @@ module.exports = {
                 password: hashedPassword,
                 firstname,
                 lastname,
-            })
+            });
             const result = await user.save();
+            console.log(result);
             return {
                 id: result.dataValues.id,
                 email,
                 firstname,
                 lastname,
                 createdAt: result.dataValues.createdAt,
-                role: result.dataValues.createdAt
             }
         } catch (error) {
             console.log(error);
@@ -47,18 +48,20 @@ module.exports = {
     },
     login: async ({ email, password }) => {
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ where: { email: email } });
+        // console.log(user);
+
         if (!user) {
-            const error = new Error("user does not exist");
+            let error = new Error("user does not exist");
             error.code = 401;
-            return error;
+            throw error;
         }
 
         const isequal = await bcrypt.compare(password, user.password);
         if (!isequal) {
-            const error = new Error('Password is incorrect')
+            let error = new Error('Password is incorrect')
             error.code = 401;
-            return error;
+            throw error;
         }
 
         const token = jwt.sign({
@@ -67,7 +70,12 @@ module.exports = {
         }, 'secretKey', { expiresIn: '1h' });
 
         return {
-            userId: user.id,
+            userId: user.dataValues.id,
+            firstname: user.dataValues.firstname,
+            lastname: user.dataValues.lastname,
+            image: user.dataValues.image,
+            role: user.dataValues.role,
+            email: user.dataValues.email,
             token,
             tokenExp: 12
         }
