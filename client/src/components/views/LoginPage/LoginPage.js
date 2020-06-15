@@ -1,149 +1,147 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import TextField from '@material-ui/core/TextField';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+
+import CardHeader from '@material-ui/core/CardHeader';
+
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { loginUser } from "../../../_actions/user_actions";
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { Form, Icon, Input, Button, Checkbox, Typography } from 'antd';
-import { useDispatch } from "react-redux";
 
-const { Title } = Typography;
 
-function LoginPage(props) {
-  const dispatch = useDispatch();
-  const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      width: 400,
+      margin: `${theme.spacing(0)} auto`
+    },
+    loginBtn: {
+      marginTop: theme.spacing(2),
+      flexGrow: 1
+    },
+    header: {
+      textAlign: 'center',
+      background: '#212121',
+      color: '#fff'
+    },
+    card: {
+      marginTop: theme.spacing(10)
+    }
 
-  const [formErrorMessage, setFormErrorMessage] = useState('')
-  const [rememberMe, setRememberMe] = useState(rememberMeChecked)
+  }),
+);
 
-  const handleRememberMe = () => {
-    setRememberMe(!rememberMe)
+const Login = (props) => {
+  const classes = useStyles();
+  const [email, setEmail] = useState('cm@cm.com');
+  const [password, setPassword] = useState('12345678');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [helperText, setHelperText] = useState('');
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    console.log(props);
+    const { isAuthenticated, userData } = props;
+    if (isAuthenticated) {
+      window.localStorage.setItem('userId', userData.userId);
+      // if (rememberMe === true) {
+      //   window.localStorage.setItem('rememberMe', values.id);
+      // } else {
+      //   localStorage.removeItem('rememberMe');
+      // }
+      props.history.push("/");
+    }
+
+    if (email.trim() && password.trim()) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [email, password, props]);
+
+  const handleLogin = () => {
+    if (email && password) {
+      props.loginUser({ email, password });
+      setError(false);
+      setHelperText('Login Successfully');
+    } else {
+      setError(true);
+      setHelperText('Incorrect email or password')
+    }
   };
 
-  const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
+  const handleKeyPress = (e) => {
+    if (e.keyCode === 13 || e.which === 13) {
+      isButtonDisabled || handleLogin();
+    }
+  };
 
   return (
-    <Formik
-      initialValues={{
-        email: initialEmail,
-        password: '',
-      }}
-      validationSchema={Yup.object().shape({
-        email: Yup.string()
-          .email('Email is invalid')
-          .required('Email is required'),
-        password: Yup.string()
-          .min(6, 'Password must be at least 6 characters')
-          .required('Password is required'),
-      })}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          let dataToSubmit = {
-            email: values.email,
-            password: values.password
-          };
-
-          dispatch(loginUser(dataToSubmit))
-            .then(response => {
-              if (response.payload.loginSuccess) {
-                window.localStorage.setItem('userId', response.payload.userId);
-                if (rememberMe === true) {
-                  window.localStorage.setItem('rememberMe', values.id);
-                } else {
-                  localStorage.removeItem('rememberMe');
-                }
-                props.history.push("/");
-              } else {
-                setFormErrorMessage('Check out your Account or Password again')
-              }
-            })
-            .catch(err => {
-              setFormErrorMessage('Check out your Account or Password again')
-              setTimeout(() => {
-                setFormErrorMessage("")
-              }, 3000);
-            });
-          setSubmitting(false);
-        }, 500);
-      }}
-    >
-      {props => {
-        const {
-          values,
-          touched,
-          errors,
-          dirty,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          handleReset,
-        } = props;
-        return (
-          <div className="app">
-
-            <Title level={2}>Log In</Title>
-            <form onSubmit={handleSubmit} style={{ width: '350px' }}>
-
-              <Form.Item required>
-                <Input
-                  id="email"
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="Enter your email"
-                  type="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.email && touched.email ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item required>
-                <Input
-                  id="password"
-                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="Enter your password"
-                  type="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.password && touched.password ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.password && touched.password && (
-                  <div className="input-feedback">{errors.password}</div>
-                )}
-              </Form.Item>
-
-              {formErrorMessage && (
-                <label ><p style={{ color: '#ff0000bf', fontSize: '0.7rem', border: '1px solid', padding: '1rem', borderRadius: '10px' }}>{formErrorMessage}</p></label>
-              )}
-
-              <Form.Item>
-                <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Remember me</Checkbox>
-                <a className="login-form-forgot" href="/reset_user" style={{ float: 'right' }}>
-                  forgot password
-                  </a>
-                <div>
-                  <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} disabled={isSubmitting} onSubmit={handleSubmit}>
-                    Log in
-                </Button>
-                </div>
-                Or <a href="/register">register now!</a>
-              </Form.Item>
-            </form>
-          </div>
-        );
-      }}
-    </Formik>
+    <React.Fragment>
+      <form className={classes.container} noValidate autoComplete="off">
+        <Card className={classes.card}>
+          <CardHeader className={classes.header} title="Login App" />
+          <CardContent>
+            <div>
+              <TextField
+                error={error}
+                fullWidth
+                id="email"
+                type="email"
+                label="email"
+                placeholder="email"
+                margin="normal"
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyPress={(e) => handleKeyPress(e)}
+              />
+              <TextField
+                error={error}
+                fullWidth
+                id="password"
+                type="password"
+                label="Password"
+                placeholder="Password"
+                margin="normal"
+                helperText={helperText}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={(e) => handleKeyPress(e)}
+              />
+            </div>
+          </CardContent>
+          <CardActions>
+            <Button
+              variant="contained"
+              size="large"
+              color="secondary"
+              className={classes.loginBtn}
+              onClick={() => handleLogin()}
+              disabled={isButtonDisabled}>
+              Login
+            </Button>
+          </CardActions>
+        </Card>
+      </form>
+    </React.Fragment>
   );
+}
+
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.user.isAuthenticated,
+    userData: state.user.userData
+  };
 };
 
-export default withRouter(LoginPage);
+const mapDispatchToProps = {
+  loginUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
 
 

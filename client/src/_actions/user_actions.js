@@ -1,7 +1,9 @@
 import axios from 'axios';
 import {
-    LOGIN_USER,
-    REGISTER_USER,
+    USER_LOGIN_SUCCESS,
+    LOGIN_SUCCESS,
+    USER_LOGIN_FAILURE,
+    USER_REGISTER_SUCCESS,
     AUTH_USER,
     LOGOUT_USER,
 } from './types';
@@ -24,7 +26,7 @@ export function registerUser(dataToSubmit) {
     }).then(response => {
         console.log(response.data);
         return {
-            type: REGISTER_USER,
+            type: USER_REGISTER_SUCCESS,
             payload: response.data
         }
     }).catch(err => {
@@ -32,35 +34,40 @@ export function registerUser(dataToSubmit) {
     });
 }
 
-export function loginUser(dataToSubmit) {
+export const loginUser = (dataToSubmit) => async (dispatch) => {
 
-    const { email, password } = dataToSubmit;
-    console.log(dataToSubmit);
-
-    const requestBody = `{
+    try {
+        const { email, password } = dataToSubmit;
+        console.log(dataToSubmit);
+        const requestBody = `{
                 login(email:"${email}",password:"${password}"){
-                    userId,
-                    token,
-                    tokenExp,
-                    firstname,
+                    userId,token,
+                    tokenExp,firstname,
                     lastname,role,
-                    image,
-                    email
-            }}
-            `;
+                    image,email
+            }}`;
+        let response = await axios.post('http://localhost:4000/api', {
+            query: requestBody,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    axios.post('http://localhost:4000/api', {
-        query: requestBody,
-        headers: {
-            'Content-Type': 'application/json'
+        if (response) {
+            dispatch({
+                type: USER_LOGIN_SUCCESS,
+                payload: response.data.data.login
+            });
+        } else {
+            dispatch({
+                type: USER_LOGIN_FAILURE,
+                payload: { error: "login error" }
+            });
         }
-    }).then(response => {
-        console.log(response);
-        return {
-            type: LOGIN_USER,
-            payload: response.data.login
-        }
-    }).catch(err => console.log(err));
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 }
 
 export function auth() {

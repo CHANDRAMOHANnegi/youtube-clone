@@ -38,7 +38,6 @@ function UploadVideoPage(props) {
 
     const handleChangeDecsription = (event) => {
         console.log(event.currentTarget.value)
-
         setDescription(event.currentTarget.value)
     }
 
@@ -53,19 +52,17 @@ function UploadVideoPage(props) {
     const onSubmit = (event) => {
 
         event.preventDefault();
-
-        if (user.userData && !user.userData.isAuth) {
+        
+        if (user.userData && !user.isAuthenticated) {
             return alert('Please Log in First')
         }
 
-        if (title === "" || Description === "" ||
-            Categories === "" || FilePath === "" ||
-            Duration === "" || Thumbnail === "") {
+        if (title === "" || Description === "" || Categories === "" || FilePath === "" || Duration === "" || Thumbnail === "") {
             return alert('Please first fill all the fields')
         }
 
         const variables = {
-            writer: user.userData._id,
+            writer: user.userId,
             title: title,
             description: Description,
             privacy: privacy,
@@ -74,6 +71,8 @@ function UploadVideoPage(props) {
             duration: Duration,
             thumbnail: Thumbnail
         }
+
+        console.log(variables);
 
         axios.post('/api/video/uploadVideo', variables)
             .then(response => {
@@ -106,8 +105,6 @@ function UploadVideoPage(props) {
                     }
                     setFilePath(response.data.filePath)
 
-                    //gerenate thumbnail with this filepath ! 
-
                     axios.post('/api/video/thumbnail', variable)
                         .then(response => {
                             if (response.data.success) {
@@ -117,13 +114,10 @@ function UploadVideoPage(props) {
                                 alert('Failed to make the thumbnails');
                             }
                         })
-
-
                 } else {
                     alert('failed to save the video in server')
                 }
             })
-
     }
 
     return (

@@ -4,7 +4,7 @@ const fs = require("fs");
 const multer = require('multer');
 
 // const Question = require('../../database/models/Question');
-const User = require('../../database/connection/connecton').User;
+const Video = require('../../database/connection/connecton').Video;
 
 const cloudinary = require('cloudinary');
 
@@ -15,71 +15,6 @@ cloudinary.config({
 });
 
 module.exports = {
-    createUser: async (args) => {
-        console.log(args);
-        try {
-            const { email, firstname, lastname, password } = args.userInput;
-            const existingUser = await User.findOne({
-                where: { email: email }
-            });
-            if (existingUser) {
-                const error = new Error("user already exist");
-                throw error;
-            }
-            const hashedPassword = await bcrypt.hash(password, 12);
-            const user = new User({
-                email,
-                password: hashedPassword,
-                firstname,
-                lastname,
-            });
-            const result = await user.save();
-            console.log(result);
-            return {
-                id: result.dataValues.id,
-                email,
-                firstname,
-                lastname,
-                createdAt: result.dataValues.createdAt,
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    login: async ({ email, password }) => {
-
-        const user = await User.findOne({ where: { email: email } });
-        // console.log(user);
-        
-        if (!user) {
-            let error = new Error("user does not exist");
-            error.code = 401;
-            throw error;
-        }
-
-        const isequal = await bcrypt.compare(password, user.password);
-        if (!isequal) {
-            let error = new Error('Password is incorrect')
-            error.code = 401;
-            throw error;
-        }
-
-        const token = jwt.sign({
-            userId: user.id,
-            email: email
-        }, 'secretKey', { expiresIn: '1h' });
-
-        return {
-            userId: user.dataValues.id,
-            firstname: user.dataValues.firstname,
-            lastname: user.dataValues.lastname,
-            image: user.dataValues.image,
-            role: user.dataValues.role,
-            email: user.dataValues.email,
-            token,
-            tokenExp: 12
-        }
-    },
     addPhoto: async (args, req) => {
         console.log(args);
         let { filename, mimetype } = args.image;

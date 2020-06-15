@@ -63,7 +63,6 @@ function RegisterPage(props) {
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-
           let dataToSubmit = {
             email: values.email,
             password: values.password,
@@ -73,13 +72,13 @@ function RegisterPage(props) {
           };
 
           dispatch(registerUser(dataToSubmit)).then(response => {
+            console.log(response);
             if (response.payload.success) {
               props.history.push("/login");
             } else {
               alert(response.payload.err.errmsg)
             }
           })
-
           setSubmitting(false);
         }, 500);
       }}

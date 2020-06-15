@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const dotenv = require('dotenv');
 
-dotenv.config('./env')
+dotenv.config('./env');
 
 const graphqlHttp = require('express-graphql');
 const graphQlSchema = require('./graphql/schema/index');
@@ -39,6 +39,15 @@ app.use((req, res, next) => {
   // }
   next();
 });
+
+app.put('video', (req, res, next) => {
+
+  if (req.file) {
+    return res.status(200).json({ message: "no file provided" })
+  }
+
+})
+
 
 app.use('/api', graphqlHttp({
   schema: graphQlSchema,

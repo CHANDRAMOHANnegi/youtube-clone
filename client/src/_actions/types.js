@@ -1,4 +1,12 @@
-export const LOGIN_USER = 'login_user';
-export const REGISTER_USER = 'register_user';
-export const AUTH_USER = 'auth_user';
-export const LOGOUT_USER = 'logout_user';
+
+
+export const AUTH_USER = 'AUTH_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
+
+export const USER_LOGIN_REQUEST = 'USERS_LOGIN_REQUEST';
+export const USER_LOGIN_SUCCESS = 'USERS_LOGIN_SUCCESS';
+export const USER_LOGIN_FAILURE = 'USERS_LOGIN_FAILURE';
+
+export const USER_REGISTER_REQUEST = 'USERS_REGISTER_REQUEST';
+export const USER_REGISTER_SUCCESS = 'USERS_REGISTER_SUCCESS';
+export const USER_REGISTER_FAILURE = 'USERS_REGISTER_FAILURE';
