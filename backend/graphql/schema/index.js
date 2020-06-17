@@ -41,17 +41,23 @@ module.exports = buildSchema(`
     }
 
     type Video {
-        url: String!,
+        id:ID!,
+        userId:Int!
         title:String!,
         description:String!,
+        filePath: String!,
         category: String!
+        views:Int,
+        privacy:Int,
         thumbnail: String!
-        filename:String!,
-        format:String!
+        createdAt: String!
+        updatedAt: String!
+        
     }
 
     type RootQuery{
         login(email:String!,password:String!):AuthData!
+        getVideos:[Video]!
     }
     
     type RootMutation{

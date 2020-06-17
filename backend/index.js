@@ -4,7 +4,6 @@ const path = require("path");
 const cors = require('cors');
 
 const dotenv = require('dotenv');
-
 dotenv.config('./env');
 
 const graphqlHttp = require('express-graphql');
@@ -12,6 +11,7 @@ const graphQlSchema = require('./graphql/schema/index');
 const graphQlResolvers = require('./graphql/resolvers/index');
 
 const isAuth = require('./middleware/auth');
+const videoRouter = require('./routes/videos');
 const app = express();
 require('./database/connection/connecton');
 
@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use((req, res, next) => {
-  console.log(req.body);
+  // console.log(req);
   // res.setHeader('Access-Control-Allow-Origin', "*");
   // res.setHeader(
   //   'Access-Control-Allow-Methods',
@@ -40,14 +40,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.put('video', (req, res, next) => {
-
-  if (req.file) {
-    return res.status(200).json({ message: "no file provided" })
-  }
-
-})
-
+app.use('/video', videoRouter);
 
 app.use('/api', graphqlHttp({
   schema: graphQlSchema,
@@ -62,14 +55,6 @@ app.use('/api', graphqlHttp({
 }));
 
 app.use('/uploads', express.static('uploads'));
-
-// Serve static assets if in production
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static("client/build"));
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
-//   });
-// };
 
 const port = process.env.PORT || 4000
 

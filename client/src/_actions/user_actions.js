@@ -35,7 +35,6 @@ export function registerUser(dataToSubmit) {
 }
 
 export const loginUser = (dataToSubmit) => async (dispatch) => {
-
     try {
         const { email, password } = dataToSubmit;
         console.log(dataToSubmit);
@@ -46,6 +45,7 @@ export const loginUser = (dataToSubmit) => async (dispatch) => {
                     lastname,role,
                     image,email
             }}`;
+            
         let response = await axios.post('http://localhost:4000/api', {
             query: requestBody,
             headers: {

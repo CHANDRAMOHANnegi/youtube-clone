@@ -1,5 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
     const Video = sequelize.define('Video', {
+        userId: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+             references: {
+              model: 'User',
+              key: 'id'
+            }
+          },
         title: {
             type: Sequelize.STRING(20),
             maxlength: 50,
@@ -8,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
         description: {
             type: Sequelize.TEXT,
         },
-        url: {
+        filePath: {
             type: Sequelize.TEXT,
             allowNull: false,
         },
@@ -20,15 +28,20 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             default: 0
         },
+        privacy: {
+            type: Sequelize.INTEGER,
+            default: 0
+        },
         thumbnail: Sequelize.TEXT,
     }, {
         timestamps: true,
         freezeTableName: true,
     });
     Video.associate = (models) => {
-        Video.belongsTo(models.User, {
+        Video.hasOne(models.User, {
             as: 'user',
-            foreignKey: 'userId'
+            foreignKey: 'userId',
+            onDelete: 'CASCADE'
         });
     };
     return Video;

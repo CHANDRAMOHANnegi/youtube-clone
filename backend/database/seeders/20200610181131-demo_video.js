@@ -6,9 +6,10 @@ module.exports = {
     return queryInterface.bulkInsert('Video', [{
       title: 'John',
       description: 'Doe',
-      url: 'cm@cm.com',
+      filePath: 'cm@cm.com',
       category: '12345678',
       views: '12345678',
+      privacy: '0',
       thumbnail: '12345678',
       createdAt: new Date(),
       updatedAt: new Date()

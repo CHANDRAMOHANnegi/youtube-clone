@@ -5,45 +5,41 @@ const multer = require('multer');
 
 // const Question = require('../../database/models/Question');
 const Video = require('../../database/connection/connecton').Video;
-
-const cloudinary = require('cloudinary');
-
-cloudinary.config({
-    cloud_name: 'dksme2kao',
-    api_key: '359145757282132',
-    api_secret: 'mA4OeukQz_rmXJtVdN9pPGlDSas',
-});
+const User = require('../../database/connection/connecton').User;
 
 module.exports = {
-    addPhoto: async (args, req) => {
-        console.log(args);
-        let { filename, mimetype } = args.image;
-        console.log({ filename, mimetype });
-        const { email } = req.user;
-
-        User.update({ image: filename },
-            { where: { email } })
-            .then((data) => {
-                if (data[0] > 0) {
-                    const path = require('path');
-                    const mainDir = path.dirname(require.main.filename);
-                    filename = `${mainDir}/uploads/${filename}`;
-                    console.log(filename);
-                    try {
-                        cloudinary.v2.uploader.upload(filename).then(photo => {
-                            console.log(photo);
-                            return true;
-                        }).catch(err => {
-                            console.log(err);
-                        });
-                    } catch (error) {
-                        throw new Error(error)
-                    }
-                }
-            }).catch(err => {
-                console.log("----------------->>>>>>>>>>>>", err);
-                throw new Error(err);
+    getVideos: async () => {
+        try {
+          
+          
+            let data = await User.findAll({
+                include:  Video
             });
+
+            console.log(data);
+            
+
+            // let data = await Video.findAll({
+            //     include:  User,as:'User'
+            // });
+
+            // console.log(data);
+            
+
+            if (!data) {
+                throw new Error("error in finding videos")
+            };
+            if (data) {
+                // data = data.map(video => {
+                //     return video.dataValues;
+                // });
+                console.log("==============???", data);
+                return data;
+            }
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
     }
 };
 

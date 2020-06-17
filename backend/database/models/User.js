@@ -31,8 +31,9 @@ module.exports = (sequelize, Sequelize) => {
 
     User.associate = (models) => {
         User.hasMany(models.Video, {
-            as: 'videos',
-            foreignKey: 'userId'
+            as: 'video',
+            foreignKey: 'userId',
+            onDelete: 'CASCADE',
         });
     };
 

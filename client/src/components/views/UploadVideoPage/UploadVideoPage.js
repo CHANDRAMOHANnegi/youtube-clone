@@ -50,9 +50,7 @@ function UploadVideoPage(props) {
     }
 
     const onSubmit = (event) => {
-
         event.preventDefault();
-        
         if (user.userData && !user.isAuthenticated) {
             return alert('Please Log in First')
         }
@@ -62,7 +60,7 @@ function UploadVideoPage(props) {
         }
 
         const variables = {
-            writer: user.userId,
+            userId: user.userData.userId,
             title: title,
             description: Description,
             privacy: privacy,
@@ -70,20 +68,19 @@ function UploadVideoPage(props) {
             category: Categories,
             duration: Duration,
             thumbnail: Thumbnail
-        }
+        };
 
         console.log(variables);
-
-        axios.post('/api/video/uploadVideo', variables)
+        axios.post('http://localhost:4000/video/uploadVideo', variables)
             .then(response => {
+                console.log(response);
                 if (response.data.success) {
                     alert('video Uploaded Successfully')
                     props.history.push('/')
                 } else {
                     alert('Failed to upload video')
                 }
-            })
-
+            }).catch(err=>console.log(err));
     }
 
     const onDrop = (files) => {
@@ -94,19 +91,18 @@ function UploadVideoPage(props) {
         }
         console.log(files)
         formData.append("file", files[0])
-
-        axios.post('/api/video/uploadfiles', formData, config)
+        axios.post('http://localhost:4000/video/uploadfiles', formData, config)
             .then(response => {
+                console.log(response);
                 if (response.data.success) {
-
                     let variable = {
                         filePath: response.data.filePath,
                         fileName: response.data.fileName
                     }
                     setFilePath(response.data.filePath)
-
-                    axios.post('/api/video/thumbnail', variable)
+                    axios.post('http://localhost:4000/video/thumbnail', variable)
                         .then(response => {
+                            console.log(response);
                             if (response.data.success) {
                                 setDuration(response.data.fileDuration)
                                 setThumbnail(response.data.thumbsFilePath)
@@ -120,12 +116,12 @@ function UploadVideoPage(props) {
             })
     }
 
+    
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
                 <Title level={2} > Upload Video</Title>
             </div>
-
             <Form onSubmit={onSubmit}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Dropzone
@@ -134,43 +130,35 @@ function UploadVideoPage(props) {
                         maxSize={800000000}>
                         {({ getRootProps, getInputProps }) => (
                             <div style={{ width: '300px', height: '240px', border: '1px solid lightgray', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                                {...getRootProps()}
-                            >
+                                {...getRootProps()}>
                                 <input {...getInputProps()} />
                                 <Icon type="plus" style={{ fontSize: '3rem' }} />
-
                             </div>
                         )}
                     </Dropzone>
-
                     {Thumbnail !== "" &&
                         <div>
-                            <img src={`http://localhost:5000/${Thumbnail}`} alt="haha" />
+                            <img src={`http://localhost:4000/${Thumbnail}`} alt="haha" />
                         </div>
                     }
                 </div>
-
                 <br /><br />
                 <label>Title</label>
                 <Input
                     onChange={handleChangeTitle}
-                    value={title}
-                />
+                    value={title} />
                 <br /><br />
                 <label>Description</label>
                 <TextArea
                     onChange={handleChangeDecsription}
-                    value={Description}
-                />
+                    value={Description} />
                 <br /><br />
-
                 <select onChange={handleChangeOne}>
                     {Private.map((item, index) => (
                         <option key={index} value={item.value}>{item.label}</option>
                     ))}
                 </select>
                 <br /><br />
-
                 <select onChange={handleChangeTwo}>
                     {Catogory.map((item, index) => (
                         <option key={index} value={item.label}>{item.label}</option>
@@ -181,7 +169,6 @@ function UploadVideoPage(props) {
                 <Button type="primary" size="large" onClick={onSubmit}>
                     Submit
             </Button>
-
             </Form>
         </div>
     )
