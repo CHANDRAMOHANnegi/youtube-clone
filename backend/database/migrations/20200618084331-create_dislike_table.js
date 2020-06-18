@@ -2,11 +2,11 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("Video", {
+    return queryInterface.createTable("Dislike", {
       id: {
         type: Sequelize.UUID,
         allowNull: false,
-        primaryKey: true,
+         primaryKey: true,
         defaultValue: Sequelize.UUIDV4
       },
       userId: {
@@ -17,37 +17,28 @@ module.exports = {
           key: 'id'
         }
       },
-      title: {
-        type: Sequelize.STRING,
-        maxlength: 50,
-        allowNull: false,
-      },
-      description: {
-        type: Sequelize.TEXT,
-      },
-      filePath: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      category: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      views: {
+      commentId: {
         type: Sequelize.INTEGER,
-        default: 0
+        allowNull: false,
+        references: {
+          model: 'Comment',
+          key: 'id'
+        }
       },
-      privacy: {
+      videoId: {
         type: Sequelize.INTEGER,
-        default: 0
+        allowNull: false,
+        references: {
+          model: 'Video',
+          key: 'id'
+        }
       },
-      thumbnail: Sequelize.TEXT,
       createdAt: Sequelize.DATE(),
       updatedAt: Sequelize.DATE()
     })
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("Video")
+    return queryInterface.dropTable("Dislike")
   }
 };

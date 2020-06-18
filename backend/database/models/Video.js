@@ -1,13 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
     const Video = sequelize.define('Video', {
-        userId: {
+        
+        id: {
+            allowNull: false,
+            primaryKey: true,
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4
+          },
+          userId: {
             type: Sequelize.INTEGER,
             allowNull: false,
-             references: {
-              model: 'User',
-              key: 'id'
+            references: {
+                model: 'User',
+                key: 'id'
             }
-          },
+        },
         title: {
             type: Sequelize.STRING(20),
             maxlength: 50,
@@ -38,11 +45,13 @@ module.exports = (sequelize, Sequelize) => {
         freezeTableName: true,
     });
     Video.associate = (models) => {
-        Video.hasOne(models.User, {
-            as: 'user',
+        Video.belongsTo(models.User, 
+            {
+            as: 'User',
             foreignKey: 'userId',
             onDelete: 'CASCADE'
-        });
+        }
+        );
     };
     return Video;
 }

@@ -2,6 +2,12 @@
 
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define('User', {
+        id: {
+            allowNull: false,
+            primaryKey: true,
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4
+          },
         firstname: {
             type: Sequelize.STRING(20),
             maxlength: 50,
@@ -15,9 +21,9 @@ module.exports = (sequelize, Sequelize) => {
             unique: true,
             allowNull: false,
         },
-         password: {
+        password: {
             type: Sequelize.STRING(200),
-            allowNull: false,
+
         },
         role: {
             type: Sequelize.INTEGER(11),
@@ -30,11 +36,13 @@ module.exports = (sequelize, Sequelize) => {
     });
 
     User.associate = (models) => {
-        User.hasMany(models.Video, {
-            as: 'video',
+        User.hasMany(models.Video, 
+            {
+            as: 'Video',
             foreignKey: 'userId',
             onDelete: 'CASCADE',
-        });
+        }
+        );
     };
 
     return User;

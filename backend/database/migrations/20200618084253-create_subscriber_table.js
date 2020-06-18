@@ -2,39 +2,35 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("User", {
+    return queryInterface.createTable("Subscriber", {
       id: {
         type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true
       },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      firstname: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      }, 
-      role: {
+      userFrom: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
-       },
-      email: {
-        type: Sequelize.STRING,
         allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id'
+        }
       },
-      lastname: {
-        type: Sequelize.STRING,
+      userTo: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id'
+        }
       },
-      image: Sequelize.STRING,
       createdAt: Sequelize.DATE(),
       updatedAt: Sequelize.DATE()
     })
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("User")
+    return queryInterface.dropTable("Subscriber")
   }
 };

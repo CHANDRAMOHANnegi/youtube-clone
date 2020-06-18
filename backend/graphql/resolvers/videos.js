@@ -10,21 +10,15 @@ const User = require('../../database/connection/connecton').User;
 module.exports = {
     getVideos: async () => {
         try {
-          
-          
             let data = await User.findAll({
-                include:  Video
+                include: Video
             });
-
             console.log(data);
-            
-
             // let data = await Video.findAll({
             //     include:  User,as:'User'
             // });
 
             // console.log(data);
-            
 
             if (!data) {
                 throw new Error("error in finding videos")
