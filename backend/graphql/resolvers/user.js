@@ -4,7 +4,7 @@ const fs = require("fs");
 const multer = require('multer');
 
 // const Question = require('../../database/models/Question');
-const User = require('../../database/connection/connecton').User;
+const User = require('../../database/models').User;
 
 const cloudinary = require('cloudinary');
 

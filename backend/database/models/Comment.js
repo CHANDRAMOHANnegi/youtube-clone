@@ -1,31 +1,33 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../connection/connecton');
+module.exports = (sequelize, Sequelize) => {
 
-module.exports = sequelize.define('comment', {
-    id: {
-        allowNull: false,
-        primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
-    },
-    writer: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    postId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Video'
-    },
-    responseTo: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    content: {
-        type: String
-    }
+const Comments= sequelize.define('Comments', {
+//     id: {
+//         allowNull: false,
+//         primaryKey: true,
+//         type: Sequelize.UUID,
+//         defaultValue: Sequelize.UUIDV4
+//     },
+//     // writer: {
+//     //     type: Schema.Types.ObjectId,
+//     //     ref: 'User'
+//     // },
+//     // postId: {
+//     //     type: Schema.Types.ObjectId,
+//     //     ref: 'Video'
+//     // },
+//     // responseTo: {
+//     //     type: Schema.Types.ObjectId,
+//     //     ref: 'User'
+//     // },
+//     content: {
+//         type: Sequelize.STRING
+//     }
 },
     {
         timestamps: true,
-        freezeTableName: true
+        // freezeTableName: true
     }
 );
+
+return Comments;
+};

@@ -13,10 +13,21 @@ const graphQlResolvers = require('./graphql/resolvers/index');
 const isAuth = require('./middleware/auth');
 const videoRouter = require('./routes/videos');
 const app = express();
-require('./database/connection/connecton');
+const models = require('./database/models/index');
+
+models.sequelize.sync().then(() => {
+  console.log("Drop========================================== and re-sync db.");
+  require('./database/bootstrap')();
+}).catch(err => {
+
+  console.log("---------------------------------------------");
+
+  console.log(err)
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 
 // app.use(isAuth);
 app.use(cors());

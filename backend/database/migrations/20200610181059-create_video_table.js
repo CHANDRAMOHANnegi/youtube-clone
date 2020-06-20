@@ -2,18 +2,18 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("Video", {
+    return queryInterface.createTable("Videos", {
       id: {
-        type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true,
+        type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
       userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
         references: {
-          model: 'User',
+          model: 'Users',
           key: 'id'
         }
       },
@@ -46,8 +46,7 @@ module.exports = {
       updatedAt: Sequelize.DATE()
     })
   },
-
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("Video")
+    return queryInterface.dropTable("Videos")
   }
 };

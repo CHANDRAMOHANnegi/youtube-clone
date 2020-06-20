@@ -3,10 +3,8 @@ const router = express.Router();
 const multer = require('multer');
 var ffmpeg = require('fluent-ffmpeg');
 
-const Video = require('../database/connection/connecton').Video;
+const Video = require('../database/models').Video;
 // const { Subscriber } = require("../models/Subscriber");
-
-console.log("==========================================");
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {

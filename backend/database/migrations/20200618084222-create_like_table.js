@@ -10,15 +10,15 @@ module.exports = {
         primaryKey: true
       },
       userId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
-          model: 'User',
+          model: 'Users',
           key: 'id'
         }
       },
       commentId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'Comment',
@@ -26,10 +26,10 @@ module.exports = {
         }
       },
       videoId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
-          model: 'Video',
+          model: 'Videos',
           key: 'id'
         }
       },

@@ -1,22 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
     const Video = sequelize.define('Video', {
-        
+
         id: {
             allowNull: false,
             primaryKey: true,
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4
-          },
-          userId: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'User',
-                key: 'id'
-            }
         },
         title: {
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING,
             maxlength: 50,
             allowNull: false
         },
@@ -28,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
         category: {
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING,
             allowNull: false,
         },
         views: {
@@ -40,18 +32,25 @@ module.exports = (sequelize, Sequelize) => {
             default: 0
         },
         thumbnail: Sequelize.TEXT,
-    }, {
-        timestamps: true,
-        freezeTableName: true,
-    });
-    Video.associate = (models) => {
-        Video.belongsTo(models.User, 
-            {
-            as: 'User',
+    },
+        {
+            timestamps: true,
+            // freezeTableName: true,
+            // classMethods: {
+            // associate: (models) => {
+            //     Video.belongsTo(models.User, {
+            //         foreignKey: 'userId',
+            //         onDelete: 'CASCADE'
+            //     });
+            // }
+            // }
+        });
+
+    Video.associate =  function (models) {
+        Video.belongsTo(models.User, {
             foreignKey: 'userId',
             onDelete: 'CASCADE'
-        }
-        );
-    };
+        });
+    }
     return Video;
 }

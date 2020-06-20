@@ -4,21 +4,21 @@ const fs = require("fs");
 const multer = require('multer');
 
 // const Question = require('../../database/models/Question');
-const Video = require('../../database/connection/connecton').Video;
-const User = require('../../database/connection/connecton').User;
+const Video = require('../../database/models').Video;
+const User = require('../../database/models').User;
 
 module.exports = {
     getVideos: async () => {
         try {
-            let data = await User.findAll({
-                include: Video
-            });
-            console.log(data);
-            // let data = await Video.findAll({
-            //     include:  User,as:'User'
+            // let data = await User.findAll({
+            //     include: Video
             // });
-
             // console.log(data);
+            let data = await Video.findAll({
+                include:  User,as:'User'
+            });
+
+            console.log(data);
 
             if (!data) {
                 throw new Error("error in finding videos")

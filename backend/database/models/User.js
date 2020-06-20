@@ -1,13 +1,13 @@
 
-
-module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define('User', {
+'use strict';
+module.exports = function (sequelize, Sequelize) {
+    var User = sequelize.define('User', {
         id: {
             allowNull: false,
             primaryKey: true,
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4
-          },
+        },
         firstname: {
             type: Sequelize.STRING(20),
             maxlength: 50,
@@ -23,7 +23,6 @@ module.exports = (sequelize, Sequelize) => {
         },
         password: {
             type: Sequelize.STRING(200),
-
         },
         role: {
             type: Sequelize.INTEGER(11),
@@ -32,18 +31,22 @@ module.exports = (sequelize, Sequelize) => {
         image: Sequelize.STRING(200),
     }, {
         timestamps: true,
-        freezeTableName: true,
+        // freezeTableName: true,
+        // classMethods: {
+        //     associate: (models) => {
+        //         User.hasMany(models.Video, {
+        //             foreignKey: 'userId',
+        //             onDelete: 'CASCADE',
+        //         });
+        //     }
+        // }
     });
-
-    User.associate = (models) => {
-        User.hasMany(models.Video, 
-            {
-            as: 'Video',
+    User.associate = function (models) {
+        User.hasMany(models.Video, {
             foreignKey: 'userId',
             onDelete: 'CASCADE',
-        }
-        );
-    };
+        });
+    }
 
     return User;
 };
