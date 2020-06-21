@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("Subscriber", {
+    return queryInterface.createTable("Subscribers", {
       id: {
         type: Sequelize.UUID,
         allowNull: false,

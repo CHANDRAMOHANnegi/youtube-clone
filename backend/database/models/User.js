@@ -31,21 +31,34 @@ module.exports = function (sequelize, Sequelize) {
         image: Sequelize.STRING(200),
     }, {
         timestamps: true,
-        // freezeTableName: true,
-        // classMethods: {
-        //     associate: (models) => {
-        //         User.hasMany(models.Video, {
-        //             foreignKey: 'userId',
-        //             onDelete: 'CASCADE',
-        //         });
-        //     }
-        // }
     });
+
     User.associate = function (models) {
+
+        //user can post multiple videos
         User.hasMany(models.Video, {
             foreignKey: 'userId',
-            onDelete: 'CASCADE',
+            onDelete: 'CASCADE'
         });
+
+        //user  can  have  multiple subscriber
+        // User.belongsToMany(models.Subscriber, {
+        //     foreignKey: 'userId',
+        //     onDelete: 'CASCADE'
+        // });
+
+        //user  can  comment on multiple videos
+        User.hasMany(models.Comment, {
+            foreignKey: 'userId',
+            onDelete: 'CASCADE'
+        });
+
+        //user  can  lie on multiple videos or comments
+        User.hasMany(models.Like, {
+            foreignKey: 'userId',
+            onDelete: 'CASCADE'
+        });
+
     }
 
     return User;

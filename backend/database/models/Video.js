@@ -32,25 +32,38 @@ module.exports = (sequelize, Sequelize) => {
             default: 0
         },
         thumbnail: Sequelize.TEXT,
-    },
-        {
-            timestamps: true,
-            // freezeTableName: true,
-            // classMethods: {
-            // associate: (models) => {
-            //     Video.belongsTo(models.User, {
-            //         foreignKey: 'userId',
-            //         onDelete: 'CASCADE'
-            //     });
-            // }
-            // }
-        });
+    }, {
+        timestamps: true,
+    });
 
-    Video.associate =  function (models) {
+    Video.associate = function (models) {
+
+        //a video  can have only one owner
         Video.belongsTo(models.User, {
             foreignKey: 'userId',
+            as: 'writer',
             onDelete: 'CASCADE'
         });
-    }
+
+        //a video  can have multiple Comments
+        Video.hasMany(models.Comment, {
+            foreignKey: 'commentId',
+            onDelete: 'CASCADE'
+        });
+
+        //a video  can have multiple like
+        Video.hasMany(models.Like, {
+            foreignKey: 'likeId',
+            onDelete: 'CASCADE'
+        });
+
+        //a video  can have multiple dislikes
+        Video.hasMany(models.Dislike, {
+            foreignKey: 'dislikeId',
+            onDelete: 'CASCADE'
+        });
+        
+    };
+
     return Video;
 }

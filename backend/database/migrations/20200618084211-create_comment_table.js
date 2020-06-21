@@ -2,23 +2,22 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("Comment", {
+    return queryInterface.createTable("Comments", {
       id: {
         type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true
       },
-     
-      postId: {
+      videoId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'Videos',
           key: 'id'
         }
-      }, 
-       userId: {
+      },
+      userId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
@@ -26,11 +25,10 @@ module.exports = {
           key: 'id'
         }
       },
-   
       content: {
         type: Sequelize.TEXT,
       },
-      
+
       createdAt: Sequelize.DATE(),
       updatedAt: Sequelize.DATE()
     })

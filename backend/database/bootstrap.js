@@ -32,12 +32,12 @@ module.exports = async () => {
     //     console.log("Error while users creation : ", err)
     // })
 
-    Video.findAll({
-        // where: { filePath: 'John' },
-        include:
-            { model: User }
-    }).then(data => {
-        console.log(JSON.stringify(data, null, 2));
-    }).catch(errorHandler)
+    // Video.findAll({
+    //     // where: { filePath: 'John' },
+    //     include:
+    //         { model: User }
+    // }).then(data => {
+    //     console.log(JSON.stringify(data, null, 2));
+    // }).catch(errorHandler)
 
 }
