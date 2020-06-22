@@ -4,7 +4,7 @@ const multer = require('multer');
 var ffmpeg = require('fluent-ffmpeg');
 
 const Video = require('../database/models').Video;
-// const { Subscriber } = require("../models/Subscriber");
+const User = require('../database/models').User;
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -29,10 +29,7 @@ var upload = multer({ storage: storage }).single("file")
 //=================================
 
 router.post("/uploadfiles", (req, res) => {
-
     console.log("=------------------------------------------");
-    console.log("=------------------------------------------");
-
     upload(req, res, err => {
         if (err) {
             return res.json({ success: false, err })
@@ -40,7 +37,6 @@ router.post("/uploadfiles", (req, res) => {
         return res.json({ success: true, filePath: res.req.file.path, fileName: res.req.file.filename })
     })
 });
-
 
 router.post("/thumbnail", (req, res) => {
 
@@ -52,7 +48,6 @@ router.post("/thumbnail", (req, res) => {
     ffmpeg.ffprobe(req.body.filePath, function (err, metadata) {
         // console.dir("---------->", metadata);
         // console.log("==========>", metadata.format.duration);
-
         fileDuration = metadata.format.duration;
     })
 
@@ -81,13 +76,26 @@ router.post("/thumbnail", (req, res) => {
 
 
 router.get("/getVideos", (req, res) => {
+    console.log('=================>');
 
-    Video.find()
-        .populate('writer')
-        .exec((err, videos) => {
-            if (err) return res.status(400).send(err);
-            res.status(200).json({ success: true, videos })
-        })
+    Video.findAll({
+        include:
+            { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
+    }).then(data => {
+        console.log(JSON.stringify(data, null, 2));
+        return res.status(200).send(JSON.stringify(data, null, 2));
+    }).catch(err => {
+        console.log('?????????????????????', err);
+        return res.status(400).send(err);
+    })
+
+
+    // Video.find()
+    //     .populate('writer')
+    //     .exec((err, videos) => {
+    //         if (err) return res.status(400).send(err);
+    //         res.status(200).json({ success: true, videos })
+    //     })
 
 });
 

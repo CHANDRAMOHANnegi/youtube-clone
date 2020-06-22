@@ -17,11 +17,9 @@ const models = require('./database/models/index');
 
 models.sequelize.sync().then(() => {
   console.log("Drop========================================== and re-sync db.");
-  require('./database/bootstrap')();
+  // require('./database/bootstrap')();
 }).catch(err => {
-
   console.log("---------------------------------------------");
-
   console.log(err)
 });
 
@@ -33,7 +31,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use((req, res, next) => {
-  // console.log(req);
+  console.log(req.body);
   // res.setHeader('Access-Control-Allow-Origin', "*");
   // res.setHeader(
   //   'Access-Control-Allow-Methods',

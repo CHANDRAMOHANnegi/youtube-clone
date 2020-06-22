@@ -15,7 +15,7 @@ module.exports = {
             // });
             // console.log(data);
             let data = await Video.findAll({
-                include:  User,as:'User'
+                include: User, as: 'User'
             });
 
             console.log(data);

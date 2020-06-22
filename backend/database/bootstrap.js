@@ -23,21 +23,21 @@ module.exports = async () => {
     // })
 
     // Video.bulkCreate([
-    //     { title: 'john-doe@domain.com', filePath: 'John', category: '0', userId: 'f9ed0614-7982-4ce1-ac9a-5890fd8a3da2' },
-    //     { title: 'john-de@domain.com', filePath: 'Jhn', category: '1', userId: 'e147e15d-56c1-447b-b6a9-5225515717ce' },
-    //  { title: 'john-doe@dmai.com', filePath: 'Joh', category: '2', userId: 'e147e15d-56c1-447b-b6a9-5225515717ce' }
+    //     { title: 'john-doe@domain.com', filePath: 'John', category: '0', userId: '4e0cd4b5-43b0-4ba9-bede-a9c2792df54b' },
+    //     { title: 'john-de@domain.com', filePath: 'Jhn', category: '1', userId: '4e0cd4b5-43b0-4ba9-bede-a9c2792df54b' },
+    //  { title: 'john-doe@dmai.com', filePath: 'Joh', category: '2', userId: '3077730f-a502-4f94-a9f0-ee248317effa' }
     // ]).then((newUsers) => {
     //     console.log(newUsers)
     // }).catch((err) => {
     //     console.log("Error while users creation : ", err)
     // })
 
-    // Video.findAll({
-    //     // where: { filePath: 'John' },
-    //     include:
-    //         { model: User }
-    // }).then(data => {
-    //     console.log(JSON.stringify(data, null, 2));
-    // }).catch(errorHandler)
+    
+    Video.findAll({
+         include:
+            { model: User, as: 'writer',attributes:['firstname','lastname','image'] }
+    }).then(data => {
+        console.log(JSON.stringify(data, null, 2));
+    }).catch(errorHandler)
 
 }

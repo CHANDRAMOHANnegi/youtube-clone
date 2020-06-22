@@ -12,11 +12,11 @@ function LandingPage() {
     useEffect(() => {
 
         console.log("----------------------------Z");
-        
 
         const requestBody = `{
-
-            getVideos{userId,id,
+            getVideos{
+            userId,
+            id,
             title,
             description,
             filePath,
@@ -27,19 +27,21 @@ function LandingPage() {
             createdAt
           }}`;
 
-        axios.post('http://localhost:4000/api', {
-            query: requestBody,
+        axios.get('http://localhost:4000/video/getVideos', {
+            // query: requestBody,
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            console.log(response.data.data.getVideos);
+            console.log(response);
             if (response.data) {
-                console.log(response.data.data.getVideos)
-                setVideos(response.data.data.getVideos)
+                console.log(response.data)
+                setVideos(response.data)
             } else {
                 alert('Failed to get Videos')
             }
+        }).catch(err => {
+            console.log('//////////////',err);
         })
     }, [])
 
@@ -51,7 +53,7 @@ function LandingPage() {
 
         return (<Col lg={6} md={8} xs={24}>
             <div style={{ position: 'relative' }}>
-                <a href={`/video/${video._id}`} >
+                <a href={`/video/${video.id}`} >
                     <img style={{ width: '100%' }} alt="thumbnail" src={`http://localhost:4000/${video.thumbnail}`} />
                     <div className=" duration"
                         style={{
@@ -70,7 +72,7 @@ function LandingPage() {
                 }
                 title={video.title}
             />
-            <span>{video.writer.name} </span><br />
+            <span>{video.writer.firstname+""+video.writer.lastname} </span><br />
             <span style={{ marginLeft: '3rem' }}> {video.views}</span>
             - <span> {moment(video.createdAt).format("MMM Do YY")} </span>
         </Col>)
