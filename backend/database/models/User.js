@@ -17,9 +17,12 @@ module.exports = function (sequelize, Sequelize) {
             type: Sequelize.STRING(20),
         },
         email: {
-            type: Sequelize.STRING(30),
+            type: Sequelize.STRING(32),
             unique: true,
             allowNull: false,
+            validate: {
+                len: [5, 30]
+              }
         },
         password: {
             type: Sequelize.STRING(200),

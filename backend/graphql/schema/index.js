@@ -1,69 +1,29 @@
 const { buildSchema } = require('graphql');
+const videoSchema = require('./videoSchema');
+const userSchema = require('./userSchema');
+const CommentSchema = require('./CommentSchema');
 
 module.exports = buildSchema(`
-
-    type User {
-        id:ID!,
-        email:String!,
-        firstname:String!,
-        lastname:String!,
-        createdAt:String!,
-      
-     }
-
-    input UserInput{
-        email:String!,
-        password:String!,
-        firstname:String!,
-        lastname:String,
-     }
-
-    type AuthData {
-        userId: ID!,
-        token: String!,
-        tokenExp: Int!,
-        firstname:String!,
-        lastname:String,
-        email:String!,
-        role:Int!,
-        image:String
-    }
-
-    input File {
-        filename: String!
-        mimetype: String!
-    }
-
-    type Photo {
-        url: String!,
-        filename:String!,
-        format:String!,
-    }
-
-    type Video {
-        id:ID!,
-        userId:Int!
-        title:String!,
-        description:String!,
-        filePath: String!,
-        category: String!
-        views:Int,
-        privacy:Int,
-        thumbnail: String!
-        createdAt: String!
-        updatedAt: String!
         
-    }
+    ${userSchema}
+
+    ${videoSchema}
+
+    ${CommentSchema}
 
     type RootQuery{
+
         login(email:String!,password:String!):AuthData!
-        getVideos:[Video]!
+        getVideos:[Video]
+        getVideo(videoId:String!):Video
+        
     }
     
     type RootMutation{
         createUser(userInput:UserInput!):User
         addPhoto(image: File!): Photo
         uploadVideo(video:File):Video
+        createComment(commentInput:CommentInput):Comment
     }
 
     schema{

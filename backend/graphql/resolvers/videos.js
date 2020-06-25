@@ -1,38 +1,35 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const fs = require("fs");
-const multer = require('multer');
 
-// const Question = require('../../database/models/Question');
 const Video = require('../../database/models').Video;
 const User = require('../../database/models').User;
 
 module.exports = {
     getVideos: async () => {
         try {
-            // let data = await User.findAll({
-            //     include: Video
-            // });
-            // console.log(data);
-            let data = await Video.findAll({
-                include: User, as: 'User'
+            let videos = await Video.findAll({
+                include:
+                    { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
             });
-
-            console.log(data);
-
-            if (!data) {
-                throw new Error("error in finding videos")
-            };
-            if (data) {
-                // data = data.map(video => {
-                //     return video.dataValues;
-                // });
-                console.log("==============???", data);
-                return data;
+            if (videos) {
+                console.log(JSON.parse(JSON.stringify(videos, null, 2)));
+                return JSON.parse(JSON.stringify(videos, null, 2));
             }
         } catch (err) {
             console.log(err);
             return err;
+        }
+    },
+    getVideo: async ({ videoId }) => {
+        try {
+            const video = await Video.findOne({
+                where: { id: videoId },
+                include: { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
+            });
+            if (video)
+                return video.dataValues;
+
+        } catch (error) {
+            console.log(error);
+            return error;
         }
     }
 };

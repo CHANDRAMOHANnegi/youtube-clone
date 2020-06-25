@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {
     USER_LOGIN_SUCCESS,
-    LOGIN_SUCCESS,
     USER_LOGIN_FAILURE,
     USER_REGISTER_SUCCESS,
     AUTH_USER,
@@ -9,29 +8,37 @@ import {
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
-export function registerUser(dataToSubmit) {
+export const registerUser = (dataToSubmit) => async (dispatch) => {
 
-    const { email, password, firstname, lastname } = dataToSubmit;
-    const requestBody = `
+    try {
+        const { email, password, firstname, lastname } = dataToSubmit;
+        const requestBody = `
         mutation{
            createUser(userInput:{email:"${email}",password:"${password}",firstname:"${firstname}",lastname:"${lastname}"}){
             email
-        }
-    }`;
-    axios.post('http://localhost:4000/api', {
-        query: requestBody,
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(response => {
-        console.log(response.data);
-        return {
-            type: USER_REGISTER_SUCCESS,
-            payload: response.data
-        }
-    }).catch(err => {
-        console.log(err);
-    });
+            }
+        }`;        
+
+        axios.post('http://localhost:4000/api', {
+            query: requestBody,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            console.log('===========',response);
+            if (response)
+                dispatch({
+                    type: USER_REGISTER_SUCCESS,
+                    payload: response.data.data.createUser
+                    
+                });
+        }).catch(err => {
+            console.log(err);
+        });
+
+    } catch (error) {
+        throw error;
+    }
 }
 
 export const loginUser = (dataToSubmit) => async (dispatch) => {
@@ -45,7 +52,7 @@ export const loginUser = (dataToSubmit) => async (dispatch) => {
                     lastname,role,
                     image,email
             }}`;
-            
+
         let response = await axios.post('http://localhost:4000/api', {
             query: requestBody,
             headers: {

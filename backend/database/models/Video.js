@@ -31,6 +31,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             default: 0
         },
+        duration: Sequelize.STRING,
         thumbnail: Sequelize.TEXT,
     }, {
         timestamps: true,
@@ -62,7 +63,7 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'dislikeId',
             onDelete: 'CASCADE'
         });
-        
+
     };
 
     return Video;

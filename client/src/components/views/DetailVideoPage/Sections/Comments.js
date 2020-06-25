@@ -8,6 +8,10 @@ const { TextArea } = Input;
 
 function Comments(props) {
     const user = useSelector(state => state.user)
+
+    console.log('====================>',user);
+    
+
     const [Comment, setComment] = useState("")
 
     const handleChange = (e) => {

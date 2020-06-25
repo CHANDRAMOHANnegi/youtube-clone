@@ -22,8 +22,12 @@ module.exports = {
         defaultValue: 0,
        },
       email: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(32),
         allowNull: false,
+        unique: true,
+        validate: {
+          len: [5, 30]
+        }
       },
       lastname: {
         type: Sequelize.STRING,

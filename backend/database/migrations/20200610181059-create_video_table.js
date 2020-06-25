@@ -41,6 +41,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         default: 0
       },
+      duration: Sequelize.STRING,
       thumbnail: Sequelize.TEXT,
       createdAt: Sequelize.DATE(),
       updatedAt: Sequelize.DATE()

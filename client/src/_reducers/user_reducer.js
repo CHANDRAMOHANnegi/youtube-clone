@@ -8,24 +8,22 @@ import {
     // USER_REGISTER_REQUEST
 } from '../_actions/types';
 
-
 const initialState = {
-
+    registerStatus: "",
     error: "",
     userData: {},
     isAuthenticated: false
 
-}
-
+};
 
 export default function (state = initialState, action) {
-    console.log(action);
-
+    // console.log(action);
     switch (action.type) {
         case USER_REGISTER_SUCCESS:
             return {
                 ...state,
-                register: action.payload
+                error: '',
+                registerStatus: 'success'
             }
         case USER_LOGIN_REQUEST:
             return {

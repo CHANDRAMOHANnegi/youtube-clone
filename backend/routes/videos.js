@@ -49,8 +49,7 @@ router.post("/thumbnail", (req, res) => {
         // console.dir("---------->", metadata);
         // console.log("==========>", metadata.format.duration);
         fileDuration = metadata.format.duration;
-    })
-
+    });
 
     ffmpeg(req.body.filePath)
         .on('filenames', function (filenames) {
@@ -69,10 +68,7 @@ router.post("/thumbnail", (req, res) => {
             // %b input basename ( filename w/o extension )
             filename: 'thumbnail-%b.png'
         });
-
 });
-
-
 
 
 router.get("/getVideos", (req, res) => {
@@ -82,21 +78,12 @@ router.get("/getVideos", (req, res) => {
         include:
             { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
     }).then(data => {
-        console.log(JSON.stringify(data, null, 2));
+        // console.log(JSON.stringify(data, null, 2));
         return res.status(200).send(JSON.stringify(data, null, 2));
     }).catch(err => {
         console.log('?????????????????????', err);
         return res.status(400).send(err);
-    })
-
-
-    // Video.find()
-    //     .populate('writer')
-    //     .exec((err, videos) => {
-    //         if (err) return res.status(400).send(err);
-    //         res.status(200).json({ success: true, videos })
-    //     })
-
+    });
 });
 
 router.post("/uploadVideo", (req, res) => {
@@ -115,7 +102,6 @@ router.post("/uploadVideo", (req, res) => {
 
 
 router.post("/getVideo", (req, res) => {
-
     Video.findOne({ "_id": req.body.videoId })
         .populate('writer')
         .exec((err, video) => {
@@ -134,7 +120,6 @@ router.post("/getSubscriptionVideos", (req, res) => {
             if (err) return res.status(400).send(err);
 
             let subscribedUser = [];
-
             subscribers.map((subscriber, i) => {
                 subscribedUser.push(subscriber.userTo)
             })
