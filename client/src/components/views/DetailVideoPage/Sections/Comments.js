@@ -4,13 +4,12 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import SingleComment from './SingleComment';
 import ReplyComment from './ReplyComment';
-const { TextArea } = Input;
+ const { TextArea } = Input;
 
 function Comments(props) {
     const user = useSelector(state => state.user)
 
-    console.log('====================>',user);
-    
+    console.log('====================>', user);
 
     const [Comment, setComment] = useState("")
 
@@ -21,21 +20,33 @@ function Comments(props) {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        const variables = {
-            content: Comment,
-            writer: user.userData._id,
-            postId: props.postId
-        }
+        // const variables = {
+        //     content: Comment,
+        //     writer: user.userData.userId,
+        //     videoId: props.videoId
+        // }
 
-        axios.post('/api/comment/saveComment', variables)
-            .then(response => {
-                if (response.data.success) {
-                    setComment("")
-                    props.refreshFunction(response.data.result)
-                } else {
-                    alert('Failed to save Comment')
-                }
-            })
+        const requestBody = `
+        mutation{
+           createComment(commentInput:{content:"${Comment}",userId:"${user.userData.userId}",videoId:"${props.videoId}"}){
+            content
+            }
+        }`;
+
+        axios.post('http://localhost:4000/api', {
+            query: requestBody,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            console.log(response);
+            if (response.data.data) {
+                setComment("")
+                props.refreshFunction(response.data.data)
+            } else {
+                alert('Failed to save Comment')
+            }
+        })
     }
 
     return (

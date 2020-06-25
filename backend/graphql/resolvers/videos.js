@@ -10,7 +10,7 @@ module.exports = {
                     { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
             });
             if (videos) {
-                console.log(JSON.parse(JSON.stringify(videos, null, 2)));
+                // console.log(JSON.parse(JSON.stringify(videos, null, 2)));
                 return JSON.parse(JSON.stringify(videos, null, 2));
             }
         } catch (err) {

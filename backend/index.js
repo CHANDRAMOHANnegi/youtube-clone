@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use((req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   // res.setHeader('Access-Control-Allow-Origin', "*");
   // res.setHeader(
   //   'Access-Control-Allow-Methods',

@@ -53,16 +53,6 @@ function DetailVideoPage(props) {
             alert('Failed to get video Info')
         });
 
-        // axios.post('http://localhost:4000/api/video/getVideo', videoVariable)
-        //     .then(response => {
-        //         if (response.data.success) {
-        //             console.log(response.data.video)
-        //             setVideo(response.data.video)
-        //         } else {
-        //             alert('Failed to get video Info')
-        //         }
-        //     })
-
         axios.post('http://localhost:4000/api/comment/getComments', videoVariable)
             .then(response => {
                 if (response.data.success) {
@@ -94,7 +84,8 @@ function DetailVideoPage(props) {
                             />
                             <div></div>
                         </List.Item>
-                        <Comments CommentLists={CommentLists} postId={Video._id} refreshFunction={updateComment} />
+                        <Comments CommentLists={CommentLists} videoId={videoId}
+                         refreshFunction={updateComment} />
                     </div>
                 </Col>
                 <Col lg={6} xs={24}>

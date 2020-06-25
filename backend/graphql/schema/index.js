@@ -23,7 +23,7 @@ module.exports = buildSchema(`
         createUser(userInput:UserInput!):User
         addPhoto(image: File!): Photo
         uploadVideo(video:File):Video
-        createComment(commentInput:CommentInput):Comment
+        createComment(commentInput:CommentInput!):Comment
     }
 
     schema{

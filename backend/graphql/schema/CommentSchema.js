@@ -5,13 +5,12 @@ module.exports = `
  
 type Comment {
     content:String!,
-    writer:writer,
-}
+ }
 
-type CommentInput {
+input CommentInput {
 
-    userId:ID!,
-    videoId:ID!,
+    userId:String!,
+    videoId:String!,
     content:String!
 
    }

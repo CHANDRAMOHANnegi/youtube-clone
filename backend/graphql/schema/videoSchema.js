@@ -36,8 +36,7 @@ type Video {
     updatedAt: String!,
     userId:ID!,
     writer:writer,
-    comments: [Comment]
-
+ 
 }
 
 `;

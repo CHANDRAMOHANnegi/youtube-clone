@@ -6,12 +6,19 @@ const Comment = require('../../database/models').Comment;
 module.exports = {
 
     createComment: async (args) => {
+        console.log("=================================");
+
+        console.log(args);
+
         try {
             const { userId, videoId, content } = args.commentInput;
 
             const existingUser = await Comment.findOne({
                 where: { userId, videoId }
             });
+
+            console.log(existingUser);
+
 
             if (existingUser) {
                 const error = new Error("user already exist");
@@ -21,6 +28,9 @@ module.exports = {
             const comment = new Comment({
                 userId, videoId, content
             });
+
+            console.log(comment);
+
 
             const result = await user.save();
 
