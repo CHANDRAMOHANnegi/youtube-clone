@@ -27,8 +27,16 @@ function LandingPage() {
                 firstname
                 lastname
                 image
+               
             }
-            }}`;
+            
+            Comments{
+                    id
+                    content 
+                    createdAt
+                }
+            }
+        }`;
 
         axios.post('http://localhost:4000/api', {
             query: requestBody,

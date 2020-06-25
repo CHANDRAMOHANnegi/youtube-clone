@@ -1,5 +1,3 @@
-
-
 module.exports = `
 
 input File {
@@ -15,10 +13,12 @@ type Photo {
 
 }
 
-type writer {
+type Writer {
+
     firstname:String!,
     lastname:String!,
     image:String,
+
 }
 
 type Video {
@@ -35,8 +35,9 @@ type Video {
     createdAt: String!,
     updatedAt: String!,
     userId:ID!,
-    writer:writer,
- 
+    writer:Writer
+    Comments:[Comment!]
+
 }
 
 `;

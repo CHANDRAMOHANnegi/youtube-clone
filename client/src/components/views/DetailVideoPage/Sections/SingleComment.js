@@ -21,7 +21,7 @@ function SingleComment(props) {
         e.preventDefault();
 
         const variables = {
-            writer: user.userData._id,
+            writer: user.userData.userId,
             postId: props.postId,
             responseTo: props.comment._id,
             content: CommentValue

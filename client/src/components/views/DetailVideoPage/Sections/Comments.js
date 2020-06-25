@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import SingleComment from './SingleComment';
 import ReplyComment from './ReplyComment';
- const { TextArea } = Input;
+const { TextArea } = Input;
 
 function Comments(props) {
     const user = useSelector(state => state.user)
@@ -20,16 +20,12 @@ function Comments(props) {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        // const variables = {
-        //     content: Comment,
-        //     writer: user.userData.userId,
-        //     videoId: props.videoId
-        // }
-
         const requestBody = `
         mutation{
            createComment(commentInput:{content:"${Comment}",userId:"${user.userData.userId}",videoId:"${props.videoId}"}){
-            content
+            id,
+            content,
+            createdAt
             }
         }`;
 
@@ -40,9 +36,9 @@ function Comments(props) {
             }
         }).then(response => {
             console.log(response);
-            if (response.data.data) {
+            if (response) {
                 setComment("")
-                props.refreshFunction(response.data.data)
+                props.refreshFunction(response.data.data.createComment)
             } else {
                 alert('Failed to save Comment')
             }
@@ -58,10 +54,10 @@ function Comments(props) {
             {console.log(props.CommentLists)}
 
             {props.CommentLists && props.CommentLists.map((comment, index) => (
-                (!comment.responseTo &&
+                (
                     <React.Fragment>
-                        <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />
-                        <ReplyComment CommentLists={props.CommentLists} postId={props.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} />
+                        <SingleComment comment={comment} videoId={props.videoId} refreshFunction={props.refreshFunction} />
+                        <ReplyComment CommentLists={props.CommentLists} videoId={props.videoId} parentCommentId={comment.id} refreshFunction={props.refreshFunction} />
                     </React.Fragment>
                 )
             ))}

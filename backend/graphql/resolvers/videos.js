@@ -1,16 +1,27 @@
 
 const Video = require('../../database/models').Video;
 const User = require('../../database/models').User;
+const Comment = require('../../database/models').Comment;
 
 module.exports = {
     getVideos: async () => {
         try {
             let videos = await Video.findAll({
-                include:
-                    { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
+                include: {
+                    model: User,
+                    include: {
+                        model: Comment
+                    },
+                    as: 'writer',
+                    attributes: [
+                        'firstname',
+                        'lastname',
+                        'image'
+                    ]
+                }
             });
             if (videos) {
-                // console.log(JSON.parse(JSON.stringify(videos, null, 2)));
+                console.log((JSON.stringify(videos, null, 2)));
                 return JSON.parse(JSON.stringify(videos, null, 2));
             }
         } catch (err) {
@@ -22,8 +33,11 @@ module.exports = {
         try {
             const video = await Video.findOne({
                 where: { id: videoId },
-                include: { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
+                include: { model: User, include: { model: Comment }, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
             });
+
+            console.log(video);
+
             if (video)
                 return video.dataValues;
 
