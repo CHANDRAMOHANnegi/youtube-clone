@@ -37,6 +37,11 @@ function DetailVideoPage(props) {
                             id
                             content 
                             createdAt
+                            writer{
+                                firstname
+                                lastname
+                                image
+                            }
                         }
         }}`;
 

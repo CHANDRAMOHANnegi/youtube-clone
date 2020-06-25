@@ -7,18 +7,26 @@ module.exports = {
     getVideos: async () => {
         try {
             let videos = await Video.findAll({
-                include: {
-                    model: User,
-                    include: {
-                        model: Comment
+                include: [
+                    {
+                        model: User,
+                        as: 'writer',
+                        attributes: [
+                            'firstname',
+                            'lastname',
+                            'image'
+                        ]
                     },
-                    as: 'writer',
-                    attributes: [
-                        'firstname',
-                        'lastname',
-                        'image'
-                    ]
-                }
+                    {
+                        model: Comment, include: {
+                            model: User, as: 'writer', attributes: [
+                                'firstname',
+                                'lastname',
+                                'image'
+                            ]
+                        }
+                    }
+                ]
             });
             if (videos) {
                 console.log((JSON.stringify(videos, null, 2)));
@@ -33,7 +41,17 @@ module.exports = {
         try {
             const video = await Video.findOne({
                 where: { id: videoId },
-                include: { model: User, include: { model: Comment }, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
+                include: [{ model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] },
+                {
+                    model: Comment, include: {
+                        model: User, as: 'writer', attributes: [
+                            'firstname',
+                            'lastname',
+                            'image'
+                        ]
+                    }
+                }
+                ]
             });
 
             console.log(video);

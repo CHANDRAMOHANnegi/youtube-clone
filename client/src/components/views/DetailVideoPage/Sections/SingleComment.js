@@ -9,6 +9,10 @@ function SingleComment(props) {
     const [CommentValue, setCommentValue] = useState("")
     const [OpenReply, setOpenReply] = useState(false)
 
+
+    console.log('--------------->',props);
+    
+
     const handleChange = (e) => {
         setCommentValue(e.currentTarget.value)
     }
@@ -25,8 +29,7 @@ function SingleComment(props) {
             postId: props.postId,
             responseTo: props.comment._id,
             content: CommentValue
-        }
-
+        };
 
         Axios.post('/api/comment/saveComment', variables)
             .then(response => {
@@ -49,7 +52,7 @@ function SingleComment(props) {
         <div>
             <Comment
                 actions={actions}
-                author={props.comment.writer.name}
+                author={props.comment.writer.firstname+" "+props.comment.writer.lastname}
                 avatar={
                     <Avatar
                         src={props.comment.writer.image}

@@ -42,7 +42,9 @@ function Comments(props) {
             } else {
                 alert('Failed to save Comment')
             }
-        })
+        });
+
+        
     }
 
     return (
