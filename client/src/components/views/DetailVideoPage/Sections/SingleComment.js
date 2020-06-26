@@ -4,14 +4,14 @@ import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import LikeDislikes from './LikeDislikes';
 const { TextArea } = Input;
+
+
 function SingleComment(props) {
     const user = useSelector(state => state.user);
     const [CommentValue, setCommentValue] = useState("")
     const [OpenReply, setOpenReply] = useState(false)
 
-
-    console.log('--------------->',props);
-    
+    // console.log('--------------->', props);
 
     const handleChange = (e) => {
         setCommentValue(e.currentTarget.value)
@@ -40,7 +40,7 @@ function SingleComment(props) {
                 } else {
                     alert('Failed to save Comment')
                 }
-            })
+            });
     }
 
     const actions = [
@@ -52,7 +52,7 @@ function SingleComment(props) {
         <div>
             <Comment
                 actions={actions}
-                author={props.comment.writer.firstname+" "+props.comment.writer.lastname}
+                author={props.comment.writer.firstname + " " + props.comment.writer.lastname}
                 avatar={
                     <Avatar
                         src={props.comment.writer.image}

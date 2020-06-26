@@ -51,7 +51,7 @@ function DetailVideoPage(props) {
                 'Content-Type': 'application/json'
             }
         }).then(res => {
-            console.log(res.data.data.getVideo);
+            // console.log(res.data.data.getVideo);
             setVideo(res.data.data.getVideo);
             setCommentLists(res.data.data.getVideo.Comments)
         }).catch(err => {
@@ -70,10 +70,14 @@ function DetailVideoPage(props) {
             <Row>
                 <Col lg={18} xs={24}>
                     <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
-                        <video style={{ width: '100%' }} src={`http://localhost:4000/${Video.filePath}`} controls></video>
+                        <video
+                            style={{ width: '100%' }}
+                            src={`http://localhost:4000/${Video.filePath}`} controls>
+                        </video>
                         <List.Item
-                            actions={[<LikeDislikes video videoId={videoId} userId={localStorage.getItem('userId')} />, <Subscriber userTo={Video.writer._id} userFrom={localStorage.getItem('userId')} />]}
-                        >
+                            actions={[
+                                <LikeDislikes video videoId={videoId} userId={localStorage.getItem('userId')} />,
+                                <Subscriber userTo={Video.writer._id} userFrom={localStorage.getItem('userId')} />]}>
                             <List.Item.Meta
                                 avatar={<Avatar src={Video.writer && Video.writer.image} />}
                                 title={<a href="https://ant.design">{Video.title}</a>}
@@ -90,7 +94,6 @@ function DetailVideoPage(props) {
                 </Col>
             </Row>
         )
-
     } else {
         return (
             <div>Loading...</div>

@@ -19,7 +19,6 @@ module.exports = {
       },
       commentId: {
         type: Sequelize.UUID,
-        allowNull: false,
         references: {
           model: 'Comments',
           key: 'id'
@@ -27,7 +26,6 @@ module.exports = {
       },
       videoId: {
         type: Sequelize.UUID,
-        allowNull: false,
         references: {
           model: 'Videos',
           key: 'id'

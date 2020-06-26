@@ -29,12 +29,6 @@ function LandingPage() {
                 image
                
             }
-            
-            Comments{
-                    id
-                    content 
-                    createdAt
-                }
             }
         }`;
 

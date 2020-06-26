@@ -3,6 +3,7 @@
 
 const User = require('./models').User;
 const Video = require('./models').Video;
+const Like = require('./models').Like;
 
 
 module.exports = async () => {
@@ -32,12 +33,21 @@ module.exports = async () => {
     //     console.log("Error while users creation : ", err)
     // })
 
+    //  User.findAll().then(data => {
+    //     console.log(JSON.stringify(data, null, 2));
+    // }).catch(errorHandler)
+
+    //     Like.findAll().then(data => {
+    //     console.log(JSON.stringify(data, null, 2));
+    // }).catch(errorHandler)
+
+   
     
-    Video.findAll({
-         include:
-            { model: User, as: 'writer',attributes:['firstname','lastname','image'] }
-    }).then(data => {
-        console.log(JSON.stringify(data, null, 2));
-    }).catch(errorHandler)
+    // Video.findAll({
+    //      include:
+    //         { model: User, as: 'writer',attributes:['firstname','lastname','image'] }
+    // }).then(data => {
+    //     console.log(JSON.stringify(data, null, 2));
+    // }).catch(errorHandler)
 
 }

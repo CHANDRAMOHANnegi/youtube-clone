@@ -55,13 +55,13 @@ module.exports = (sequelize, Sequelize) => {
 
         //a video  can have multiple like
         Video.hasMany(models.Like, {
-            foreignKey: 'likeId',
+            foreignKey: 'videoId',
             onDelete: 'CASCADE'
         });
 
         //a video  can have multiple dislikes
         Video.hasMany(models.Dislike, {
-            foreignKey: 'dislikeId',
+            foreignKey: 'videoId',
             onDelete: 'CASCADE'
         });
 

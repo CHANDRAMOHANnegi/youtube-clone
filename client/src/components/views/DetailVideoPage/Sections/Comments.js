@@ -7,9 +7,13 @@ import ReplyComment from './ReplyComment';
 const { TextArea } = Input;
 
 function Comments(props) {
+
+    console.log(props);
+
+
     const user = useSelector(state => state.user)
 
-    console.log('====================>', user);
+    // console.log('====================>', user);
 
     const [Comment, setComment] = useState("")
 
@@ -43,8 +47,6 @@ function Comments(props) {
                 alert('Failed to save Comment')
             }
         });
-
-        
     }
 
     return (
@@ -53,18 +55,14 @@ function Comments(props) {
             <p> replies</p>
             <hr />
             {/* Comment Lists  */}
-            {console.log(props.CommentLists)}
+            {/* {console.log(props.CommentLists)} */}
 
             {props.CommentLists && props.CommentLists.map((comment, index) => (
-                (
-                    <React.Fragment>
-                        <SingleComment comment={comment} videoId={props.videoId} refreshFunction={props.refreshFunction} />
-                        <ReplyComment CommentLists={props.CommentLists} videoId={props.videoId} parentCommentId={comment.id} refreshFunction={props.refreshFunction} />
-                    </React.Fragment>
-                )
+                <React.Fragment key={index}>
+                    <SingleComment comment={comment} videoId={props.videoId} refreshFunction={props.refreshFunction} />
+                    <ReplyComment CommentLists={props.CommentLists} videoId={props.videoId} parentCommentId={comment.id} refreshFunction={props.refreshFunction} />
+                </React.Fragment>
             ))}
-
-
 
             {/* Root Comment Form */}
             <form style={{ display: 'flex' }} onSubmit={onSubmit}>
@@ -77,7 +75,6 @@ function Comments(props) {
                 <br />
                 <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
             </form>
-
         </div>
     )
 }

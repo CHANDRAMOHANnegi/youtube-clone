@@ -49,7 +49,7 @@ module.exports = {
     login: async ({ email, password }) => {
 
         const user = await User.findOne({ where: { email: email } });
-        // console.log(user);
+        console.log(user);
 
         if (!user) {
             let error = new Error("user does not exist");

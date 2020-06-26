@@ -2,11 +2,13 @@
 const userResolver = require('./user');
 const videoResolver = require('./videos');
 const commentResolver = require('./comment');
+const likeResolver = require('./like');
  
 const rootResolver = {
      ...userResolver,
      ...videoResolver,
-     ...commentResolver
+     ...commentResolver,
+     ...likeResolver,
 };
 
 module.exports = rootResolver;

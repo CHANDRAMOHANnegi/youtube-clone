@@ -29,7 +29,7 @@ module.exports = {
                 ]
             });
             if (videos) {
-                console.log((JSON.stringify(videos, null, 2)));
+                // console.log((JSON.stringify(videos, null, 2)));
                 return JSON.parse(JSON.stringify(videos, null, 2));
             }
         } catch (err) {
@@ -54,7 +54,7 @@ module.exports = {
                 ]
             });
 
-            console.log(video);
+            // console.log(video);
 
             if (video)
                 return video.dataValues;
