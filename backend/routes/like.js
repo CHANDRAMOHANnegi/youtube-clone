@@ -124,14 +124,11 @@ router.post("/upDisLike", (req, res) => {
     disLike.save((err, dislikeResult) => {
         if (err) return res.json({ success: false, err });
         //In case Like Button is already clicked, we need to decrease the like by 1 
-        Like.findOneAndDelete(variable)
-            .exec((err, likeResult) => {
-                if (err) return res.status(400).json({ success: false, err });
-                res.status(200).json({ success: true })
-            })
-    })
-
-
-})
+        Like.findOneAndDelete(variable).exec((err, likeResult) => {
+            if (err) return res.status(400).json({ success: false, err });
+            res.status(200).json({ success: true })
+        });
+    });
+});
 
 module.exports = router;

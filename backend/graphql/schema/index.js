@@ -27,6 +27,7 @@ module.exports = buildSchema(`
     }
 
     type RootMutation{
+        
         createUser(userInput:UserInput!):User
         
         addPhoto(image: File!): Photo
@@ -35,7 +36,10 @@ module.exports = buildSchema(`
         createComment(commentInput:CommentInput!):Comment
 
         upLike(likeInput:LikeInput):Like
-        unLike(likeInput:LikeInput):Like
+        unLike(likeInput:LikeInput):Int
+
+        upDisLike(likeInput:LikeInput):Like
+        unDisLike(likeInput:LikeInput):Int
 
     }
     

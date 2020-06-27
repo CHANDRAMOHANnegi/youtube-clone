@@ -1,8 +1,9 @@
-
+ 
 const Video = require('../../database/models').Video;
 const User = require('../../database/models').User;
 const Comment = require('../../database/models').Comment;
 const Like = require('../../database/models').Like;
+const Dislike = require('../../database/models').Dislike;
 
 module.exports = {
 
@@ -17,16 +18,13 @@ module.exports = {
                 variables = { userId, commentId }
             }
 
-            // console.log(variables);
-
-            let like = await Like.findOne({ where: variables });
-            console.log('/////////////////////', like);
-            if (!like) {
-                like = new Like(variables);
-            };
+            let like = new Like(variables);
 
             console.log('-----------------------', like);
             const result = await like.save();
+            if (result) {
+                await Dislike.destroy({ where: variables })
+            }
             console.log(JSON.stringify(result));
             return {
                 id: result.dataValues.id,
@@ -49,27 +47,69 @@ module.exports = {
             }
             let like = await Like.destroy({
                 where: variables
-            })
-                .then(res => {
-                    console.log(res);
+            });
+            if (like)
+                console.log('-----------------------', like);
+            return like
+        } catch (err) {
+            console.log('=========', err);
+            return err;
+        }
+    },
+    upDisLike: async (args) => {
+        // console.log('.........>>>>>  ', args);
+        try {
+            const { userId, videoId, commentId } = args.likeInput;
+            let variables = {};
+            if (videoId) {
+                variables = { userId, videoId };
+            } else {
+                variables = { userId, commentId }
+            }
 
-                }).catch(err => console.log(err))
+            let dislike = new Dislike(variables);
 
-            console.log('-----------------------', like);
+            let result = await dislike.save();
+
+            if (result) {
+                let like = await Like.destroy({ where: variables });
+                console.log(like);
+            }
             return {
-                id: like.dataValues.id,
+                id: result.dataValues.id,
             }
         } catch (err) {
             console.log('=========', err);
             return err;
         }
     },
+
+    unDisLike: async (args) => {
+        console.log('.>>>>>  ', args);
+        try {
+            const { userId, videoId, commentId } = args.likeInput;
+            let variables = {};
+            if (videoId) {
+                variables = { userId, videoId };
+            } else {
+                variables = { userId, commentId }
+            }
+            let dislike = await Dislike.destroy({
+                where: variables
+            });
+            // if (like)
+            console.log('-----------------------', dislike);
+            return dislike
+        } catch (err) {
+            console.log('=========', err);
+            return err;
+        }
+    },
     getLikes: async (args) => {
-        console.log("-------->", args);
+        // console.log("-------->", args);
 
         try {
             const { userId, videoId, commentId } = args.likeInput;
-
             let variables = {};
             if (videoId) {
                 variables = { userId, videoId };
@@ -78,9 +118,8 @@ module.exports = {
             }
             let likes = await Like.findAll(variables);
             if (likes) {
-                console.log('==========');
-
-                console.log(likes);
+                // console.log('==========');
+                // console.log(likes);
                 likes = likes.map(like => {
                     return {
                         id: like.dataValues.id,
@@ -88,7 +127,6 @@ module.exports = {
                     }
                 })
                 console.log(likes);
-
                 return likes//JSON.parse(JSON.stringify(likes, null, 2)).length;
             }
         } catch (err) {

@@ -5,7 +5,7 @@ type Like {
     id:ID!,
     userId:ID!
    
- }
+}
 
 
 input LikeInput {

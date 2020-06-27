@@ -10,7 +10,7 @@ function LikeDislikes(props) {
     const [DislikeAction, setDislikeAction] = useState(null)
     let variable = {};
 
-    console.log(props);
+    // console.log(props);
 
 
     if (props.video) {
@@ -22,7 +22,7 @@ function LikeDislikes(props) {
 
     useEffect(() => {
 
-        console.log(variable);
+        // console.log(variable);
 
         if (variable.videoId || variable.commentId) {
 
@@ -41,7 +41,7 @@ function LikeDislikes(props) {
                     'Content-Type': 'application/json'
                 }
             }).then(response => {
-                console.log('getLikes', response)
+                // console.log('getLikes', response)
                 if (response.data) {
                     //How many likes does this video or comment have 
                     setLikes(response.data.data.getLikes.length)
@@ -93,7 +93,7 @@ function LikeDislikes(props) {
                     'Content-Type': 'application/json'
                 }
             }).then(response => {
-                console.log(response);
+                // console.log(response);
                 if (response.data) {
                     setLikes(Likes + 1);
                     setLikeAction('liked');
@@ -109,9 +109,7 @@ function LikeDislikes(props) {
         } else {
             const requestBody = `
             mutation{
-               unLike(likeInput:{videoId:"${variable.videoId}",userId:"${variable.userId}",commentId:"${variable.commentId}"}){
-                id
-                }
+               unLike(likeInput:{videoId:"${variable.videoId}",userId:"${variable.userId}",commentId:"${variable.commentId}"})
             }`;
 
             Axios.post('http://localhost:4000/api', {
@@ -120,11 +118,10 @@ function LikeDislikes(props) {
                     'Content-Type': 'application/json'
                 }
             }).then(response => {
-                if (response) {
-
+                // console.log(response);
+                if (response.data.data) {
                     setLikes(Likes - 1)
                     setLikeAction(null)
-
                 } else {
                     alert('Failed to decrease the like')
                 }
@@ -139,42 +136,52 @@ function LikeDislikes(props) {
 
         if (DislikeAction !== null) {
 
-            Axios.post('/api/like/unDisLike', variable)
-                .then(response => {
-                    if (response.data.success) {
+            const requestBody = `
+            mutation{
+               unDisLike(likeInput:{videoId:"${variable.videoId}",userId:"${variable.userId}",commentId:"${variable.commentId}"})
+            }`;
 
-                        setDislikes(Dislikes - 1)
-                        setDislikeAction(null)
-
-                    } else {
-                        alert('Failed to decrease dislike')
-                    }
-                })
-
+            Axios.post('http://localhost:4000/api', {
+                query: requestBody,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                console.log(response);
+                if (response.data) {
+                    setDislikes(Dislikes - 1)
+                    setDislikeAction(null)
+                } else {
+                    alert('Failed to decrease dislike')
+                }
+            });
         } else {
-
-            Axios.post('/api/like/upDisLike', variable)
-                .then(response => {
-                    if (response.data.success) {
-
-                        setDislikes(Dislikes + 1)
-                        setDislikeAction('disliked')
-
-                        //If dislike button is already clicked
-                        if (LikeAction !== null) {
-                            setLikeAction(null)
-                            setLikes(Likes - 1)
-                        }
-
-                    } else {
-                        alert('Failed to increase dislike')
+            const requestBody = `
+            mutation{
+               upDisLike(likeInput:{videoId:"${variable.videoId}",userId:"${variable.userId}",commentId:"${variable.commentId}"}){
+                id
+                }
+            }`;
+            Axios.post('http://localhost:4000/api', {
+                query: requestBody,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                console.log(response);
+                if (response.data) {
+                    setDislikes(Dislikes + 1)
+                    setDislikeAction('disliked')
+                    //If dislike button is already clicked
+                    if (LikeAction !== null) {
+                        setLikeAction(null)
+                        setLikes(Likes - 1)
                     }
-                })
-
-
+                } else {
+                    alert('Failed to increase dislike')
+                }
+            })
         }
-
-
     }
 
     return (
