@@ -2,14 +2,14 @@
 const Video = require('../../database/models').Video;
 const User = require('../../database/models').User;
 const Comment = require('../../database/models').Comment;
-const Subscribe = require('../../database/models').Subscribe;
+const Subscriber = require('../../database/models').Subscriber;
 
 module.exports = {
     subscribed: async ({ userTo, userFrom }) => {
         // console.log(args);
         try {
 
-            let subscribe = await Subscriber.findOne({ where: { userTo, userFrom } });
+            let subscribe = await Subscribe.findOne({ where: { userTo, userFrom } });
 
             console.log(subscriber);
 
@@ -17,22 +17,32 @@ module.exports = {
             if (subscribe.length !== 0) {
                 result = true
             }
-
-            return { success: true, subcribed: result }
+            return { success: true }
         } catch (err) {
             console.log('=========', err);
             return err;
         }
     },
-    subscribe: async ({ userTo, userFrom }) => {
-        // console.log(args);
-        try {
-            let subscribe = new Subscriber({ userTo, userFrom });
+    subscribe: async (args) => {
 
-            console.log(subscriber);
+        console.log(args);
+        
+
+        const { userId, subscriberId } = args.subscribeInput;
+        console.log("-------------------------------------------", { userId, subscriberId });
+
+        try {
+            let subscriber = new Subscriber({  userId, subscriberId });
+
+            console.log("////------------------", subscriber);
+
+            if (subscriber) {
+                let res = await subscriber.save()
+                console.log(res);
+            }
 
             let result = false;
-            if (subscribe.length !== 0) {
+            if (subscriber.length !== 0) {
                 result = true
             }
 
@@ -42,8 +52,6 @@ module.exports = {
             return err;
         }
     },
-
-
 
     // getcomments: async () => {
     //     try {

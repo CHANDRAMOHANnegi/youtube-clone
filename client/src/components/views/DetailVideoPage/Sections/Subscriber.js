@@ -3,71 +3,111 @@ import axios from 'axios';
 function Subscriber(props) {
 
     console.log(props);
-    
 
-    const userTo = props.userTo
-    const userFrom = props.userFrom
+    const userId = props.userId
+    const subscriberId = props.subscriberId
 
     const [SubscribeNumber, setSubscribeNumber] = useState(0)
     const [Subscribed, setSubscribed] = useState(false)
 
+
     const onSubscribe = () => {
 
-        let subscribeVariables = {
-            userTo: userTo,
-            userFrom: userFrom
-        };
 
         if (Subscribed) {
             //when we are already subscribed 
-            axios.post('/api/subscribe/unSubscribe', subscribeVariables)
-                .then(response => {
-                    if (response.data.success) {
-                        setSubscribeNumber(SubscribeNumber - 1)
-                        setSubscribed(!Subscribed)
-                    } else {
-                        alert('Failed to unsubscribe')
-                    }
-                })
+            const requestBody = `
+            mutation{
+                unSubscribe(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"}){
+                success
+                }
+            }`;
+
+            axios.post('http://localhost:4000/api', {
+                query: requestBody,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                console.log(response);
+                if (response) {
+                    setSubscribeNumber(SubscribeNumber - 1);
+                    setSubscribed(!Subscribed);
+                } else {
+                    alert('Failed to unsubscribe');
+                }
+            })
         } else {
             // when we are not subscribed yet
+            const requestBody = `
+            mutation{
+               subscribe(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"}){
+                success
+                }
+            }`;
 
-            axios.post('/api/subscribe/subscribe', subscribeVariables)
-                .then(response => {
-                    if (response.data.success) {
-                        setSubscribeNumber(SubscribeNumber + 1)
-                        setSubscribed(!Subscribed)
-                    } else {
-                        alert('Failed to subscribe')
-                    }
-                })
+            axios.post('http://localhost:4000/api', {
+                query: requestBody,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                console.log(response);
+
+                if (response.data) {
+                    setSubscribeNumber(SubscribeNumber + 1)
+                    setSubscribed(!Subscribed)
+                } else {
+                    alert('Failed to subscribe')
+                }
+            })
         }
 
     }
 
 
     useEffect(() => {
+console.log("----------------------------------------------------------");
 
-        const subscribeNumberVariables = { userTo: userTo, userFrom: userFrom }
-        axios.post('/api/subscribe/subscribeNumber', subscribeNumberVariables)
-            .then(response => {
-                if (response.data.success) {
-                    setSubscribeNumber(response.data.subscribeNumber)
-                } else {
-                    alert('Failed to get subscriber Number')
-                }
-            })
+        const requestBody = `
+        mutation{
+            subscribeNumber(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
+        }`;
 
-        axios.post('/api/subscribe/subscribed', subscribeNumberVariables)
-            .then(response => {
-                if (response.data.success) {
-                    setSubscribed(response.data.subcribed)
-                } else {
-                    alert('Failed to get Subscribed Information')
-                }
-            })
+        axios.post('http://localhost:4000/api', {
+            query: requestBody,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.data) {
+                console.log(response);
+                setSubscribeNumber(response.data.data.subscribeNumber)
+            } else {
+                alert('Failed to get subscriber Number')
+            }
+        })
 
-    }, [])
+        const requestBody1 = `
+        mutation{
+            subcribed(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
+        }`;
+
+        axios.post('http://localhost:4000/api', {
+            query: requestBody1,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.data) {
+                console.log(response);
+                setSubscribed(response.data.data.subcribed)
+            } else {
+                alert('Failed to get Subscribed Information')
+            }
+        })
+
+    }, [subscriberId,userId])
 
 
     return (

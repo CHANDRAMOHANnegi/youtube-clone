@@ -9,17 +9,17 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true
       },
-      userFrom: {
+      userId: {
         type: Sequelize.UUID,
-        allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'Users',
           key: 'id'
         }
       },
-      userTo: {
+      subscriberId: {
         type: Sequelize.UUID,
-        allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'Users',
           key: 'id'
@@ -31,6 +31,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("Subscriber")
+    return queryInterface.dropTable("Subscribers")
   }
 };

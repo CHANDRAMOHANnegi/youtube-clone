@@ -44,11 +44,11 @@ module.exports = function (sequelize, Sequelize) {
             onDelete: 'CASCADE'
         });
 
-        //user  can  have  multiple subscriber
-        // User.belongsToMany(models.Subscriber, {
-        //     foreignKey: 'userId',
-        //     onDelete: 'CASCADE'
-        // });
+        // user  can  have  multiple subscriber
+        User.hasMany(models.Subscriber, {
+            foreignKey: 'subscriberId',
+            onDelete: 'CASCADE'
+        });
 
         //user  can  comment on multiple videos
         User.hasMany(models.Comment, {

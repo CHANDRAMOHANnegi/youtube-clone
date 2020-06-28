@@ -22,7 +22,7 @@ module.exports = {
             }
             // console.log('-----------------------', comment);
             const result = await comment.save();
-            console.log(JSON.stringify("=======================",result));
+            console.log(JSON.stringify("=======================", result));
             return {
                 id: result.dataValues.id,
                 content,

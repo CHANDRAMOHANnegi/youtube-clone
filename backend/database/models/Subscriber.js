@@ -16,19 +16,12 @@ module.exports = function (sequelize, Sequelize) {
     })
 
     Subscriber.associate = function (models) {
-
-        //user  can  subscribe  user
-        // Subscriber.belongsTo(models.User, {
-        //     foreignKey: 'userId',
-        //     as: 'userFrom',
-        //     onDelete: 'CASCADE'
-        // });
-
-        // Subscriber.belongsToMany(models.User, {
-        //     foreignKey: 'userId',
-        //     as: 'userTo',
-        //     onDelete: 'CASCADE'
-        // });
+        // user  can  subscribe  user
+        Subscriber.belongsTo(models.User, {
+            foreignKey: 'userId',
+            // as: 'userFrom',
+            onDelete: 'CASCADE'
+        });
     };
 
     return Subscriber;

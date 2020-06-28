@@ -18,6 +18,13 @@ module.exports = buildSchema(`
         success:Boolean
     }
 
+    input SubscribeInput{
+
+        userId:String!
+        subscriberId:String!
+
+    }
+
     type RootQuery{
 
         login(email:String!,password:String!):AuthData!
@@ -27,6 +34,9 @@ module.exports = buildSchema(`
 
         getLikes(likeInput:LikeInput):[Like]
         
+        subscribeNumber(subscribeInput:SubscribeInput):Int
+        subscribed(subscribeInput:SubscribeInput):Boolean
+
     }
 
     type RootMutation{
@@ -44,7 +54,9 @@ module.exports = buildSchema(`
         upDisLike(likeInput:LikeInput):Like
         unDisLike(likeInput:LikeInput):Int
 
-        subscribe(userTo:String!,userFrom:String!):Success
+        subscribe(subscribeInput:SubscribeInput):Success
+        subscribed(subscribeInput:SubscribeInput):Success
+
 
     }
     

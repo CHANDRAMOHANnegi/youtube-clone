@@ -49,7 +49,6 @@ module.exports = (sequelize, Sequelize) => {
         //a video  can have multiple Comments
         Video.hasMany(models.Comment, {
             foreignKey: 'videoId',
-            
             onDelete: 'CASCADE'
         });
 

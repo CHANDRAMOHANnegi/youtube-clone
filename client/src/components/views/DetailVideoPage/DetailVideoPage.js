@@ -87,7 +87,7 @@ function DetailVideoPage(props) {
                         <List.Item
                             actions={[
                                 <LikeDislikes video videoId={videoId} userId={localStorage.getItem('userId')} />,
-                                <Subscriber userTo={Video.writer._id} userFrom={localStorage.getItem('userId')} />]}>
+                                <Subscriber userId={Video.userId} subscriberId={localStorage.getItem('userId')} />]}>
                             <List.Item.Meta
                                 avatar={<Avatar src={Video.writer && Video.writer.image} />}
                                 title={<a href="https://ant.design">{Video.title}</a>}
