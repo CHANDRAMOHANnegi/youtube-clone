@@ -35,7 +35,6 @@ module.exports = buildSchema(`
         getLikes(likeInput:LikeInput):[Like]
         
         subscribeNumber(subscribeInput:SubscribeInput):Int
-        subscribed(subscribeInput:SubscribeInput):Boolean
 
     }
 
@@ -68,3 +67,4 @@ module.exports = buildSchema(`
     }
 
 `);
+        // subscribed(subscribeInput:SubscribeInput):Boolean

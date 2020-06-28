@@ -26,13 +26,13 @@ module.exports = {
     subscribe: async (args) => {
 
         console.log(args);
-        
+
 
         const { userId, subscriberId } = args.subscribeInput;
         console.log("-------------------------------------------", { userId, subscriberId });
 
         try {
-            let subscriber = new Subscriber({  userId, subscriberId });
+            let subscriber = new Subscriber({ userId, subscriberId });
 
             console.log("////------------------", subscriber);
 
@@ -53,21 +53,27 @@ module.exports = {
         }
     },
 
-    // getcomments: async () => {
-    //     try {
-    //         let videos = await Video.findAll({
-    //             include:
-    //                 { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
-    //         });
-    //         if (videos) {
-    //             // console.log(JSON.parse(JSON.stringify(videos, null, 2)));
-    //             return JSON.parse(JSON.stringify(videos, null, 2));
-    //         }
-    //     } catch (err) {
-    //         console.log(err);
-    //         return err;
-    //     }
-    // },
+    subscribeNumber: async (args) => {
+        try {
+
+            const { userId, subscriberId } = args.subscribeInput;
+
+            let subscriber = await Subscriber.findAll({
+                where: { userId, subscriberId }
+            });
+            console.log(args);
+            console.log(JSON.parse(JSON.stringify(subscriber, null, 2)));
+
+            subscriber = JSON.parse(JSON.stringify(subscriber, null, 2))
+
+            if (subscriber) {
+                return subscriber.length;
+            }
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
+    },
     // getComment: async ({ videoId }) => {
     //     try {
     //         const video = await Video.findOne({

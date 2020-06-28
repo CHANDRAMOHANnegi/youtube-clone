@@ -67,10 +67,10 @@ function Subscriber(props) {
 
 
     useEffect(() => {
-console.log("----------------------------------------------------------");
+        console.log("----------------------------------------------------------");
 
         const requestBody = `
-        mutation{
+        {
             subscribeNumber(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
         }`;
 
@@ -90,7 +90,7 @@ console.log("----------------------------------------------------------");
 
         const requestBody1 = `
         mutation{
-            subcribed(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
+            subscribed(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
         }`;
 
         axios.post('http://localhost:4000/api', {
@@ -107,7 +107,7 @@ console.log("----------------------------------------------------------");
             }
         })
 
-    }, [subscriberId,userId])
+    }, [subscriberId, userId])
 
 
     return (
