@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 function Subscriber(props) {
 
-    // console.log(props);
-
     const userId = props.userId
     const subscriberId = props.subscriberId
 
     const [SubscribeNumber, setSubscribeNumber] = useState(0)
     const [Subscribed, setSubscribed] = useState(false)
-
 
     const onSubscribe = () => {
 

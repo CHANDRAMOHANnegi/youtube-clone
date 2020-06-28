@@ -2,6 +2,7 @@
 const Video = require('../../database/models').Video;
 const User = require('../../database/models').User;
 const Comment = require('../../database/models').Comment;
+const Subscriber = require('../../database/models').Subscriber;
 
 module.exports = {
     getVideos: async () => {
@@ -54,8 +55,6 @@ module.exports = {
                 ]
             });
 
-            // console.log(video);
-
             if (video)
                 return video.dataValues;
 
@@ -63,6 +62,47 @@ module.exports = {
             console.log(error);
             return error;
         }
+    },
+    getSubscriptionVideos: async ({ subscriberId }) => {
+
+        //Need to find all of the Users that I am subscribing to From Subscriber Collection 
+        try {
+            console.log('------------', subscriberId);
+
+            let subscribers = await Subscriber.findAll({ where: { subscriberId } });
+
+            console.log("---->>>>>>>>>>>>>>>>>>>>>>>");
+
+
+            subscribers = JSON.parse(JSON.stringify(subscribers, null, 2));
+
+            console.log(subscribers);
+
+            let subscribedUser = [];
+            subscribers.map((subscriber) => {
+                subscribedUser.push(subscriber.userId);
+            });
+
+            console.log("--------------------", subscribedUser);
+
+
+            //Need to Fetch all of the Videos that belong to the Users that I found in previous step. 
+
+            const videos = await Video.findAll({
+                where: { userId: subscribedUser },
+                include: [{ model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] },]
+            });
+// console.log(videos);
+
+            if (videos) {
+                console.log((JSON.stringify(videos, null, 2)));
+                return JSON.parse(JSON.stringify(videos, null, 2));
+            }
+
+        } catch (error) {
+            console.log("-------------------->", err);
+        }
+
     }
 };
 

@@ -14,7 +14,6 @@ module.exports = buildSchema(`
 
     ${LikeSchema}
  
-
     input SubscribeInput{
 
         userId:String!
@@ -28,10 +27,12 @@ module.exports = buildSchema(`
 
         getVideos:[Video]
         getVideo(videoId:String!):Video
+        getSubscriptionVideos(subscriberId:String!):[Video]
 
         getLikes(likeInput:LikeInput):[Like]
         
         subscribeNumber(subscribeInput:SubscribeInput):Int
+
 
     }
 
@@ -53,7 +54,6 @@ module.exports = buildSchema(`
         subscribe(subscribeInput:SubscribeInput):Boolean
         unSubscribe(subscribeInput:SubscribeInput):Boolean
         subscribed(subscribeInput:SubscribeInput):Boolean
-
 
     }
     
