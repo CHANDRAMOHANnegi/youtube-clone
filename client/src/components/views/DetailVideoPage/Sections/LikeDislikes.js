@@ -12,13 +12,11 @@ function LikeDislikes(props) {
 
     // console.log(props);
 
-
     if (props.video) {
         variable = { videoId: props.videoId, userId: props.userId }
     } else {
         variable = { commentId: props.commentId, userId: props.userId }
     }
-
 
     useEffect(() => {
 
@@ -32,7 +30,7 @@ function LikeDislikes(props) {
                 videoId:"${variable.videoId}",
                 commentId:"${variable.commentId}"
             }){
-                   userId
+userId
         }}`;
 
             Axios.post('http://localhost:4000/api', {

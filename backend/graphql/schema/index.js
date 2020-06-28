@@ -6,8 +6,6 @@ const LikeSchema = require('./LikeSchema');
 
 module.exports = buildSchema(`
         
-
-
     ${userSchema}
 
     ${videoSchema}
@@ -16,13 +14,18 @@ module.exports = buildSchema(`
 
     ${LikeSchema}
 
+    type Success{
+        success:Boolean
+    }
 
     type RootQuery{
 
         login(email:String!,password:String!):AuthData!
+
         getVideos:[Video]
-        getLikes(likeInput:LikeInput):[Like]
         getVideo(videoId:String!):Video
+
+        getLikes(likeInput:LikeInput):[Like]
         
     }
 
@@ -41,11 +44,15 @@ module.exports = buildSchema(`
         upDisLike(likeInput:LikeInput):Like
         unDisLike(likeInput:LikeInput):Int
 
+        subscribe(userTo:String!,userFrom:String!):Success
+
     }
     
     schema{
+
         query:RootQuery
         mutation:RootMutation
+
     }
 
 `);

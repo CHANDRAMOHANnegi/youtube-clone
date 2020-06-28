@@ -40,8 +40,8 @@ const Register = (props) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('12345678');
-  const [firstname, setFirstname] = useState('true');
-  const [lastname, setLastname] = useState('xxx');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(false);
   // const [isButtonDisabled, setIsButtonDisabled] = useState(true);

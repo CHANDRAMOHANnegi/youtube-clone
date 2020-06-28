@@ -9,18 +9,13 @@ const { TextArea } = Input;
 function Comments(props) {
 
     console.log(props);
-
-
     const user = useSelector(state => state.user)
-
     // console.log('====================>', user);
 
     const [Comment, setComment] = useState("")
-
     const handleChange = (e) => {
         setComment(e.currentTarget.value)
     }
-
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -42,7 +37,8 @@ function Comments(props) {
             console.log(response);
             if (response) {
                 setComment("")
-                props.refreshFunction(response.data.data.createComment)
+                if (response.data.data.createComment)
+                    props.refreshFunction(response.data.data.createComment)
             } else {
                 alert('Failed to save Comment')
             }
@@ -70,7 +66,7 @@ function Comments(props) {
                     style={{ width: '100%', borderRadius: '5px' }}
                     onChange={handleChange}
                     value={Comment}
-                    placeholder="write some comments"
+                    placeholder="write some comments..."
                 />
                 <br />
                 <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>

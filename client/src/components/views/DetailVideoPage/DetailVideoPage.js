@@ -5,6 +5,7 @@ import SideVideo from './Sections/SideVideo';
 import Subscriber from './Sections/Subscriber';
 import Comments from './Sections/Comments'
 import LikeDislikes from './Sections/LikeDislikes';
+import { useSelector } from "react-redux";
 
 function DetailVideoPage(props) {
 
@@ -12,6 +13,7 @@ function DetailVideoPage(props) {
     const [Video, setVideo] = useState([])
     const [CommentLists, setCommentLists] = useState([])
 
+    const user = useSelector(state => state.user);
 
     useEffect(() => {
 
@@ -62,6 +64,14 @@ function DetailVideoPage(props) {
     }, [])
 
     const updateComment = (newComment) => {
+        console.log(newComment);
+
+        const { firstname, lastname, image } = user.userData;
+        console.log({ firstname, lastname, image });
+
+        newComment['writer'] = { firstname, lastname, image };
+        console.log(newComment);
+
         setCommentLists(CommentLists.concat(newComment))
     };
 

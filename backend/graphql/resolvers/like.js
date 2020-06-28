@@ -116,7 +116,7 @@ module.exports = {
             } else {
                 variables = { userId, commentId }
             }
-            let likes = await Like.findAll(variables);
+            let likes = await Like.findAll({where:variables});
             if (likes) {
                 // console.log('==========');
                 // console.log(likes);
@@ -126,7 +126,7 @@ module.exports = {
                         userId: like.dataValues.userId
                     }
                 })
-                console.log(likes);
+                // console.log(likes);
                 return likes//JSON.parse(JSON.stringify(likes, null, 2)).length;
             }
         } catch (err) {

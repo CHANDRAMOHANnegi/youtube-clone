@@ -9,13 +9,12 @@ function ReplyComment(props) {
 
         let commentNumber = 0;
         props.CommentLists.map((comment) => {
-
             if (comment.responseTo === props.parentCommentId) {
                 commentNumber++
             }
         })
-        setChildCommentNumber(commentNumber)
-    }, [props.CommentLists, props.parentCommentId])
+        setChildCommentNumber(commentNumber);
+    }, [props.CommentLists, props.parentCommentId]);
 
 
     let renderReplyComment = (parentCommentId) =>

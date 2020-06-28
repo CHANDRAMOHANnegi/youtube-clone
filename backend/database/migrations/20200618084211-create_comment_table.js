@@ -28,7 +28,6 @@ module.exports = {
       content: {
         type: Sequelize.TEXT,
       },
-
       createdAt: Sequelize.DATE(),
       updatedAt: Sequelize.DATE()
     })

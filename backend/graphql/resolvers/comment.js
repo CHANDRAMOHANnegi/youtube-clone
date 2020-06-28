@@ -9,7 +9,7 @@ module.exports = {
         // console.log(args);
         try {
             const { userId, videoId, content } = args.commentInput;
-            const comment = await Comment.findOne({
+            let comment = await Comment.findOne({
                 where: { userId, videoId }
             });
             // console.log('/////////////////////', comment);
@@ -22,7 +22,7 @@ module.exports = {
             }
             // console.log('-----------------------', comment);
             const result = await comment.save();
-            // console.log(JSON.stringify(result));
+            console.log(JSON.stringify("=======================",result));
             return {
                 id: result.dataValues.id,
                 content,

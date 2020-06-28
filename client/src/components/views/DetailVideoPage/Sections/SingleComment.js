@@ -11,7 +11,7 @@ function SingleComment(props) {
     const [CommentValue, setCommentValue] = useState("")
     const [OpenReply, setOpenReply] = useState(false)
 
-    // console.log('--------------->', props);
+    console.log('--------------->', props);
 
     const handleChange = (e) => {
         setCommentValue(e.currentTarget.value)
@@ -31,7 +31,7 @@ function SingleComment(props) {
             content: CommentValue
         };
 
-        Axios.post('/api/comment/saveComment', variables)
+        Axios.post('/api/comment/saveReply', variables)
             .then(response => {
                 if (response.data.success) {
                     setCommentValue("")
@@ -60,12 +60,9 @@ function SingleComment(props) {
                     />
                 }
                 content={
-                    <p>
-                        {props.comment.content}
-                    </p>
+                    <p>{props.comment.content}</p>
                 }
             ></Comment>
-
 
             {OpenReply &&
                 <form style={{ display: 'flex' }} onSubmit={onSubmit}>
@@ -73,7 +70,7 @@ function SingleComment(props) {
                         style={{ width: '100%', borderRadius: '5px' }}
                         onChange={handleChange}
                         value={CommentValue}
-                        placeholder="write some comments"
+                        placeholder="write reply"
                     />
                     <br />
                     <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
