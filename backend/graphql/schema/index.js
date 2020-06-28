@@ -13,10 +13,7 @@ module.exports = buildSchema(`
     ${CommentSchema}
 
     ${LikeSchema}
-
-    type Success{
-        success:Boolean
-    }
+ 
 
     input SubscribeInput{
 
@@ -53,8 +50,9 @@ module.exports = buildSchema(`
         upDisLike(likeInput:LikeInput):Like
         unDisLike(likeInput:LikeInput):Int
 
-        subscribe(subscribeInput:SubscribeInput):Success
-        subscribed(subscribeInput:SubscribeInput):Success
+        subscribe(subscribeInput:SubscribeInput):Boolean
+        unSubscribe(subscribeInput:SubscribeInput):Boolean
+        subscribed(subscribeInput:SubscribeInput):Boolean
 
 
     }
@@ -66,5 +64,4 @@ module.exports = buildSchema(`
 
     }
 
-`);
-        // subscribed(subscribeInput:SubscribeInput):Boolean
+`); 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 function Subscriber(props) {
 
-    console.log(props);
+    // console.log(props);
 
     const userId = props.userId
     const subscriberId = props.subscriberId
@@ -13,14 +13,11 @@ function Subscriber(props) {
 
     const onSubscribe = () => {
 
-
         if (Subscribed) {
             //when we are already subscribed 
             const requestBody = `
             mutation{
-                unSubscribe(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"}){
-                success
-                }
+                unSubscribe(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
             }`;
 
             axios.post('http://localhost:4000/api', {
@@ -30,7 +27,7 @@ function Subscriber(props) {
                 }
             }).then(response => {
                 console.log(response);
-                if (response) {
+                if (response.data.data.unSubscribe) {
                     setSubscribeNumber(SubscribeNumber - 1);
                     setSubscribed(!Subscribed);
                 } else {
@@ -41,9 +38,7 @@ function Subscriber(props) {
             // when we are not subscribed yet
             const requestBody = `
             mutation{
-               subscribe(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"}){
-                success
-                }
+               subscribe(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
             }`;
 
             axios.post('http://localhost:4000/api', {
@@ -53,24 +48,21 @@ function Subscriber(props) {
                 }
             }).then(response => {
                 console.log(response);
-
-                if (response.data) {
-                    setSubscribeNumber(SubscribeNumber + 1)
-                    setSubscribed(!Subscribed)
+                if (response.data.data.subcribe) {
+                    setSubscribeNumber(SubscribeNumber + 1);
+                    setSubscribed(!Subscribed);
                 } else {
-                    alert('Failed to subscribe')
+                    alert('Failed to subscribe');
                 }
-            })
+            });
         }
-
     }
 
 
     useEffect(() => {
-        console.log("----------------------------------------------------------");
+        console.log("--------------------");
 
-        const requestBody = `
-        {
+        const requestBody = `{
             subscribeNumber(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
         }`;
 
@@ -86,7 +78,8 @@ function Subscriber(props) {
             } else {
                 alert('Failed to get subscriber Number')
             }
-        })
+        });
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
         const requestBody1 = `
         mutation{
@@ -101,7 +94,7 @@ function Subscriber(props) {
         }).then(response => {
             if (response.data) {
                 console.log(response);
-                setSubscribed(response.data.data.subcribed)
+                setSubscribed(response.data.data.subscribed)
             } else {
                 alert('Failed to get Subscribed Information')
             }

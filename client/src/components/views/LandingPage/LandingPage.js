@@ -27,8 +27,7 @@ function LandingPage() {
                 firstname
                 lastname
                 image
-               
-            }
+                }
             }
         }`;
 
