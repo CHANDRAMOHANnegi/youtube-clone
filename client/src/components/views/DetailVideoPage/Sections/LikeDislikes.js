@@ -30,7 +30,7 @@ function LikeDislikes(props) {
                 videoId:"${variable.videoId}",
                 commentId:"${variable.commentId}"
             }){
-userId
+                userId
         }}`;
 
             Axios.post('http://localhost:4000/api', {
@@ -91,8 +91,8 @@ userId
                     'Content-Type': 'application/json'
                 }
             }).then(response => {
-                // console.log(response);
-                if (response.data) {
+                console.log(response);
+                if (response.data.data) {
                     setLikes(Likes + 1);
                     setLikeAction('liked');
                     //If dislike button is already clicked
@@ -124,9 +124,7 @@ userId
                     alert('Failed to decrease the like')
                 }
             })
-
         }
-
     }
 
 

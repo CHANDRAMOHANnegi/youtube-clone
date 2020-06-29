@@ -57,7 +57,7 @@ function Subscriber(props) {
 
 
     useEffect(() => {
-        console.log("--------------------");
+        // console.log("--------------------");
 
         const requestBody = `{
             subscribeNumber(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
@@ -70,13 +70,13 @@ function Subscriber(props) {
             }
         }).then(response => {
             if (response.data) {
-                console.log(response);
+                // console.log(response);
                 setSubscribeNumber(response.data.data.subscribeNumber)
             } else {
                 alert('Failed to get subscriber Number')
             }
         });
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
         const requestBody1 = `
         mutation{
@@ -90,7 +90,7 @@ function Subscriber(props) {
             }
         }).then(response => {
             if (response.data) {
-                console.log(response);
+                // console.log(response);
                 setSubscribed(response.data.data.subscribed)
             } else {
                 alert('Failed to get Subscribed Information')

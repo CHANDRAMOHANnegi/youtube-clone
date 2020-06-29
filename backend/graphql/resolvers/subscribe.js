@@ -9,7 +9,7 @@ module.exports = {
 
         try {
             const { userId, subscriberId } = args.subscribeInput;
-            console.log("-----<<<<<<<<<<<<<<<<<<<<----------", { userId, subscriberId });
+            // console.log("-----<<<<<<<<<<<<<<<<<<<<----------", { userId, subscriberId });
 
             let subscriber = await Subscriber.findAll({
                 where:
@@ -20,7 +20,7 @@ module.exports = {
             });
 
             subscriber = JSON.parse(JSON.stringify(subscriber, null, 2));
-            console.log(subscriber);
+            // console.log(subscriber);
 
             if (subscriber) return subscriber.length > 0;
         } catch (err) {
@@ -30,7 +30,7 @@ module.exports = {
     },
     subscribe: async (args) => {
 
-        console.log(args);
+        // console.log(args);
         const { userId, subscriberId } = args.subscribeInput;
 
         try {
@@ -41,7 +41,7 @@ module.exports = {
                 userId, subscriberId
             });
 
-            console.log("///----====----", subscriber);
+            // console.log("///----====----", subscriber);
 
             if (subscriber) {
                 subscriber = await subscriber.save()
@@ -55,7 +55,7 @@ module.exports = {
     },
     unSubscribe: async (args) => {
 
-        console.log(args);
+        // console.log(args);
         const { userId, subscriberId } = args.subscribeInput;
 
         try {
@@ -83,7 +83,7 @@ module.exports = {
             let subscriber = await Subscriber.findAll({
                 where: { userId, subscriberId }
             });
-            console.log(args);
+            // console.log(args);
             console.log(JSON.parse(JSON.stringify(subscriber, null, 2)));
 
             subscriber = JSON.parse(JSON.stringify(subscriber, null, 2))

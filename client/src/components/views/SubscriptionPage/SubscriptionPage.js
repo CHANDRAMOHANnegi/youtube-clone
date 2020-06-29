@@ -8,7 +8,7 @@ const { Meta } = Card;
 
 function SubscriptionPage() {
 
-    const [Videos, setVideos] = useState([])
+    const [Videos, setVideos] = useState([]);
 
     // let variable = { userFrom : localStorage.getItem('userId')  }
 
@@ -59,7 +59,7 @@ function SubscriptionPage() {
 
         return <Col lg={6} md={8} xs={24}>
             <div style={{ position: 'relative' }}>
-                <a href={`/video/${video._id}`} >
+                <a href={`/video/${video.id}`} >
                     <img style={{ width: '100%' }} alt="thumbnail" src={`http://localhost:4000/${video.thumbnail}`} />
                     <div className=" duration"
                         style={{
@@ -72,10 +72,7 @@ function SubscriptionPage() {
                     </div>
                 </a>
             </div><br />
-            <Meta
-                avatar={
-                    <Avatar src={video.writer.image} />
-                }
+            <Meta avatar={<Avatar src={video.writer.image} />}
                 title={video.title}
             />
             <span>{video.writer.name} </span><br />

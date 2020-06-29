@@ -33,7 +33,7 @@ function SideVideo() {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            console.log(response);
+            // console.log(response);
             if (response.data) {
                 // console.log(response.data)
                 setSideVideos(response.data.data.getVideos)

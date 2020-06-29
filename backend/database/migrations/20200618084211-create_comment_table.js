@@ -25,6 +25,14 @@ module.exports = {
           key: 'id'
         }
       },
+      parentcommentid: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'Comments',
+          key: 'id'
+        }
+      },
       content: {
         type: Sequelize.TEXT,
       },
@@ -34,6 +42,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("Comment")
+    return queryInterface.dropTable("Comments")
   }
 };

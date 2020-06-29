@@ -3,8 +3,11 @@ import SingleComment from './SingleComment';
 
 function ReplyComment(props) {
 
-    const [ChildCommentNumber, setChildCommentNumber] = useState(0)
-    const [OpenReplyComments, setOpenReplyComments] = useState(false)
+    console.log('ReplyCommentProps----->', props);
+
+    const [ChildCommentNumber, setChildCommentNumber] = useState(0);
+    const [OpenReplyComments, setOpenReplyComments] = useState(false);
+
     useEffect(() => {
 
         let commentNumber = 0;
@@ -12,7 +15,9 @@ function ReplyComment(props) {
             if (comment.responseTo === props.parentCommentId) {
                 commentNumber++
             }
-        })
+        });
+
+        
         setChildCommentNumber(commentNumber);
     }, [props.CommentLists, props.parentCommentId]);
 

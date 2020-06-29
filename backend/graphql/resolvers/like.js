@@ -1,4 +1,4 @@
- 
+
 const Video = require('../../database/models').Video;
 const User = require('../../database/models').User;
 const Comment = require('../../database/models').Comment;
@@ -12,11 +12,14 @@ module.exports = {
         try {
             const { userId, videoId, commentId } = args.likeInput;
             let variables = {};
-            if (videoId) {
+
+            if (videoId != 'undefined') {
                 variables = { userId, videoId };
             } else {
                 variables = { userId, commentId }
             }
+
+            console.log(variables);
 
             let like = new Like(variables);
 
@@ -39,8 +42,13 @@ module.exports = {
         console.log('.........>>>>>  ', args);
         try {
             const { userId, videoId, commentId } = args.likeInput;
+
+            console.log("--------------------------------", videoId);
+
+            console.log(variables);
+
             let variables = {};
-            if (videoId) {
+            if (videoId != 'undefined') {
                 variables = { userId, videoId };
             } else {
                 variables = { userId, commentId }
@@ -61,7 +69,7 @@ module.exports = {
         try {
             const { userId, videoId, commentId } = args.likeInput;
             let variables = {};
-            if (videoId) {
+            if (videoId != 'undefined') {
                 variables = { userId, videoId };
             } else {
                 variables = { userId, commentId }
@@ -89,7 +97,7 @@ module.exports = {
         try {
             const { userId, videoId, commentId } = args.likeInput;
             let variables = {};
-            if (videoId) {
+            if (videoId != 'undefined') {
                 variables = { userId, videoId };
             } else {
                 variables = { userId, commentId }
@@ -111,12 +119,13 @@ module.exports = {
         try {
             const { userId, videoId, commentId } = args.likeInput;
             let variables = {};
-            if (videoId) {
+
+            if (videoId != 'undefined') {
                 variables = { userId, videoId };
             } else {
-                variables = { userId, commentId }
+                variables = { userId, commentId };
             }
-            let likes = await Like.findAll({where:variables});
+            let likes = await Like.findAll({ where: variables });
             if (likes) {
                 // console.log('==========');
                 // console.log(likes);

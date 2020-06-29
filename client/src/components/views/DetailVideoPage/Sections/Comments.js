@@ -8,7 +8,7 @@ const { TextArea } = Input;
 
 function Comments(props) {
 
-    console.log(props);
+    // console.log(props);
     const user = useSelector(state => state.user)
     // console.log('====================>', user);
 
@@ -55,8 +55,15 @@ function Comments(props) {
 
             {props.CommentLists && props.CommentLists.map((comment, index) => (
                 <React.Fragment key={index}>
-                    <SingleComment comment={comment} videoId={props.videoId} refreshFunction={props.refreshFunction} />
-                    <ReplyComment CommentLists={props.CommentLists} videoId={props.videoId} parentCommentId={comment.id} refreshFunction={props.refreshFunction} />
+                    <SingleComment comment={comment}
+                        videoId={props.videoId}
+                        refreshFunction={props.refreshFunction}
+                    />
+
+                    <ReplyComment CommentLists={props.CommentLists}
+                        videoId={props.videoId} parentCommentId={comment.id}
+                        refreshFunction={props.refreshFunction}
+                    />
                 </React.Fragment>
             ))}
 
