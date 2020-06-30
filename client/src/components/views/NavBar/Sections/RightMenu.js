@@ -14,6 +14,7 @@ function RightMenu(props) {
     // axios.get(`${USER_SERVER}/logout`).then(response => {
     //   if (response.status === 200) {
     localStorage.removeItem('userId')    
+    localStorage.clear()   ; 
     props.history.push("/login");
       // } else {
       //   alert('Log Out Failed');
@@ -36,7 +37,7 @@ function RightMenu(props) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="create">
-          <a href="/video/upload"><img src={Upload} alt="Upload" /></a>
+          <a href="/video/upload"> {user.userData.firstname} <img src={Upload} alt="Upload" /></a>
         </Menu.Item>
         <Menu.Item key="logout">
           <a onClick={logoutHandler}>Logout</a>

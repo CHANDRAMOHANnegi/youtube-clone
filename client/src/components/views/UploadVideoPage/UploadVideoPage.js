@@ -31,7 +31,6 @@ function UploadVideoPage(props) {
     const [Duration, setDuration] = useState("")
     const [Thumbnail, setThumbnail] = useState("")
 
-
     const handleChangeTitle = (event) => {
         setTitle(event.currentTarget.value)
     }

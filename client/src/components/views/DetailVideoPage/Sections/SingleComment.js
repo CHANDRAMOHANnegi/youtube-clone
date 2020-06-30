@@ -24,23 +24,42 @@ function SingleComment(props) {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        const variables = {
-            writer: user.userData.userId,
-            postId: props.postId,
-            responseTo: props.comment.id,
-            content: CommentValue
-        };
+        // const variables = {
+        //     writer: user.userData.userId,
+        //     videoId: props.videoId,
+        //     parentcommentId: props.comment.id,
+        //     content: CommentValue
+        // };
 
-        Axios.post('/api/comment/saveReply', variables)
-            .then(response => {
-                if (response.data.success) {
-                    setCommentValue("")
-                    setOpenReply(!OpenReply)
-                    props.refreshFunction(response.data.result)
-                } else {
-                    alert('Failed to save Comment')
-                }
-            });
+
+        const requestBody = `
+        mutation{
+           createComment(commentInput:{
+           content:"${CommentValue}",
+           userId:"${user.userData.userId}",
+           videoId:"${props.videoId}",
+           commentId:"${props.comment.id}"}){
+            id,
+            content,
+            createdAt
+            }
+        }`;
+
+        Axios.post('http://localhost:4000/api', {
+            query: requestBody,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            console.log(response);
+            if (response.data) {
+                setCommentValue("")
+                setOpenReply(!OpenReply)
+                props.refreshFunction(response.data.result)
+            } else {
+                alert('Failed to save Comment')
+            }
+        });
     }
 
     const actions = [
@@ -53,15 +72,8 @@ function SingleComment(props) {
             <Comment
                 actions={actions}
                 author={props.comment.writer.firstname + " " + props.comment.writer.lastname}
-                avatar={
-                    <Avatar
-                        src={props.comment.writer.image}
-                        alt="image"
-                    />
-                }
-                content={
-                    <p>{props.comment.content}</p>
-                }
+                avatar={<Avatar src={props.comment.writer.image} alt="image" />}
+                content={<p>{props.comment.content}</p>}
             ></Comment>
 
             {OpenReply &&
@@ -76,7 +88,6 @@ function SingleComment(props) {
                     <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
                 </form>
             }
-
         </div>
     )
 }

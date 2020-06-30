@@ -8,19 +8,32 @@ module.exports = {
     createComment: async (args) => {
         // console.log(args);
         try {
-            const { userId, videoId, content } = args.commentInput;
+            const { userId, videoId, content, commentId } = args.commentInput;
+
+            let variables = {}
+
+            if (commentId && commentId != 'undefined') {
+                variables = { userId, videoId, commentId }
+            } else {
+                variables = { userId, videoId }
+            }
+
+            console.log(variables);
+
             let comment = await Comment.findOne({
-                where: { userId, videoId }
+                where: variables
             });
-            // console.log('/////////////////////', comment);
+            console.log('/////////////////////', comment);
             if (comment) {
                 comment.content = content;
             } else {
-                comment = new Comment({
-                    userId, videoId, content
-                });
+                variables = { ...variables, content }
+
+                console.log(variables);
+
+                comment = new Comment(variables);
             }
-            // console.log('-----------------------', comment);
+            console.log('-----------------------', comment);
             const result = await comment.save();
             console.log(JSON.stringify("=======================", result));
             return {
@@ -40,7 +53,7 @@ module.exports = {
                     { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
             });
             if (videos) {
-                // console.log(JSON.parse(JSON.stringify(videos, null, 2)));
+                console.log(JSON.parse(JSON.stringify(videos, null, 2)));
                 return JSON.parse(JSON.stringify(videos, null, 2));
             }
         } catch (err) {
@@ -54,6 +67,9 @@ module.exports = {
                 where: { id: videoId },
                 include: { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
             });
+
+            console.log("-------------------->>>", video);
+
             if (video)
                 return video.dataValues;
 

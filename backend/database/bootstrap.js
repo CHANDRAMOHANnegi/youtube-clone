@@ -4,6 +4,7 @@
 const User = require('./models').User;
 const Video = require('./models').Video;
 const Like = require('./models').Like;
+const Comment = require('./models').Comment;
 
 
 module.exports = async () => {
@@ -15,8 +16,10 @@ module.exports = async () => {
 
     // User.bulkCreate([
     //     { email: "cm@cm.com", password: "12345678", firstname: "cm", lastname: "cc" },
-    //     { email: "c@cm.com", password: "12345678", firstname: "m", lastname: "cc" },
-    //     { email: "cm@c.com", password: "12345678", firstname: "c", lastname: "cc" }
+    //     { email: "mohan@cm.com", password: "12345678", firstname: "mohan", lastname: "rawat" },
+    //     { email: "rajan@cm.com", password: "12345678", firstname: "rajan", lastname: "jha" },
+    //     { email: "magie@cm.com", password: "12345678", firstname: "magie", lastname: "cc" },
+    //     { email: "naveen@cm.com", password: "12345678", firstname: "naveen", lastname: "negi" }
     // ]).then(user => {
     //     console.log("=============", user);
     // }).catch((err) => {
@@ -41,8 +44,6 @@ module.exports = async () => {
     //     console.log(JSON.stringify(data, null, 2));
     // }).catch(errorHandler)
 
-   
-    
     // Video.findAll({
     //      include:
     //         { model: User, as: 'writer',attributes:['firstname','lastname','image'] }
@@ -50,4 +51,16 @@ module.exports = async () => {
     //     console.log(JSON.stringify(data, null, 2));
     // }).catch(errorHandler)
 
+    // let variables = {
+    //     userId: '58eb3034-ac9d-4005-baa4-bb31154b31cd',
+    //     videoId: '91e54dfe-0e17-446e-bdbb-a133d7185ef5',
+    //     commentId: '269e83e9-7556-412d-96c4-25793af33a95',
+    //     content: 'rajan reply to cm'
+    // }
+    // let comment = new Comment(variables);
+    // await comment.save();
+    // console.log("-------------------------------------", comment);
+
+
 }
+

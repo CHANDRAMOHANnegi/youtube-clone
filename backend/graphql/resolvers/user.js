@@ -49,7 +49,7 @@ module.exports = {
     login: async ({ email, password }) => {
 
         const user = await User.findOne({ where: { email: email } });
-        console.log(user);
+        // console.log(JSON.stringify(user));
 
         if (!user) {
             let error = new Error("user does not exist");
@@ -57,17 +57,25 @@ module.exports = {
             throw error;
         }
 
-        const isequal = await bcrypt.compare(password, user.password);
-        if (!isequal) {
-            let error = new Error('Password is incorrect')
-            error.code = 401;
-            throw error;
-        }
+        // const isequal = await bcrypt.compare(password, user.password);
 
+        // console.log();
+        
+
+        // if (!isequal) {
+        //     let error = new Error('Password is incorrect')
+        //     error.code = 401;
+        //     throw error;
+        // }
+
+        // console.log("-------------------------------------------------");
+        
         const token = jwt.sign({
             userId: user.id,
             email: email
-        }, 'secretKey', { expiresIn: '1h' });
+        }, 'secretKey', { expiresIn: '8h' });
+
+        console.log("token", token);
 
         return {
             userId: user.dataValues.id,

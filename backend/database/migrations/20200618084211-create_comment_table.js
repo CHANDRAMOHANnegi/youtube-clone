@@ -25,10 +25,9 @@ module.exports = {
           key: 'id'
         }
       },
-      parentcommentid: {
+      commentId: {
         type: Sequelize.UUID,
-        allowNull: false,
-        references: {
+         references: {
           model: 'Comments',
           key: 'id'
         }

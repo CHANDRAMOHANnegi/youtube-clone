@@ -44,16 +44,13 @@ module.exports = {
                 where: { id: videoId },
                 include: [{ model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] },
                 {
-                    model: Comment, include: {
-                        model: User, as: 'writer', attributes: [
-                            'firstname',
-                            'lastname',
-                            'image'
-                        ]
-                    }
-                }
-                ]
+                    model: Comment,where:{commentId:null}, 
+                    include: [
+                        { model: User,as: 'writer', attributes: ['firstname', 'lastname', 'image'] },
+                        { model: Comment, as: 'replies' }]
+                }]
             });
+            console.log("--<<<<<<<<<<<<--->>>>>>>>>", (JSON.stringify(video, null, 2)));
 
             if (video)
                 return video.dataValues;
@@ -92,7 +89,7 @@ module.exports = {
                 where: { userId: subscribedUser },
                 include: [{ model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] },]
             });
-// console.log(videos);
+            // console.log(videos);
 
             if (videos) {
                 // console.log((JSON.stringify(videos, null, 2)));

@@ -60,6 +60,9 @@ export const loginUser = (dataToSubmit) => async (dispatch) => {
             }
         });
 
+        console.log(response);
+        
+
         if (response) {
             dispatch({
                 type: USER_LOGIN_SUCCESS,

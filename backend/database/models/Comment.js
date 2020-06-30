@@ -45,7 +45,7 @@ module.exports = (sequelize, Sequelize) => {
         //user  can  comment on  video 
         Comment.hasMany(models.Comment, {
             as: 'replies',
-            foreignKey: 'parentcommentid',
+            foreignKey: 'commentId',
             onDelete: 'CASCADE'
         });
 

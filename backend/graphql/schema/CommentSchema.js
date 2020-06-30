@@ -6,6 +6,7 @@ type Comment {
     content:String!,
     createdAt:String!
     writer:Writer
+    
  }
 
 input CommentInput {
@@ -13,6 +14,7 @@ input CommentInput {
     userId:String!,
     videoId:String!,
     content:String!
+commentId:String
 
    }
 
