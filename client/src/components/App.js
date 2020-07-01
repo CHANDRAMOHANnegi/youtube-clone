@@ -15,6 +15,9 @@ import ThemeContextProvider from '../_context/themeContext';
 import AuthContextProvider from '../_context/authContext.js';
 
 function App() {
+
+  console.log("-------------app------------");
+  
   return (
     <Suspense fallback={(<div>Loading...</div>)}>
       <ThemeContextProvider>

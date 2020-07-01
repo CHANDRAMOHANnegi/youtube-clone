@@ -5,38 +5,38 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
 
-import Reducer from './_reducers';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import promiseMiddleware from 'redux-promise';
-import ReduxThunk from 'redux-thunk';
-import {persistStore ,persistReducer } from "redux-persist";
-import localStorage from 'redux-persist/lib/storage';
-import { PersistGate } from 'redux-persist/integration/react';
+// import Reducer from './_reducers';
+// import { Provider } from 'react-redux';
+// import { createStore, applyMiddleware } from 'redux';
+// import promiseMiddleware from 'redux-promise';
+// import ReduxThunk from 'redux-thunk';
+// import {persistStore ,persistReducer } from "redux-persist";
+// import localStorage from 'redux-persist/lib/storage';
+// import { PersistGate } from 'redux-persist/integration/react';
 
-const persistConfig = {
-    key: 'root',
-    storage: localStorage,
-    // whitelist: ['auth']
-};
-const persistedReducer = persistReducer(persistConfig, Reducer);
-const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, 
-    ReduxThunk)(createStore);
+// const persistConfig = {
+//     key: 'root',
+//     storage: localStorage,
+//     // whitelist: ['auth']
+// };
+// const persistedReducer = persistReducer(persistConfig, Reducer);
+// const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, 
+//     ReduxThunk)(createStore);
 
-const store = createStoreWithMiddleware(
-    persistedReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-    window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+// const store = createStoreWithMiddleware(
+//     persistedReducer,
+//     window.__REDUX_DEVTOOLS_EXTENSION__ &&
+//     window.__REDUX_DEVTOOLS_EXTENSION__()
+// );
 
 ReactDOM.render(
-    <Provider store={store}>
-         <PersistGate loading={null} persistor={persistStore(store)}>
+    // <Provider store={store}>
+    //      <PersistGate loading={null} persistor={persistStore(store)}>
         <BrowserRouter>
             <App />
         </BrowserRouter>
-        </PersistGate>
-    </Provider>
+    //     </PersistGate>
+    // </Provider>
     , document.getElementById('root'));
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

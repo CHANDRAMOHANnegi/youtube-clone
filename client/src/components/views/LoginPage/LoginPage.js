@@ -5,13 +5,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-
 import CardHeader from '@material-ui/core/CardHeader';
-
-import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { loginUser } from "../../../_actions/user_actions";
-
 import Axios from 'axios';
 import { AuthContext } from '../../../_context/authContext';
 
@@ -43,8 +38,7 @@ const useStyles = makeStyles((theme) =>
 const Login = (props) => {
 
   const context = useContext(AuthContext);
-
-  console.log(context);
+ 
 
   const classes = useStyles();
   const [email, setEmail] = useState('cm@cm.com');
@@ -53,10 +47,9 @@ const Login = (props) => {
   const [helperText, setHelperText] = useState('');
   const [error, setError] = useState(false);
 
-
   useEffect(() => {
-    console.log(props);
-    const { isAuthenticated, userData } = props;
+    console.log(context);
+    const { isAuthenticated, userData } = context.authData;
     if (isAuthenticated) {
       window.localStorage.setItem('userId', userData.userId);
       // if (rememberMe === true) {
@@ -72,7 +65,7 @@ const Login = (props) => {
     } else {
       setIsButtonDisabled(true);
     }
-  }, [email, password, props]);
+  }, [context,props]);
 
   const handleLogin = () => {
 
@@ -94,6 +87,7 @@ const Login = (props) => {
         }
       }).then(res => {
         console.log(res.data.data.login);
+        localStorage.setItem('userData', JSON.stringify(res.data.data.login))
         context.setUser(res.data.data.login);
       }).catch(err => {
         console.log(err);
@@ -161,17 +155,17 @@ const Login = (props) => {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    isAuthenticated: state.user.isAuthenticated,
-    userData: state.user.userData
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     isAuthenticated: state.user.isAuthenticated,
+//     userData: state.user.userData
+//   };
+// };
 
-const mapDispatchToProps = {
-  loginUser
-}
+// const mapDispatchToProps = {
+//   loginUser
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
+export default withRouter(Login);
 
 

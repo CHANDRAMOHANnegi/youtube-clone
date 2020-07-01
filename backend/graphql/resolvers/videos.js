@@ -39,6 +39,9 @@ module.exports = {
         }
     },
     getVideo: async ({ videoId }) => {
+
+        // console.log('------------>>>>', videoId);
+
         try {
             const video = await Video.findOne({
                 where: { id: videoId },
@@ -50,7 +53,10 @@ module.exports = {
                         { model: Comment, as: 'replies' }]
                 }]
             });
-            console.log("--<<<<<<<<<<<<--->>>>>>>>>", (JSON.stringify(video, null, 2)));
+
+            // console.log(video);
+
+            // console.log("--<<<<<<<<<<<<--->>>>>>>>>", (JSON.stringify(video, null, 2)));
 
             if (video)
                 return video.dataValues;

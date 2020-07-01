@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Button, Input } from 'antd';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import SingleComment from './SingleComment';
 import ReplyComment from './ReplyComment';
+import { AuthContext } from '../../../../_context/authContext';
 const { TextArea } = Input;
 
 function Comments(props) {
 
-    // console.log(props);
-    const user = useSelector(state => state.user)
-    // console.log('====================>', user);
+    const context = useContext(AuthContext);
+    // console.log(context);
+
+    const {userData}=context.authData;
 
     const [Comment, setComment] = useState("")
     const handleChange = (e) => {
@@ -21,7 +22,10 @@ function Comments(props) {
 
         const requestBody = `
         mutation{
-           createComment(commentInput:{content:"${Comment}",userId:"${user.userData.userId}",videoId:"${props.videoId}"}){
+           createComment(commentInput:{
+            content:"${Comment}",
+            userId:"${userData.userId}",
+            videoId:"${props.videoId}"}){
             id,
             content,
             createdAt
@@ -51,7 +55,6 @@ function Comments(props) {
             <p> replies</p>
             <hr />
             {/* Comment Lists  */}
-            {/* {console.log(props.CommentLists)} */}
 
             {props.CommentLists && props.CommentLists.map((comment, index) => (
                 <React.Fragment key={index}>

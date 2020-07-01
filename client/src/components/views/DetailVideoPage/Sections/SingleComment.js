@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Comment, Avatar, Button, Input } from 'antd';
 import Axios from 'axios';
-import { useSelector } from 'react-redux';
-import LikeDislikes from './LikeDislikes';
+ import LikeDislikes from './LikeDislikes';
+import { AuthContext } from '../../../../_context/authContext';
 const { TextArea } = Input;
 
 
 function SingleComment(props) {
-    const user = useSelector(state => state.user);
+    
+    // const user = useSelector(state => state.user);
+    const context = useContext(AuthContext);
+    const {userData}=context.authData;
+
+
     const [CommentValue, setCommentValue] = useState("")
     const [OpenReply, setOpenReply] = useState(false)
 
@@ -31,12 +36,11 @@ function SingleComment(props) {
         //     content: CommentValue
         // };
 
-
         const requestBody = `
         mutation{
            createComment(commentInput:{
            content:"${CommentValue}",
-           userId:"${user.userData.userId}",
+           userId:"${userData.userId}",
            videoId:"${props.videoId}",
            commentId:"${props.comment.id}"}){
             id,

@@ -1,19 +1,19 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState } from 'react';
 
 export const AuthContext = createContext();
 
 const AuthContextProvider = (props) => {
 
   const [authData, setAuthData] = useState({
-    isAuthenticated: false,
-    userData: ''
-  })
+    isAuthenticated: !!localStorage.getItem('userData'),
+    userData: JSON.parse(localStorage.getItem('userData'))
+  });
 
   const setUser = (userData) => {
     console.log(userData);
     let isAuthenticated = !!userData.userId;
-    setAuthData({ isAuthenticated, userData })
-  }
+    setAuthData({ isAuthenticated, userData });
+  };
 
   return (
     <AuthContext.Provider
@@ -21,7 +21,6 @@ const AuthContextProvider = (props) => {
       {props.children}
     </AuthContext.Provider>
   );
-
 }
 
 

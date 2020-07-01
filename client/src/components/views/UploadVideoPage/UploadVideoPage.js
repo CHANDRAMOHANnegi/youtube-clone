@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { Typography, Button, Form, message, Input, Icon } from 'antd';
+import React, { useState, useContext } from 'react'
+import { Typography, Button, Form, Input, Icon } from 'antd';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
-import { useSelector } from "react-redux";
+ import { AuthContext } from '../../../_context/authContext';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -18,48 +18,51 @@ const Catogory = [
     { value: 0, label: "Music" },
     { value: 0, label: "Pets & Animals" },
     { value: 0, label: "Sports" },
-]
+];
 
 function UploadVideoPage(props) {
-    const user = useSelector(state => state.user);
+    const context = useContext(AuthContext);
+    console.log(context);
+
+    const { userData, isAuthenticated } = context.authData;
 
     const [title, setTitle] = useState("");
     const [Description, setDescription] = useState("");
-    const [privacy, setPrivacy] = useState(0)
-    const [Categories, setCategories] = useState("Film & Animation")
-    const [FilePath, setFilePath] = useState("")
-    const [Duration, setDuration] = useState("")
-    const [Thumbnail, setThumbnail] = useState("")
+    const [privacy, setPrivacy] = useState(0);
+    const [Categories, setCategories] = useState("Film & Animation");
+    const [FilePath, setFilePath] = useState("");
+    const [Duration, setDuration] = useState("");
+    const [Thumbnail, setThumbnail] = useState("");
 
     const handleChangeTitle = (event) => {
-        setTitle(event.currentTarget.value)
+        setTitle(event.currentTarget.value);
     }
 
     const handleChangeDecsription = (event) => {
-        console.log(event.currentTarget.value)
-        setDescription(event.currentTarget.value)
+        console.log(event.currentTarget.value);
+        setDescription(event.currentTarget.value);
     }
 
     const handleChangeOne = (event) => {
-        setPrivacy(event.currentTarget.value)
+        setPrivacy(event.currentTarget.value);
     }
 
     const handleChangeTwo = (event) => {
-        setCategories(event.currentTarget.value)
+        setCategories(event.currentTarget.value);
     }
 
     const onSubmit = (event) => {
         event.preventDefault();
-        if (user.userData && !user.isAuthenticated) {
-            return alert('Please Log in First')
+        if (!isAuthenticated) {
+            return alert('Please Log in First');
         }
 
         if (title === "" || Description === "" || Categories === "" || FilePath === "" || Duration === "" || Thumbnail === "") {
-            return alert('Please first fill all the fields')
+            return alert('Please first fill all the fields');
         }
 
         const variables = {
-            userId: user.userData.userId,
+            userId: userData.userId,
             title: title,
             description: Description,
             privacy: privacy,
@@ -74,12 +77,12 @@ function UploadVideoPage(props) {
             .then(response => {
                 console.log(response);
                 if (response.data.success) {
-                    alert('video Uploaded Successfully')
-                    props.history.push('/')
+                    alert('video Uploaded Successfully');
+                    props.history.push('/');
                 } else {
-                    alert('Failed to upload video')
+                    alert('Failed to upload video');
                 }
-            }).catch(err=>console.log(err));
+            }).catch(err => console.log(err));
     }
 
     const onDrop = (files) => {
@@ -115,7 +118,7 @@ function UploadVideoPage(props) {
             })
     }
 
-    
+
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>

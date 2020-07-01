@@ -1,21 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { List, Avatar, Row, Col } from 'antd';
 import axios from 'axios';
 import SideVideo from './Sections/SideVideo';
 import Subscriber from './Sections/Subscriber';
 import Comments from './Sections/Comments'
 import LikeDislikes from './Sections/LikeDislikes';
-import { useSelector } from "react-redux";
+import { AuthContext } from '../../../_context/authContext';
 
 function DetailVideoPage(props) {
+    console.log("-------------DetailVideoPage------------");
 
     const videoId = props.match.params.videoId
     const [Video, setVideo] = useState([])
     const [CommentLists, setCommentLists] = useState([])
 
-    const user = useSelector(state => state.user);
+    const context = useContext(AuthContext);
+
+    console.log(videoId, context);
 
     useEffect(() => {
+        console.log("-------------DetailVideoPage  useEffect------------", videoId);
+        if (!videoId) return;
 
         const requestBody = `{
             getVideo(videoId:"${videoId}"){
@@ -53,29 +58,34 @@ function DetailVideoPage(props) {
                 'Content-Type': 'application/json'
             }
         }).then(res => {
-            // console.log(res.data.data.getVideo);
-            setVideo(res.data.data.getVideo);
-            setCommentLists(res.data.data.getVideo.Comments)
+            console.log(res);
+            if (res.data.data.getVideo) {
+                setVideo(res.data.data.getVideo);
+                setCommentLists(res.data.data.getVideo.Comments)
+            } else {
+                setVideo(null);
+                setCommentLists(null);
+            }
         }).catch(err => {
             console.log(err)
             alert('Failed to get video Info')
         });
 
-    }, [])
+    }, [videoId])
 
     const updateComment = (newComment) => {
-        console.log(newComment);
+        // console.log(newComment);
 
-        const { firstname, lastname, image } = user.userData;
-        console.log({ firstname, lastname, image });
+        const { firstname, lastname, image } = context.authData;
+        // console.log({ firstname, lastname, image });
 
         newComment['writer'] = { firstname, lastname, image };
-        console.log(newComment);
+        // console.log(newComment);
 
         setCommentLists(CommentLists.concat(newComment))
     };
 
-    if (Video.writer) {
+    if (Video && Video.writer) {
         return (
             <Row>
                 <Col lg={18} xs={24}>
@@ -104,7 +114,9 @@ function DetailVideoPage(props) {
                 </Col>
             </Row>
         )
-    } else {
+    }
+    else if (!Video) { return <div>Video not found</div> }
+    else {
         return (
             <div>Loading...</div>
         )

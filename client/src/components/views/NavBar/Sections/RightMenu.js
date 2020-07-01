@@ -1,22 +1,24 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+ import React, { useContext } from 'react';
 import { Menu } from 'antd';
-import axios from 'axios';
-import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
-import { useSelector } from "react-redux";
+ import { AuthContext } from '../../../../_context/authContext';
 const Upload = require('../../../../images/upload.png');
 
 function RightMenu(props) {
-  const user = useSelector(state => state.user)
+
+  const context = useContext(AuthContext);
+
+  const { isAuthenticated, userData } = context.authData;
+  console.log(context);
 
   const logoutHandler = () => {
-     localStorage.clear();
-     console.log(localStorage,props);
-     props.history.push("/login");
+    localStorage.clear();
+    context.setUser("");
+    console.log(localStorage, props);
+    props.history.push("/login");
   };
 
-  if (user.userData && !user.isAuthenticated) {
+  if (!isAuthenticated) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
@@ -31,7 +33,7 @@ function RightMenu(props) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="create">
-          <a href="/video/upload"> {user.userData.firstname} <img src={Upload} alt="Upload" /></a>
+          <a href="/video/upload"> {userData.firstname} <img src={Upload} alt="Upload" /></a>
         </Menu.Item>
         <Menu.Item key="logout">
           <a onClick={logoutHandler}>Logout</a>

@@ -10,6 +10,8 @@ function Subscriber(props) {
 
     const onSubscribe = () => {
 
+        console.log(props);
+
         if (Subscribed) {
             //when we are already subscribed 
             const requestBody = `
