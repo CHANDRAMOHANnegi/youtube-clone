@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 import { withRouter } from "react-router-dom";
-import Axios from 'axios';
+import axios from 'axios';
 import { AuthContext } from '../../../_context/authContext';
 
 
@@ -34,11 +34,9 @@ const useStyles = makeStyles((theme) =>
   }),
 );
 
-
 const Login = (props) => {
 
   const context = useContext(AuthContext);
- 
 
   const classes = useStyles();
   const [email, setEmail] = useState('cm@cm.com');
@@ -65,7 +63,7 @@ const Login = (props) => {
     } else {
       setIsButtonDisabled(true);
     }
-  }, [context,props]);
+  }, [context, props]);
 
   const handleLogin = () => {
 
@@ -80,12 +78,9 @@ const Login = (props) => {
             image,email
     }}`;
 
-      Axios.post('http://localhost:4000/api', {
-        query: requestBody,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(res => {
+    axios.post('http://localhost:4000/api', {
+      query: requestBody,
+  }).then(res => {
         console.log(res.data.data.login);
         localStorage.setItem('userData', JSON.stringify(res.data.data.login))
         context.setUser(res.data.data.login);

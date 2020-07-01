@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+import axios from '../../../../axios';
 function SideVideo() {
 
     const [SideVideos, setSideVideos] = useState([])
@@ -27,11 +27,8 @@ function SideVideo() {
             }
         }`;
 
-        axios.post('http://localhost:4000/api', {
+        axios.post('/', {
             query: requestBody,
-            headers: {
-                'Content-Type': 'application/json'
-            }
         }).then(response => {
             // console.log(response);
             if (response.data) {

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import axios from 'axios';
+import axios from '../../../axios';
 import { Button, makeStyles, CardActions, createStyles, CardContent, CardHeader, Card, TextField,Input } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 
@@ -44,12 +44,9 @@ const Register = (props) => {
         email
         }
     }`;
-    axios.post('http://localhost:4000/api', {
+    axios.post('/', {
       query: requestBody,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => {
+  }).then(response => {
       console.log('===========', response);
       if (response)
         props.history.push("/");

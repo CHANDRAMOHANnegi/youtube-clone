@@ -21,9 +21,10 @@ module.exports = buildSchema(`
 
     }
 
-    type RootQuery{
+    type RootQuery {
 
         login(email:String!,password:String!):AuthData!
+        logOut:Boolean
 
         getVideos:[Video]
         getVideo(videoId:String!):Video
@@ -32,7 +33,6 @@ module.exports = buildSchema(`
         getLikes(likeInput:LikeInput):[Like]
         
         subscribeNumber(subscribeInput:SubscribeInput):Int
-
 
     }
 
@@ -58,10 +58,8 @@ module.exports = buildSchema(`
     }
     
     schema{
-
         query:RootQuery
         mutation:RootMutation
-
     }
 
 `); 

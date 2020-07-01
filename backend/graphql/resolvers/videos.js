@@ -5,7 +5,10 @@ const Comment = require('../../database/models').Comment;
 const Subscriber = require('../../database/models').Subscriber;
 
 module.exports = {
-    getVideos: async () => {
+    getVideos: async (args,req) => {
+
+        // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',req.user);
+
         try {
             let videos = await Video.findAll({
                 include: [
@@ -47,7 +50,7 @@ module.exports = {
                 where: { id: videoId },
                 include: [{ model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] },
                 {
-                    model: Comment, where: { commentId: null },
+                    model: Comment,// where: { commentId: null },
                     include: [
                         { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] },
                         { model: Comment, as: 'replies' }]

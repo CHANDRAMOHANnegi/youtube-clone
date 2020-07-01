@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Tooltip, Icon } from 'antd';
-import Axios from 'axios';
+import axios from '../../../../axios';
 
 function LikeDislikes(props) {
 
@@ -33,12 +33,9 @@ function LikeDislikes(props) {
                 userId
         }}`;
 
-            Axios.post('http://localhost:4000/api', {
-                query: requestBody,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(response => {
+        axios.post('/', {
+            query: requestBody,
+        }).then(response => {
                 // console.log('getLikes', response)
                 if (response.data) {
                     //How many likes does this video or comment have 
@@ -85,11 +82,8 @@ function LikeDislikes(props) {
                 }
             }`;
 
-            Axios.post('http://localhost:4000/api', {
+            axios.post('/', {
                 query: requestBody,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             }).then(response => {
                 console.log(response);
                 if (response.data.data) {
@@ -110,11 +104,8 @@ function LikeDislikes(props) {
                unLike(likeInput:{videoId:"${variable.videoId}",userId:"${variable.userId}",commentId:"${variable.commentId}"})
             }`;
 
-            Axios.post('http://localhost:4000/api', {
+            axios.post('/', {
                 query: requestBody,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             }).then(response => {
                 // console.log(response);
                 if (response.data.data) {
@@ -137,11 +128,8 @@ function LikeDislikes(props) {
                unDisLike(likeInput:{videoId:"${variable.videoId}",userId:"${variable.userId}",commentId:"${variable.commentId}"})
             }`;
 
-            Axios.post('http://localhost:4000/api', {
+            axios.post('/', {
                 query: requestBody,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             }).then(response => {
                 console.log(response);
                 if (response.data) {
@@ -158,11 +146,8 @@ function LikeDislikes(props) {
                 id
                 }
             }`;
-            Axios.post('http://localhost:4000/api', {
+            axios.post('/', {
                 query: requestBody,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             }).then(response => {
                 console.log(response);
                 if (response.data) {

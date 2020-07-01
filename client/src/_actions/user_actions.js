@@ -20,11 +20,8 @@ export const loginUser = (dataToSubmit) => async (dispatch) => {
                     image,email
             }}`;
 
-        let response = await axios.post('http://localhost:4000/api', {
+        let response = await  axios.post('/', {
             query: requestBody,
-            headers: {
-                'Content-Type': 'application/json'
-            }
         });
         console.log(response);
         if (response) {

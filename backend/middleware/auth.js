@@ -1,44 +1,47 @@
 const jwt = require('jsonwebtoken');
+const User = require('../database/models').User;
+
+
 
 module.exports = (req, res, next) => {
+  // console.log("=======>", req);
+  const { authorization } = req.headers;
 
-  console.log("=======>",req.body.variables);
-
-  if (Object.keys(req.body).length === 0 || req.body.variables==null) {
+  if (!authorization) {
     return next();
   }
+  console.log("=======>", authorization);
 
-  const authHeader = req.body.variables['Authorization'];
+  const token = authorization.split(' ')[1];
 
-  if (!authHeader) {
-    req.isAuth = false;
-    return next();
-  }
+  if (!token)
+    return res.status(401).send({
+      success: false,
+      payload: {
+        message: "Token Not Provided. Hence, Unauthorized"
+      }
+    });
 
-  const token = authHeader.split(' ')[1];
-  if (!token || token === '') {
-    req.isAuth = false;
-    return next();
-  }
-
+  // User.findOne({ where: { token } }).then((res) => {
+  //   let user = JSON.parse(JSON.stringify(res));
   let decodedToken;
   try {
     decodedToken = jwt.verify(token, 'secretKey');
+    if (!decodedToken) {
+      req.isAuth = false;
+      return next();
+    };
+    req.isAuth = true;
+    req.user = decodedToken;
+    next();
   } catch (err) {
-    console.log(err);
     req.isAuth = false;
     return next();
   }
+  // }).catch((err) => {
+  //   console.log(err);
+  //   next()
+  // });
 
-  if (!decodedToken) {
-    req.isAuth = false;
-    return next();
-  }
-
-  req.isAuth = true;
-  req.user = decodedToken;
-  console.log(decodedToken);
-
-  next()
 }
 

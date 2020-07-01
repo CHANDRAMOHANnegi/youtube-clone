@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Comment, Avatar, Button, Input } from 'antd';
-import Axios from 'axios';
+import axios from '../../../../axios';
  import LikeDislikes from './LikeDislikes';
 import { AuthContext } from '../../../../_context/authContext';
 const { TextArea } = Input;
@@ -28,14 +28,7 @@ function SingleComment(props) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
-        // const variables = {
-        //     writer: user.userData.userId,
-        //     videoId: props.videoId,
-        //     parentcommentId: props.comment.id,
-        //     content: CommentValue
-        // };
-
+ 
         const requestBody = `
         mutation{
            createComment(commentInput:{
@@ -49,11 +42,8 @@ function SingleComment(props) {
             }
         }`;
 
-        Axios.post('http://localhost:4000/api', {
+        axios.post('/', {
             query: requestBody,
-            headers: {
-                'Content-Type': 'application/json'
-            }
         }).then(response => {
             console.log(response);
             if (response.data) {

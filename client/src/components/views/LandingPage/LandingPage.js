@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Card, Avatar, Col, Typography, Row } from 'antd';
-import axios from 'axios';
+import axios from '../../../axios';
 import moment from 'moment';
 import { ThemeContext } from '../../../_context/themeContext';
 const { Title } = Typography;
@@ -37,11 +37,8 @@ function LandingPage() {
             }
         }`;
 
-        axios.post('http://localhost:4000/api', {
+        axios.post('/', {
             query: requestBody,
-            headers: {
-                'Content-Type': 'application/json'
-            }
         }).then(response => {
             console.log(response);
             if (response.data.data.getVideos) {

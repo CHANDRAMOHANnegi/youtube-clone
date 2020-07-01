@@ -70,7 +70,9 @@ module.exports = {
             email: email
         }, 'secretKey', { expiresIn: '8h' });
 
-        console.log("token", token);
+        user.token = token;
+        await user.save();
+        console.log("token----------->", token);
 
         return {
             userId: user.dataValues.id,
@@ -83,10 +85,19 @@ module.exports = {
             tokenExp: 12
         }
     },
+    logOut: async (args, req) => {
+
+        console.log('============================',req.user);
+        
+
+        let res = await User.update({ token: '' }, { where: { id: req.user.id } });
+        console.log(res);
+        return !!res;
+
+    },
     addPhoto: async (args, req) => {
 
         console.log(args);
-
         let { filename, mimetype } = args.image;
         console.log({ filename, mimetype });
         const { email } = req.user;

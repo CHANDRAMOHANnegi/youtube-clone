@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+import axios from '../../../../axios';
 function Subscriber(props) {
 
     const userId = props.userId
@@ -19,11 +19,8 @@ function Subscriber(props) {
                 unSubscribe(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
             }`;
 
-            axios.post('http://localhost:4000/api', {
+            axios.post('/', {
                 query: requestBody,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             }).then(response => {
                 console.log(response);
                 if (response.data.data.unSubscribe) {
@@ -40,11 +37,8 @@ function Subscriber(props) {
                subscribe(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
             }`;
 
-            axios.post('http://localhost:4000/api', {
+            axios.post('/', {
                 query: requestBody,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             }).then(response => {
                 console.log(response);
                 if (response.data.data.subcribe) {
@@ -65,11 +59,8 @@ function Subscriber(props) {
             subscribeNumber(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
         }`;
 
-        axios.post('http://localhost:4000/api', {
+        axios.post('/', {
             query: requestBody,
-            headers: {
-                'Content-Type': 'application/json'
-            }
         }).then(response => {
             if (response.data) {
                 // console.log(response);
@@ -85,11 +76,8 @@ function Subscriber(props) {
             subscribed(subscribeInput:{userId:"${userId}",subscriberId:"${subscriberId}"})
         }`;
 
-        axios.post('http://localhost:4000/api', {
+        axios.post('/', {
             query: requestBody1,
-            headers: {
-                'Content-Type': 'application/json'
-            }
         }).then(response => {
             if (response.data) {
                 // console.log(response);

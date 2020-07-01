@@ -9,29 +9,36 @@ module.exports = function (sequelize, Sequelize) {
             defaultValue: Sequelize.UUIDV4
         },
         firstname: {
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING,
             maxlength: 50,
             allowNull: false,
         },
         lastname: {
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING,
         },
         email: {
-            type: Sequelize.STRING(32),
+            type: Sequelize.STRING,
             unique: true,
             allowNull: false,
             validate: {
                 len: [5, 30]
-              }
+            }
         },
         password: {
-            type: Sequelize.STRING(200),
+            type: Sequelize.STRING,
         },
         role: {
-            type: Sequelize.INTEGER(11),
+            type: Sequelize.INTEGER,
             default: 0
         },
-        image: Sequelize.STRING(200),
+        image: Sequelize.STRING,
+        token: {
+            type: Sequelize.STRING,
+            unique: true,
+        },
+        tokenExp: {
+            type: Sequelize.INTEGER,
+        }
     }, {
         timestamps: true,
     });

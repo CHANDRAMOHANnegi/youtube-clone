@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FaCode } from "react-icons/fa";
 import { Card, Avatar, Col, Typography, Row } from 'antd';
-import axios from 'axios';
+import axios from '../../../axios';
 import moment from 'moment';
 const { Title } = Typography;
 const { Meta } = Card;
@@ -35,12 +35,8 @@ function SubscriptionPage() {
                    }
             }
         }`;
-
-        axios.post('http://localhost:4000/api', {
+        axios.post('/', {
             query: requestBody,
-            headers: {
-                'Content-Type': 'application/json'
-            }
         }).then(response => {
             console.log(response);
             if (response.data) {

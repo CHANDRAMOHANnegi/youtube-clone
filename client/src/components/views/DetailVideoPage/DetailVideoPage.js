@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { List, Avatar, Row, Col } from 'antd';
-import axios from 'axios';
+import axios from '../../../axios';
 import SideVideo from './Sections/SideVideo';
 import Subscriber from './Sections/Subscriber';
 import Comments from './Sections/Comments'
@@ -52,11 +52,8 @@ function DetailVideoPage(props) {
                         }
         }}`;
 
-        axios.post('http://localhost:4000/api', {
+        axios.post('/', {
             query: requestBody,
-            headers: {
-                'Content-Type': 'application/json'
-            }
         }).then(res => {
             console.log(res);
             if (res.data.data.getVideo) {
