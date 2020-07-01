@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Card, Avatar, Col, Typography, Row } from 'antd';
 import axios from 'axios';
 import moment from 'moment';
+import { ThemeContext } from '../../../_context/themeContext';
 const { Title } = Typography;
 const { Meta } = Card;
+
 function LandingPage() {
 
     const [Videos, setVideos] = useState([])
+
+    const context = useContext(ThemeContext);
+    const { isLightTheme, light, dark } = context;
+    const theme = isLightTheme ? light : dark;
 
     useEffect(() => {
         const requestBody = `{
@@ -51,7 +57,6 @@ function LandingPage() {
 
     console.log(Videos);
 
-
     const renderCards = Videos.map((video, index) => {
 
         var minutes = Math.floor(video.duration / 60);
@@ -82,7 +87,11 @@ function LandingPage() {
     });
 
     return (
-        <div style={{ width: '85%', margin: '3rem auto' }}>
+        <div style={{
+            width: '85%', margin: '3rem auto',
+            backgroundColor: theme.ui,
+            color: theme.syntax
+        }}>
             <Title level={2} > Recommended </Title>
             <hr />
             <Row gutter={16}>{renderCards}</Row>

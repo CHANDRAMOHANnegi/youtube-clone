@@ -57,19 +57,14 @@ module.exports = {
             throw error;
         }
 
-        // const isequal = await bcrypt.compare(password, user.password);
+        const isequal = await bcrypt.compare(password, user.password);
 
-        // console.log();
-        
+        if (!isequal) {
+            let error = new Error('Password is incorrect')
+            error.code = 401;
+            throw error;
+        }
 
-        // if (!isequal) {
-        //     let error = new Error('Password is incorrect')
-        //     error.code = 401;
-        //     throw error;
-        // }
-
-        // console.log("-------------------------------------------------");
-        
         const token = jwt.sign({
             userId: user.id,
             email: email
@@ -89,7 +84,9 @@ module.exports = {
         }
     },
     addPhoto: async (args, req) => {
+
         console.log(args);
+
         let { filename, mimetype } = args.image;
         console.log({ filename, mimetype });
         const { email } = req.user;

@@ -2,44 +2,11 @@ import axios from 'axios';
 import {
     USER_LOGIN_SUCCESS,
     USER_LOGIN_FAILURE,
-    USER_REGISTER_SUCCESS,
     AUTH_USER,
     LOGOUT_USER,
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
-export const registerUser = (dataToSubmit) => async (dispatch) => {
-
-    try {
-        const { email, password, firstname, lastname } = dataToSubmit;
-        const requestBody = `
-        mutation{
-           createUser(userInput:{email:"${email}",password:"${password}",firstname:"${firstname}",lastname:"${lastname}"}){
-            email
-            }
-        }`;        
-
-        axios.post('http://localhost:4000/api', {
-            query: requestBody,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            console.log('===========',response);
-            if (response)
-                dispatch({
-                    type: USER_REGISTER_SUCCESS,
-                    payload: response.data.data.createUser
-                    
-                });
-        }).catch(err => {
-            console.log(err);
-        });
-
-    } catch (error) {
-        throw error;
-    }
-}
 
 export const loginUser = (dataToSubmit) => async (dispatch) => {
     try {
@@ -59,10 +26,7 @@ export const loginUser = (dataToSubmit) => async (dispatch) => {
                 'Content-Type': 'application/json'
             }
         });
-
         console.log(response);
-        
-
         if (response) {
             dispatch({
                 type: USER_LOGIN_SUCCESS,

@@ -44,9 +44,9 @@ module.exports = {
                 where: { id: videoId },
                 include: [{ model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] },
                 {
-                    model: Comment,where:{commentId:null}, 
+                    model: Comment, where: { commentId: null },
                     include: [
-                        { model: User,as: 'writer', attributes: ['firstname', 'lastname', 'image'] },
+                        { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] },
                         { model: Comment, as: 'replies' }]
                 }]
             });

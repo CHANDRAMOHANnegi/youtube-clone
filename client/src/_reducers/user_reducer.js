@@ -9,7 +9,7 @@ import {
 } from '../_actions/types';
 
 const initialState = {
-    registerStatus: "",
+
     error: "",
     userData: {},
     isAuthenticated: false
@@ -23,7 +23,6 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 error: '',
-                registerStatus: 'success'
             }
         case USER_LOGIN_REQUEST:
             return {
@@ -35,7 +34,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 userData: action.payload,
-                error: "", isAuthenticated: true
+                error: "",
+                isAuthenticated: true
             }
         case USER_LOGIN_FAILURE:
             return {

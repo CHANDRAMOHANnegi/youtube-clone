@@ -10,21 +10,29 @@ import Footer from "./views/Footer/Footer"
 import UploadVideoPage from "./views/UploadVideoPage/UploadVideoPage"
 import DetailVideoPage from "./views/DetailVideoPage/DetailVideoPage"
 import SubscriptionPage from "./views/SubscriptionPage/SubscriptionPage"
+
+import ThemeContextProvider from '../_context/themeContext';
+import AuthContextProvider from '../_context/authContext.js';
+
 function App() {
   return (
     <Suspense fallback={(<div>Loading...</div>)}>
-      <NavBar />
-      <div style={{ paddingTop: '75px', minHeight: 'calc(100vh - 80px)' }}>
-        <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/video/upload" component={UploadVideoPage} />
-          <Route exact path="/video/:videoId" component={DetailVideoPage} />
-          <Route exact path="/subscription" component={SubscriptionPage} />
-        </Switch>
-      </div>
-      <Footer />
+      <ThemeContextProvider>
+        <AuthContextProvider>
+        <NavBar />
+        <div style={{ paddingTop: '75px', minHeight: 'calc(100vh - 80px)' }}>
+          <Switch>
+            <Route exact path="/" component={LandingPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/video/upload" component={UploadVideoPage} />
+            <Route exact path="/video/:videoId" component={DetailVideoPage} />
+            <Route exact path="/subscription" component={SubscriptionPage} />
+          </Switch>
+        </div>
+        <Footer />
+        </AuthContextProvider>
+      </ThemeContextProvider>
     </Suspense>
   );
 }

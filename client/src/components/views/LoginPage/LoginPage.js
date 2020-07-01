@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -11,6 +11,9 @@ import CardHeader from '@material-ui/core/CardHeader';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { loginUser } from "../../../_actions/user_actions";
+
+import Axios from 'axios';
+import { AuthContext } from '../../../_context/authContext';
 
 
 const useStyles = makeStyles((theme) =>
@@ -39,6 +42,9 @@ const useStyles = makeStyles((theme) =>
 
 const Login = (props) => {
 
+  const context = useContext(AuthContext);
+
+  console.log(context);
 
   const classes = useStyles();
   const [email, setEmail] = useState('cm@cm.com');
@@ -69,8 +75,29 @@ const Login = (props) => {
   }, [email, password, props]);
 
   const handleLogin = () => {
+
+    console.log(email, password);
+
     if (email && password) {
-      props.loginUser({ email, password });
+      const requestBody = `{
+        login(email:"${email}",password:"${password}"){
+            userId,token,
+            tokenExp,firstname,
+            lastname,role,
+            image,email
+    }}`;
+
+      Axios.post('http://localhost:4000/api', {
+        query: requestBody,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        console.log(res.data.data.login);
+        context.setUser(res.data.data.login);
+      }).catch(err => {
+        console.log(err);
+      });
       setError(false);
       setHelperText('Login Successfully');
     } else {
