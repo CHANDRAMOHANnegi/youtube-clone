@@ -4,7 +4,8 @@ import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
-
+import ThemeContextProvider from './_context/themeContext';
+import AuthContextProvider from './_context/authContext.js';
 // import Reducer from './_reducers';
 // import { Provider } from 'react-redux';
 // import { createStore, applyMiddleware } from 'redux';
@@ -32,9 +33,13 @@ import { BrowserRouter } from "react-router-dom";
 ReactDOM.render(
     // <Provider store={store}>
     //      <PersistGate loading={null} persistor={persistStore(store)}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+    <BrowserRouter>
+        <ThemeContextProvider>
+            <AuthContextProvider>
+                <App />
+            </AuthContextProvider>
+        </ThemeContextProvider>
+    </BrowserRouter>
     //     </PersistGate>
     // </Provider>
     , document.getElementById('root'));

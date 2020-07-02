@@ -6,8 +6,6 @@ import './Sections/Navbar.css';
 import { ThemeContext } from '../../../_context/themeContext';
 const Logo = require('../../../images/HappyTubeLogo.png');
 
-
-
 function NavBar() {
   const [visible, setVisible] = useState(false)
 
@@ -29,7 +27,7 @@ function NavBar() {
       style={{
         position: 'fixed',
         zIndex: 1, width: '100%',
-        backgroundColor: theme.ui, color: theme.syntax
+        backgroundColor: theme.backgroundColor
       }}>
       <div className="menu__logo">
         <a href="/"><img src={Logo}
@@ -41,7 +39,7 @@ function NavBar() {
         <div className="menu_left">
           <LeftMenu mode="horizontal" />
         </div>
-        <div className="menu_rigth">
+        <div className="menu_rigth" >
           <RightMenu mode="horizontal" />
         </div>
         <Button
