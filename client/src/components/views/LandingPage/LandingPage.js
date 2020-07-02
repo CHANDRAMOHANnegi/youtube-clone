@@ -3,6 +3,7 @@ import { Card, Avatar, Col, Typography, Row } from 'antd';
 import axios from '../../../axios';
 import moment from 'moment';
 import { ThemeContext } from '../../../_context/themeContext';
+import {Link} from 'react-router-dom'
 const { Title } = Typography;
 const { Meta } = Card;
 
@@ -62,7 +63,7 @@ function LandingPage() {
         return (
             <Col lg={6} md={8} xs={24}>
                 <div style={{ position: 'relative' }}>
-                    <a href={`/video/${video.id}`} >
+                    <Link to={`/video/${video.id}`} >
                         <img style={{ width: '100%' }} alt="thumbnail" src={`http://localhost:4000/${video.thumbnail}`} />
                         <div className=" duration"
                             style={{
@@ -73,7 +74,7 @@ function LandingPage() {
                             }}>
                             <span>{minutes} : {seconds}</span>
                         </div>
-                    </a>
+                    </Link>
                 </div><br />
                 <Meta avatar={<Avatar src={video.writer.image} />} title={video.title} />
                 <span>{video.writer.firstname + "" + video.writer.lastname} </span><br />

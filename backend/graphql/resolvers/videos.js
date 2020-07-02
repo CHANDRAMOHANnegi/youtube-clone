@@ -18,7 +18,8 @@ module.exports = {
                         attributes: [
                             'firstname',
                             'lastname',
-                            'image'
+                            'image',
+                            'id'
                         ]
                     },
                     {
@@ -26,7 +27,8 @@ module.exports = {
                             model: User, as: 'writer', attributes: [
                                 'firstname',
                                 'lastname',
-                                'image'
+                                'image',
+                                'id'
                             ]
                         }
                     }
@@ -48,11 +50,11 @@ module.exports = {
         try {
             const video = await Video.findOne({
                 where: { id: videoId },
-                include: [{ model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] },
+                include: [{ model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image','id'] },
                 {
                     model: Comment,// where: { commentId: null },
                     include: [
-                        { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] },
+                        { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image','id'] },
                         { model: Comment, as: 'replies' }]
                 }]
             });

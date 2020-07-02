@@ -41,7 +41,7 @@ function Subscriber(props) {
                 query: requestBody,
             }).then(response => {
                 console.log(response);
-                if (response.data.data.subcribe) {
+                if (response.data.data.subscribe) {
                     setSubscribeNumber(SubscribeNumber + 1);
                     setSubscribed(!Subscribed);
                 } else {

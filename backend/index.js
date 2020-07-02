@@ -19,14 +19,19 @@ models.sequelize.sync().then(() => {
   console.log("Drop========================================== and re-sync db.");
   require('./database/bootstrap')();
 }).catch(err => {
-  console.log("---------------------------------------------");
+  // console.log("---------------------------------------------");
   console.log(err)
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(isAuth);
+
+console.log('---------------------------',process.env.DB_DATABASE);
+
+
+
+// app.use(isAuth);
 app.use(cors());
 
 app.use('/video', videoRouter);

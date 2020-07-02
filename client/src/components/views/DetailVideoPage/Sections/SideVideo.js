@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../../../../axios';
-function SideVideo() {
+function SideVideo(props) {
 
     const [SideVideos, setSideVideos] = useState([])
 
@@ -33,7 +33,12 @@ function SideVideo() {
             // console.log(response);
             if (response.data) {
                 // console.log(response.data)
-                setSideVideos(response.data.data.getVideos)
+
+                let sidevideos = response.data.data.getVideos;
+
+                sidevideos = sidevideos.filter(video => video.id !== props.videoId);
+
+                setSideVideos(sidevideos)
             } else {
                 alert('Failed to get Videos')
             }

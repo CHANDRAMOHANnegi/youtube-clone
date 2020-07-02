@@ -8,7 +8,7 @@ import LikeDislikes from './Sections/LikeDislikes';
 import { AuthContext } from '../../../_context/authContext';
 
 function DetailVideoPage(props) {
-    console.log("-------------DetailVideoPage------------");
+    // console.log("-------------DetailVideoPage------------");
 
     const videoId = props.match.params.videoId
     const [Video, setVideo] = useState([])
@@ -16,10 +16,10 @@ function DetailVideoPage(props) {
 
     const context = useContext(AuthContext);
 
-    console.log(videoId, context);
+    // console.log(videoId, context);
 
     useEffect(() => {
-        console.log("-------------DetailVideoPage  useEffect------------", videoId);
+        // console.log("-------------DetailVideoPage  useEffect------------", videoId);
         if (!videoId) return;
 
         const requestBody = `{
@@ -39,6 +39,7 @@ function DetailVideoPage(props) {
                         firstname
                         lastname
                         image
+                        id
                     }
                     Comments{
                             id
@@ -48,6 +49,7 @@ function DetailVideoPage(props) {
                                 firstname
                                 lastname
                                 image
+                                id
                             }
                         }
         }}`;
@@ -55,7 +57,7 @@ function DetailVideoPage(props) {
         axios.post('/', {
             query: requestBody,
         }).then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.data.data.getVideo) {
                 setVideo(res.data.data.getVideo);
                 setCommentLists(res.data.data.getVideo.Comments)
@@ -67,19 +69,25 @@ function DetailVideoPage(props) {
             console.log(err)
             alert('Failed to get video Info')
         });
-
     }, [videoId])
 
     const updateComment = (newComment) => {
-        // console.log(newComment);
 
-        const { firstname, lastname, image } = context.authData;
+        // console.log(CommentLists);
+        // console.log(context);
+
+        const { firstname, lastname, image, userId } = context.authData.userData;
         // console.log({ firstname, lastname, image });
 
-        newComment['writer'] = { firstname, lastname, image };
+        let newCommentLists = CommentLists.filter(comment => comment.writer.id !== userId);
+
+        // console.log(newCommentLists);
+
+        newComment['writer'] = { firstname, lastname, image,id: userId };
+
         // console.log(newComment);
 
-        setCommentLists(CommentLists.concat(newComment))
+        setCommentLists([...newCommentLists, newComment]);
     };
 
     if (Video && Video.writer) {
@@ -107,7 +115,7 @@ function DetailVideoPage(props) {
                     </div>
                 </Col>
                 <Col lg={6} xs={24}>
-                    <SideVideo />
+                    <SideVideo videoId={videoId} />
                 </Col>
             </Row>
         )

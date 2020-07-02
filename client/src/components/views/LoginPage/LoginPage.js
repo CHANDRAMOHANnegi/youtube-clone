@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) =>
 
 const Login = (props) => {
 
+  console.log('>>>>>>>>>>>>>>>>>>>', props);
+
   const context = useContext(AuthContext);
 
   const classes = useStyles();
@@ -78,9 +80,9 @@ const Login = (props) => {
             image,email
     }}`;
 
-    axios.post('http://localhost:4000/api', {
-      query: requestBody,
-  }).then(res => {
+      axios.post('http://localhost:4000/api', {
+        query: requestBody,
+      }).then(res => {
         console.log(res.data.data.login);
         localStorage.setItem('userData', JSON.stringify(res.data.data.login))
         context.setUser(res.data.data.login);

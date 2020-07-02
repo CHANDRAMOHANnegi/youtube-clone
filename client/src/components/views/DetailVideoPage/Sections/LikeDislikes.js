@@ -85,7 +85,7 @@ function LikeDislikes(props) {
             axios.post('/', {
                 query: requestBody,
             }).then(response => {
-                console.log(response);
+                // console.log(response);
                 if (response.data.data) {
                     setLikes(Likes + 1);
                     setLikeAction('liked');
@@ -131,7 +131,7 @@ function LikeDislikes(props) {
             axios.post('/', {
                 query: requestBody,
             }).then(response => {
-                console.log(response);
+                // console.log(response);
                 if (response.data) {
                     setDislikes(Dislikes - 1)
                     setDislikeAction(null)
@@ -149,7 +149,7 @@ function LikeDislikes(props) {
             axios.post('/', {
                 query: requestBody,
             }).then(response => {
-                console.log(response);
+                // console.log(response);
                 if (response.data) {
                     setDislikes(Dislikes + 1)
                     setDislikeAction('disliked')

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Menu } from 'antd';
 import { withRouter, Link } from 'react-router-dom';
-import axios from "../../../../axios";
+// import axios from "../../../../axios";
 import { AuthContext } from '../../../../_context/authContext';
 const Upload = require('../../../../images/upload.png');
 

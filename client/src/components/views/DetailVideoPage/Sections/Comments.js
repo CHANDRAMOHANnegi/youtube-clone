@@ -4,6 +4,8 @@ import axios from '../../../../axios';
 import SingleComment from './SingleComment';
 import ReplyComment from './ReplyComment';
 import { AuthContext } from '../../../../_context/authContext';
+import { withRouter } from "react-router-dom";
+
 const { TextArea } = Input;
 
 function Comments(props) {
@@ -11,12 +13,18 @@ function Comments(props) {
     const context = useContext(AuthContext);
     // console.log(context);
 
-    const {userData}=context.authData;
+    const { userData, isAuthenticated } = context.authData;
 
     const [Comment, setComment] = useState("")
     const handleChange = (e) => {
+
+        // console.log(context);
+
         setComment(e.currentTarget.value)
     }
+
+    // console.log(Comment);
+
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -35,7 +43,7 @@ function Comments(props) {
         axios.post('/', {
             query: requestBody,
         }).then(response => {
-            console.log(response);
+            // console.log(response);
             if (response) {
                 setComment("")
                 if (response.data.data.createComment)
@@ -44,6 +52,12 @@ function Comments(props) {
                 alert('Failed to save Comment')
             }
         });
+    }
+
+    const handleClick = () => {
+        if (!isAuthenticated) {
+            props.history.push("/login");
+        }
     }
 
     return (
@@ -59,10 +73,10 @@ function Comments(props) {
                         videoId={props.videoId}
                         refreshFunction={props.refreshFunction}
                     />
-                    <ReplyComment CommentLists={props.CommentLists}
+                    {/* <ReplyComment CommentLists={props.CommentLists}
                         videoId={props.videoId} parentCommentId={comment.id}
                         refreshFunction={props.refreshFunction}
-                    />
+                    /> */}
                 </React.Fragment>
             ))}
 
@@ -71,6 +85,7 @@ function Comments(props) {
                 <TextArea
                     style={{ width: '100%', borderRadius: '5px' }}
                     onChange={handleChange}
+                    onClick={handleClick}
                     value={Comment}
                     placeholder="write some comments..."
                 />
@@ -81,4 +96,4 @@ function Comments(props) {
     )
 }
 
-export default Comments
+export default withRouter(Comments)

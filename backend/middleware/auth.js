@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../database/models').User;
 
-
-
 module.exports = (req, res, next) => {
   // console.log("=======>", req);
   const { authorization } = req.headers;
@@ -13,7 +11,6 @@ module.exports = (req, res, next) => {
   console.log("=======>", authorization);
 
   const token = authorization.split(' ')[1];
-
   if (!token)
     return res.status(401).send({
       success: false,
