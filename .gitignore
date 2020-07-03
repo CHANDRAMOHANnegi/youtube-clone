@@ -30,6 +30,6 @@ yarn-error.log*
 */.env
 
 
-.mp4
+# .mp4
 
-*.mp4
+# *.mp4

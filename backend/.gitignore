@@ -28,6 +28,6 @@ yarn-error.log*
 /connection/*
 connection.js
 
-.mp4
+# .mp4
 
-*.mp4
+# *.mp4
