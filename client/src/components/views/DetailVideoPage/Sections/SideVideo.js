@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../../../../axios';
+import { Link } from 'react-router-dom'
+
+
 function SideVideo(props) {
 
     const [SideVideos, setSideVideos] = useState([])
@@ -52,9 +55,9 @@ function SideVideo(props) {
 
         return <div style={{ display: 'flex', marginTop: '1rem', padding: '0 2rem' }} key={index}>
             <div style={{ width: '40%', marginRight: '1rem' }}>
-                <a href={`/video/${video.id}`} style={{ color: 'gray' }}>
+                <Link to={`/video/${video.id}`} style={{ color: 'gray' }}>
                     <img style={{ width: '100%' }} src={`http://localhost:4000/${video.thumbnail}`} alt="thumbnail" />
-                </a>
+                </Link>
             </div>
 
             <div style={{ width: '50%' }}>

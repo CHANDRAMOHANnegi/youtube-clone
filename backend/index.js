@@ -19,7 +19,6 @@ models.sequelize.sync().then(() => {
   console.log("Drop========================================== and re-sync db.");
   require('./database/bootstrap')();
 }).catch(err => {
-  // console.log("---------------------------------------------");
   console.log(err)
 });
 
@@ -48,12 +47,14 @@ app.use('/api', graphqlHttp({
 
 app.use('/uploads', express.static('uploads'));
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, '../client/build')));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, '../client/build')));
 
-app.use('*', (req, res, next) => {
-  res.sendfile(path.join(__dirname, '../client/build/index.html'));
-});
+  app.use('*', (req, res, next) => {
+    res.sendfile(path.join(__dirname, '../client/build/index.html'));
+  });
+}
 
 const port = process.env.PORT || 4000
 

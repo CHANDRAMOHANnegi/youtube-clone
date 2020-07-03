@@ -104,8 +104,9 @@ function LandingPage() {
                             <Typography variant="body2" color="textSecondary" component="p">
                                 <Box style={{ marginLeft: '50px' }} >{video.writer.firstname + " " + video.writer.lastname} </Box>
                                 <Box>
-                                    <span style={{ marginLeft: '3rem' }}>
-                                        {video.views ? video.views : 0} views</span> - <span> {moment(video.createdAt).format("MMM Do YY")}
+                                    {/* <span style={{ marginLeft: '3rem' }}>
+                                        {video.views ? video.views : 0} views</span> -  */}
+                                        <span> {moment(video.createdAt).format("MMM Do YY")}
                                     </span>
                                 </Box>
                             </Typography>
