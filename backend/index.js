@@ -26,10 +26,7 @@ models.sequelize.sync().then(() => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-console.log('---------------------------',process.env.DB_DATABASE);
-
-
+console.log('---------------------------', process.env.DB_DATABASE);
 
 // app.use(isAuth);
 app.use(cors());
@@ -48,7 +45,15 @@ app.use('/api', graphqlHttp({
   })
 }));
 
+
 app.use('/uploads', express.static('uploads'));
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+app.use('*', (req, res, next) => {
+  res.sendfile(path.join(__dirname, '../client/build/index.html'));
+});
 
 const port = process.env.PORT || 4000
 
