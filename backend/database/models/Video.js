@@ -58,6 +58,13 @@ module.exports = (sequelize, Sequelize) => {
             onDelete: 'CASCADE'
         });
 
+        //a video  can have multiple views
+        Video.hasMany(models.View, {
+            foreignKey: 'videoId',
+            onDelete: 'CASCADE'
+        });
+
+
         //a video  can have multiple dislikes
         Video.hasMany(models.Dislike, {
             foreignKey: 'videoId',

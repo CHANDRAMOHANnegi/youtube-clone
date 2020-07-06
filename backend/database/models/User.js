@@ -57,13 +57,20 @@ module.exports = function (sequelize, Sequelize) {
             onDelete: 'CASCADE'
         });
 
+        //user  can  view on multiple videos
+        User.hasMany(models.View, {
+            foreignKey: 'userId',
+            onDelete: 'CASCADE'
+        });
+
+
         //user  can  comment on multiple videos
         User.hasMany(models.Comment, {
             foreignKey: 'userId',
             onDelete: 'CASCADE'
         });
 
-        //user  can  lie on multiple videos or comments
+        //user  can  like on multiple videos or comments
         User.hasMany(models.Like, {
             foreignKey: 'userId',
             onDelete: 'CASCADE'
