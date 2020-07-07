@@ -14,7 +14,7 @@ type Photo {
 }
 
 type Writer {
-id:ID,
+    id:ID,
     firstname:String!,
     lastname:String!,
     image:String,

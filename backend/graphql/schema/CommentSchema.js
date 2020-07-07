@@ -14,7 +14,7 @@ input CommentInput {
     userId:String!,
     videoId:String!,
     content:String!
-commentId:String
+    commentId:String
 
    }
 

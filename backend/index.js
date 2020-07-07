@@ -16,16 +16,13 @@ const app = express();
 const models = require('./database/models/index');
 
 models.sequelize.sync().then(() => {
-  console.log("Drop========================================== and re-sync db.");
-  require('./database/bootstrap')();
+  // require('./database/bootstrap')();
 }).catch(err => {
   console.log(err)
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-console.log('---------------------------', process.env.DB_DATABASE);
 
 // app.use(isAuth);
 app.use(cors());

@@ -18,13 +18,13 @@ function App() {
   const { isLightTheme, light, dark } = context;
   const theme = isLightTheme ? light : dark;
 
-
   return (
     <Suspense fallback={(<div>Loading...</div>)}>
       <NavBar />
-      <div style={{ paddingTop: '75px', minHeight: 'calc(100vh - 80px)',
-     backgroundColor: theme.backgroundColor 
-    }}>
+      <div style={{
+        paddingTop: '75px', minHeight: 'calc(100vh - 80px)',
+        backgroundColor: theme.backgroundColor
+      }}>
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/login" component={LoginPage} />

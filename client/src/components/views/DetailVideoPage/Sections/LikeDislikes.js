@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { Tooltip, Icon } from 'antd';
 import axios from '../../../../axios';
 import { ThemeContext } from '../../../../_context/themeContext';
+import { withRouter } from 'react-router-dom';
 
 function LikeDislikes(props) {
 
@@ -87,8 +88,14 @@ function LikeDislikes(props) {
         }
     }, [variable, props.userId]);
 
+    const handleClick = () => {
+        if (!userId) {
+            props.history.push("/login");
+        }
+    }
 
     const onLike = () => {
+        handleClick();
 
         if (LikeAction === null) {
             const requestBody = `
@@ -136,7 +143,7 @@ function LikeDislikes(props) {
 
 
     const onDisLike = () => {
-
+        handleClick();
         if (DislikeAction !== null) {
 
             const requestBody = `
@@ -186,7 +193,7 @@ function LikeDislikes(props) {
             <span key="comment-basic-like">
                 <Tooltip title="Like">
                     <Icon type="like"
-                       style={{color:theme.color}}
+                        style={{ color: theme.color }}
                         theme={LikeAction === 'liked' ? 'filled' : 'outlined'}
                         onClick={onLike} />
                 </Tooltip>
@@ -196,7 +203,7 @@ function LikeDislikes(props) {
                 <Tooltip title="Dislike">
                     <Icon
                         type="dislike"
-                        style={{color:theme.color}}
+                        style={{ color: theme.color }}
                         theme={DislikeAction === 'disliked' ? 'filled' : 'outlined'}
                         onClick={onDisLike}
                     />
@@ -207,4 +214,4 @@ function LikeDislikes(props) {
     )
 }
 
-export default LikeDislikes
+export default withRouter(LikeDislikes);

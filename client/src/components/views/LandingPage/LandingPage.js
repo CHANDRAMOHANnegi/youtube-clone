@@ -146,7 +146,7 @@ function LandingPage() {
             // backgroundColor: theme.backgroundColor,
             color: theme.color
         }}>
-            <Title level={2} > Recommended </Title>
+            <Title level={2}  style={{  color: theme.color}}> Recommended </Title>
             <hr />
             <Row gutter={16}>{renderCards}</Row>
         </div>

@@ -85,16 +85,14 @@ module.exports = {
             tokenExp: 12
         }
     },
-    logOut: async (args, req) => {
+    // logOut: async (args, req) => {
+    //     console.log('============================',req.user);
 
-        console.log('============================',req.user);
-        
+    //     let res = await User.update({ token: '' }, { where: { id: req.user.id } });
+    //     console.log(res);
+    //     return !!res;
 
-        let res = await User.update({ token: '' }, { where: { id: req.user.id } });
-        console.log(res);
-        return !!res;
-
-    },
+    // },
     addPhoto: async (args, req) => {
 
         console.log(args);

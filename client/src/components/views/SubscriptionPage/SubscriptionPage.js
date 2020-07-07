@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { FaCode } from "react-icons/fa";
 import { Card, Avatar, Col, Typography, Row } from 'antd';
 import axios from '../../../axios';
 import moment from 'moment';
+import { ThemeContext } from '../../../_context/themeContext';
 const { Title } = Typography;
 const { Meta } = Card;
 
@@ -11,6 +12,10 @@ function SubscriptionPage() {
     const [Videos, setVideos] = useState([]);
 
     // let variable = { userFrom : localStorage.getItem('userId')  }
+
+    const context = useContext(ThemeContext);
+    const { isLightTheme, light, dark } = context;
+    const theme = isLightTheme ? light : dark;
 
     useEffect(() => {
 
@@ -82,7 +87,7 @@ function SubscriptionPage() {
 
     return (
         <div style={{ width: '85%', margin: '3rem auto' }}>
-            <Title level={2} > Subscribed Videos </Title>
+            <Title level={2} style={{color:theme.color}} > Subscribed Videos </Title>
             <hr />
 
             <Row gutter={16}>

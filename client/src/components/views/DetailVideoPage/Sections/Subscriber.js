@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../../../../axios';
+import { withRouter } from 'react-router-dom';
 function Subscriber(props) {
 
     const userId = props.userId
@@ -8,10 +9,22 @@ function Subscriber(props) {
     const [SubscribeNumber, setSubscribeNumber] = useState(0)
     const [Subscribed, setSubscribed] = useState(false)
 
+
+    const handleClick = () => {
+
+        console.log(subscriberId);
+
+
+        if (!subscriberId) {
+            props.history.push("/login");
+        }
+    }
+
     const onSubscribe = () => {
-
-        console.log(props);
-
+  
+        if (!subscriberId) {
+            props.history.push("/login");
+        }else{
         if (Subscribed) {
             //when we are already subscribed 
             const requestBody = `
@@ -48,7 +61,7 @@ function Subscriber(props) {
                     alert('Failed to subscribe');
                 }
             });
-        }
+        }}
     }
 
 
@@ -105,5 +118,5 @@ function Subscriber(props) {
     )
 }
 
-export default Subscriber
+export default withRouter(Subscriber)
 
