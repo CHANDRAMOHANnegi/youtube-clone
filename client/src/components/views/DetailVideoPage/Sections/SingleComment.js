@@ -68,15 +68,16 @@ function SingleComment(props) {
             (context) => {
                 const { isLightTheme, light, dark } = context;
                 const theme = isLightTheme ? light : dark;
+
                 return <div>
                     <Comment
                         actions={actions}
-                        author={<p style={{color:theme.color}}>{props.comment.writer.firstname + " " + props.comment.writer.lastname}</p>}
+                        author={<p style={{ color: theme.color }}>{props.comment.writer.firstname + " " + props.comment.writer.lastname}</p>}
                         avatar={<Avatar src={props.comment.writer.image} alt="image" />}
-                        content={<p  style={{color:theme.color}}>{props.comment.content}</p>}
+                        content={<p style={{ color: theme.color }}>{props.comment.content}</p>}
                     ></Comment>
-
-                    {OpenReply &&
+                    {
+                        OpenReply &&
                         <form style={{ display: 'flex' }} onSubmit={onSubmit}>
                             <TextArea
                                 style={{ width: '100%', borderRadius: '5px' }}

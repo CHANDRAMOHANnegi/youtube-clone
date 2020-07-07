@@ -75,6 +75,13 @@ module.exports = {
 
         //Need to find all of the Users that I am subscribing to From Subscriber Collection 
         try {
+
+
+            if (!req.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
+
+
             // console.log('------------', subscriberId);
 
             let subscribers = await Subscriber.findAll({ where: { subscriberId } });

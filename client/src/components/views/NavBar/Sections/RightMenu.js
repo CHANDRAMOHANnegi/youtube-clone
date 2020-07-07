@@ -1,19 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Menu } from 'antd';
 import { withRouter, Link } from 'react-router-dom';
-import { AuthContext } from '../../../../_context/authContext';
 import { ThemeContext } from '../../../../_context/themeContext';
 const Upload = require('../../../../images/upload.png');
 
 function RightMenu(props) {
 
-  const context = useContext(AuthContext);
+  console.log(props);
 
-  const { isAuthenticated, userData } = context.authData;
+  
+  const { setUser } = props.authContext;
+ 
+  const { isAuthenticated, userData } = props.authContext&&props.authContext.authData;
+
   const logoutHandler = () => {
 
     localStorage.clear();
-    context.setUser("");
+    setUser("");
     console.log(localStorage, props);
     props.history.push("/login");
 

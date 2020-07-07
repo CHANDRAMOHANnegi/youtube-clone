@@ -8,6 +8,11 @@ module.exports = {
     createComment: async (args) => {
         // console.log(args);
         try {
+
+            if (!req.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
+
             const { userId, videoId, content, commentId } = args.commentInput;
 
             let variables = {}

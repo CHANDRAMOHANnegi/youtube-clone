@@ -108,8 +108,8 @@ function LikeDislikes(props) {
             axios.post('/', {
                 query: requestBody,
             }).then(response => {
-                // console.log(response);
-                if (response.data.data) {
+                console.log(response);
+                if (response.data.data.upLike) {
                     setLikes(Likes + 1);
                     setLikeAction('liked');
                     //If dislike button is already clicked
@@ -130,8 +130,8 @@ function LikeDislikes(props) {
             axios.post('/', {
                 query: requestBody,
             }).then(response => {
-                // console.log(response);
-                if (response.data.data) {
+                console.log(response);
+                if (response.data.data.unLike) {
                     setLikes(Likes - 1)
                     setLikeAction(null)
                 } else {
@@ -155,7 +155,7 @@ function LikeDislikes(props) {
                 query: requestBody,
             }).then(response => {
                 // console.log(response);
-                if (response.data) {
+                if (response.data.data.unDisLike) {
                     setDislikes(Dislikes - 1)
                     setDislikeAction(null)
                 } else {
@@ -173,7 +173,7 @@ function LikeDislikes(props) {
                 query: requestBody,
             }).then(response => {
                 // console.log(response);
-                if (response.data) {
+                if (response.data.data.upDisLike) {
                     setDislikes(Dislikes + 1)
                     setDislikeAction('disliked')
                     //If dislike button is already clicked

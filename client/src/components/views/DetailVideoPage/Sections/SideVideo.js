@@ -66,12 +66,12 @@ function SideVideo(props) {
             </div>
 
             <div style={{ width: '50%' }}>
-                <a href={`/video/${video.id}`} style={{ color: 'gray' }}>
-                    <span style={{ fontSize: '1rem',color:theme.color }}>{video.title}  </span><br />
-                    <span style={{color:theme.color}}>{video.writer.firstname + " " + video.writer.lastname}</span><br />
-                    <span style={{color:theme.color}}>{video.views}</span><br />
-                    <span style={{color:theme.color}}>{minutes} : {seconds}</span><br />
-                </a>
+                <Link to={`/video/${video.id}`} style={{ color: 'gray' }}>
+                    <span style={{ fontSize: '1rem', color: theme.color }}>{video.title}  </span><br />
+                    <span style={{ color: theme.color }}>{video.writer.firstname + " " + video.writer.lastname}</span><br />
+                    <span style={{ color: theme.color }}>{video.views}</span><br />
+                    <span style={{ color: theme.color }}>{minutes} : {seconds}</span><br />
+                </Link>
             </div>
         </div>
     })

@@ -8,6 +8,9 @@ module.exports = {
     subscribed: async (args) => {
 
         try {
+
+
+
             const { userId, subscriberId } = args.subscribeInput;
             // console.log("-----<<<<<<<<<<<<<<<<<<<<----------", { userId, subscriberId });
 
@@ -30,10 +33,15 @@ module.exports = {
     },
     subscribe: async (args) => {
 
-        // console.log(args);
-        const { userId, subscriberId } = args.subscribeInput;
+
 
         try {
+            if (!req.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
+
+            // console.log(args);
+            const { userId, subscriberId } = args.subscribeInput;
 
             // let subscribed
 
@@ -55,11 +63,17 @@ module.exports = {
     },
     unSubscribe: async (args) => {
 
-        // console.log(args);
-        const { userId, subscriberId } = args.subscribeInput;
 
         try {
 
+
+            if (!req.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
+
+
+            // console.log(args);
+            const { userId, subscriberId } = args.subscribeInput;
             let subscriber = await Subscriber.destroy({
                 where:
                 {

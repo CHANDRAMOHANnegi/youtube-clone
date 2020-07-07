@@ -7,9 +7,16 @@ const Dislike = require('../../database/models').Dislike;
 
 module.exports = {
 
-    upLike: async (args) => {
-        console.log('.........>>>>>  ', args);
+    upLike: async (args, req) => {
+
+
         try {
+            // console.log("--------------------->>>>>>>>>>>>>", req.isAuth, req.user);
+            if (!req.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
+
+            // console.log('.........>>>>>  ', args);
             const { userId, videoId, commentId } = args.likeInput;
             let variables = {};
 
@@ -23,7 +30,7 @@ module.exports = {
 
             let like = new Like(variables);
 
-            console.log('-----------------------', like);
+            // console.log('-----------------------', like);
             const result = await like.save();
             if (result) {
                 await Dislike.destroy({ where: variables })
@@ -39,11 +46,18 @@ module.exports = {
     },
 
     unLike: async (args) => {
-        console.log('.........>>>>>  ', args);
+
+
         try {
+            // console.log("--------------------->>>>>>>>>>>>>", req.isAuth, req.user);
+
+            if (!req.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
+
             const { userId, videoId, commentId } = args.likeInput;
 
-            console.log("--------------------------------", videoId);
+            // console.log("--------------------------------", videoId);
 
             let variables = {};
             if (videoId != 'undefined') {
@@ -55,7 +69,7 @@ module.exports = {
                 where: variables
             });
             if (like)
-                console.log('-----------------------', like);
+                // console.log('-----------------------', like);
             return like
         } catch (err) {
             console.log('=========', err);
@@ -65,6 +79,11 @@ module.exports = {
     upDisLike: async (args) => {
         // console.log('.........>>>>>  ', args);
         try {
+
+            if (!req.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
+
             const { userId, videoId, commentId } = args.likeInput;
             let variables = {};
             if (videoId != 'undefined') {
@@ -93,6 +112,11 @@ module.exports = {
     unDisLike: async (args) => {
         console.log('.>>>>>  ', args);
         try {
+
+            if (!req.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
+
             const { userId, videoId, commentId } = args.likeInput;
             let variables = {};
             if (videoId != 'undefined') {
