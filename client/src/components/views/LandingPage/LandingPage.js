@@ -6,17 +6,16 @@ import { ThemeContext } from '../../../_context/themeContext';
 import { Link } from 'react-router-dom'
 import { makeStyles, CardActionArea, CardMedia, CardContent, Box, Avatar } from '@material-ui/core';
 const { Title } = Typography;
- 
+
 
 const useStyles = makeStyles({
     root: {
         maxWidth: 345,
-        // padding:5
-        
+        // padding:5  
     },
 });
-function LandingPage() {
 
+function LandingPage() {
 
     const [Videos, setVideos] = useState([])
 
@@ -106,7 +105,7 @@ function LandingPage() {
                                 <Box>
                                     {/* <span style={{ marginLeft: '3rem' }}>
                                         {video.views ? video.views : 0} views</span> -  */}
-                                        <span> {moment(video.createdAt).format("MMM Do YY")}
+                                    <span> {moment(video.createdAt).format("MMM Do YY")}
                                     </span>
                                 </Box>
                             </Typography>

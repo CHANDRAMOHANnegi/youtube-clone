@@ -81,7 +81,7 @@ module.exports = {
             const { userId, subscriberId } = args.subscribeInput;
 
             let subscriber = await Subscriber.findAll({
-                where: { userId, subscriberId }
+                where: { userId }
             });
             // console.log(args);
             console.log(JSON.parse(JSON.stringify(subscriber, null, 2)));

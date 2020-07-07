@@ -45,8 +45,6 @@ module.exports = {
 
             console.log("--------------------------------", videoId);
 
-            console.log(variables);
-
             let variables = {};
             if (videoId != 'undefined') {
                 variables = { userId, videoId };
@@ -117,13 +115,13 @@ module.exports = {
         // console.log("-------->", args);
 
         try {
-            const { userId, videoId, commentId } = args.likeInput;
+            const { videoId, commentId } = args.likeInput;
             let variables = {};
 
             if (videoId != 'undefined') {
-                variables = { userId, videoId };
+                variables = { videoId };
             } else {
-                variables = { userId, commentId };
+                variables = { commentId };
             }
             let likes = await Like.findAll({ where: variables });
             if (likes) {
@@ -144,19 +142,35 @@ module.exports = {
         }
     },
 
+    getDislikes: async (args) => {
+        // console.log("-------->", args);
 
-    // getComment: async ({ videoId }) => {
-    //     try {
-    //         const video = await Video.findOne({
-    //             where: { id: videoId },
-    //             include: { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
-    //         });
-    //         if (video)
-    //             return video.dataValues;
-    //     } catch (error) {
-    //         console.log(error);
-    //         return error;
-    //     }
-    // }
+        try {
+            const { videoId, commentId } = args.likeInput;
+            let variables = {};
+
+            if (videoId != 'undefined') {
+                variables = { videoId };
+            } else {
+                variables = { commentId };
+            }
+            let dislikes = await Dislike.findAll({ where: variables });
+            if (dislikes) {
+                // console.log('==========');
+                // console.log(dislikes);
+                dislikes = dislikes.map(dislike => {
+                    return {
+                        id: dislike.dataValues.id,
+                        userId: dislike.dataValues.userId
+                    }
+                })
+                // console.log(dislikes);
+                return dislikes//JSON.parse(JSON.stringify(likes, null, 2)).length;
+            }
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
+    },
 };
 

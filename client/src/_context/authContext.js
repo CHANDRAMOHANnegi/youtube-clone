@@ -10,7 +10,7 @@ const AuthContextProvider = (props) => {
   });
 
   const setUser = (userData) => {
-    console.log(userData);
+    // console.log(userData);
     let isAuthenticated = !!userData.userId;
     setAuthData({ isAuthenticated, userData });
   };

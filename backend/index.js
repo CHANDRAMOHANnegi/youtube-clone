@@ -44,7 +44,6 @@ app.use('/api', graphqlHttp({
   })
 }));
 
-
 app.use('/uploads', express.static('uploads'));
 
 if (process.env.NODE_ENV === 'production') {

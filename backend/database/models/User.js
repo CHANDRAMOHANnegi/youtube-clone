@@ -32,13 +32,13 @@ module.exports = function (sequelize, Sequelize) {
             default: 0
         },
         image: Sequelize.STRING,
-        token: {
-            type: Sequelize.STRING,
-            unique: true,
-        },
-        tokenExp: {
-            type: Sequelize.INTEGER,
-        }
+        // token: {
+        //     type: Sequelize.STRING,
+        //     unique: true,
+        // },
+        // tokenExp: {
+        //     type: Sequelize.INTEGER,
+        // }
     }, {
         timestamps: true,
     });

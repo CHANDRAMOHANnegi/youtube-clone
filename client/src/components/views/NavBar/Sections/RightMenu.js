@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Menu } from 'antd';
 import { withRouter, Link } from 'react-router-dom';
-// import axios from "../../../../axios";
 import { AuthContext } from '../../../../_context/authContext';
 import { ThemeContext } from '../../../../_context/themeContext';
 const Upload = require('../../../../images/upload.png');
@@ -26,12 +25,9 @@ function RightMenu(props) {
       (context) => {
         const { isLightTheme, light, dark } = context;
         const theme = isLightTheme ? light : dark;
-        console.log(theme);
-
         if (!isAuthenticated) {
           return <Menu mode={props.mode}
-            style={{ backgroundColor: theme.backgroundColor }}
-          >
+            style={{ backgroundColor: theme.backgroundColor }}>
             <Menu.Item key="mail">
               <Link to="/login" style={{ color: theme.color }} >Signin</Link>
             </Menu.Item>

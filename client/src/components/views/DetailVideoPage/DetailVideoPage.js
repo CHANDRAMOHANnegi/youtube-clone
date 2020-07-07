@@ -6,6 +6,7 @@ import Subscriber from './Sections/Subscriber';
 import Comments from './Sections/Comments'
 import LikeDislikes from './Sections/LikeDislikes';
 import { AuthContext } from '../../../_context/authContext';
+import { ThemeContext } from '../../../_context/themeContext';
 
 function DetailVideoPage(props) {
     // console.log("-------------DetailVideoPage------------");
@@ -16,10 +17,8 @@ function DetailVideoPage(props) {
 
     const context = useContext(AuthContext);
 
-    // console.log(videoId, context);
-
     useEffect(() => {
-        // console.log("-------------DetailVideoPage  useEffect------------", videoId);
+        // console.log("-------------DetailVideoPage  useEffect------------");
         if (!videoId) return;
 
         const requestBody = `{
@@ -73,9 +72,6 @@ function DetailVideoPage(props) {
 
     const updateComment = (newComment) => {
 
-        // console.log(CommentLists);
-        // console.log(context);
-
         const { firstname, lastname, image, userId } = context.authData.userData;
         // console.log({ firstname, lastname, image });
 
@@ -83,7 +79,7 @@ function DetailVideoPage(props) {
 
         // console.log(newCommentLists);
 
-        newComment['writer'] = { firstname, lastname, image,id: userId };
+        newComment['writer'] = { firstname, lastname, image, id: userId };
 
         // console.log(newComment);
 
@@ -92,32 +88,43 @@ function DetailVideoPage(props) {
 
     if (Video && Video.writer) {
         return (
-            <Row>
-                <Col lg={18} xs={24}>
-                    <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
-                        <video
-                            style={{ width: '100%' }}
-                            src={`http://localhost:4000/${Video.filePath}`} controls>
-                        </video>
-                        <List.Item
-                            actions={[
-                                <LikeDislikes video videoId={videoId} userId={localStorage.getItem('userId')} />,
-                                <Subscriber userId={Video.userId} subscriberId={localStorage.getItem('userId')} />]}>
-                            <List.Item.Meta
-                                avatar={<Avatar src={Video.writer && Video.writer.image} />}
-                                title={<a href="https://ant.design">{Video.title}</a>}
-                                description={Video.description}
-                            />
-                            <div></div>
-                        </List.Item>
-                        <Comments CommentLists={CommentLists} videoId={videoId}
-                            refreshFunction={updateComment} />
-                    </div>
-                </Col>
-                <Col lg={6} xs={24}>
-                    <SideVideo videoId={videoId} />
-                </Col>
-            </Row>
+            <ThemeContext.Consumer>{
+                (context) => {
+
+                    const { isLightTheme, light, dark } = context;
+                    const theme = isLightTheme ? light : dark;
+                    return <Row>
+                        <Col lg={18} xs={24}>
+                            <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
+                                <video
+                                    style={{ width: '100%' }}
+                                    src={`http://localhost:4000/${Video.filePath}`} controls>
+                                </video>
+                                <List.Item
+                                    actions={[
+                                        <LikeDislikes video videoId={videoId}
+                                            userId={localStorage.getItem('userId')} />,
+                                        <Subscriber userId={Video.userId}
+                                            subscriberId={localStorage.getItem('userId')} />]}>
+                                    <List.Item.Meta
+                                        avatar={<Avatar src={Video.writer && Video.writer.image} />}
+                                        title={<a href="https://ant.design"
+                                            style={{ color: theme.color }}>{Video.title}
+                                        </a>}
+                                        description={<p   style={{ color: theme.color }}>{Video.description}</p>}
+                                    />
+                                    <div></div>
+                                </List.Item>
+                                <Comments CommentLists={CommentLists} videoId={videoId}
+                                    refreshFunction={updateComment} />
+                            </div>
+                        </Col>
+                        <Col lg={6} xs={24}>
+                            <SideVideo videoId={videoId} />
+                        </Col>
+                    </Row>
+                }}
+            </ThemeContext.Consumer>
         )
     }
     else if (!Video) { return <div>Video not found</div> }

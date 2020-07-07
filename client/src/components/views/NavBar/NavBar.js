@@ -27,7 +27,9 @@ function NavBar() {
       style={{
         position: 'fixed',
         zIndex: 1, width: '100%',
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.backgroundColor,
+      
+        boxShadow:!isLightTheme&&'none'
       }}>
       <div className="menu__logo">
         <a href="/"><img src={Logo}

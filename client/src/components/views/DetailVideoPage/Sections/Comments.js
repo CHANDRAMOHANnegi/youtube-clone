@@ -5,6 +5,7 @@ import SingleComment from './SingleComment';
 import ReplyComment from './ReplyComment';
 import { AuthContext } from '../../../../_context/authContext';
 import { withRouter } from "react-router-dom";
+import { ThemeContext } from '../../../../_context/themeContext';
 
 const { TextArea } = Input;
 
@@ -61,38 +62,45 @@ function Comments(props) {
     }
 
     return (
-        <div>
-            <br />
-            <p> replies</p>
-            <hr />
-            {/* Comment Lists  */}
+        <ThemeContext.Consumer>{
+            (context) => {
+                const { isLightTheme, light, dark } = context;
+                const theme = isLightTheme ? light : dark;
 
-            {props.CommentLists && props.CommentLists.map((comment, index) => (
-                <React.Fragment key={index}>
-                    <SingleComment comment={comment}
-                        videoId={props.videoId}
-                        refreshFunction={props.refreshFunction}
-                    />
-                    {/* <ReplyComment CommentLists={props.CommentLists}
+                return <div>
+                    <br />
+                    <p  style={{color:theme.color}}> replies</p>
+                    <hr />
+                    {/* Comment Lists  */}
+
+                    {props.CommentLists && props.CommentLists.map((comment, index) => (
+                        <React.Fragment key={index}>
+                            <SingleComment comment={comment}
+                                videoId={props.videoId}
+                                refreshFunction={props.refreshFunction}
+                            />
+                            {/* <ReplyComment CommentLists={props.CommentLists}
                         videoId={props.videoId} parentCommentId={comment.id}
                         refreshFunction={props.refreshFunction}
                     /> */}
-                </React.Fragment>
-            ))}
+                        </React.Fragment>
+                    ))}
 
-            {/* Root Comment Form */}
-            <form style={{ display: 'flex' }} onSubmit={onSubmit}>
-                <TextArea
-                    style={{ width: '100%', borderRadius: '5px' }}
-                    onChange={handleChange}
-                    onClick={handleClick}
-                    value={Comment}
-                    placeholder="write some comments..."
-                />
-                <br />
-                <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
-            </form>
-        </div>
+                    {/* Root Comment Form */}
+                    <form style={{ display: 'flex' }} onSubmit={onSubmit}>
+                        <TextArea
+                            style={{ width: '100%', borderRadius: '5px' }}
+                            onChange={handleChange}
+                            onClick={handleClick}
+                            value={Comment}
+                            placeholder="write some comments..."
+                        />
+                        <br />
+                        <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
+                    </form>
+                </div>
+            }}
+        </ThemeContext.Consumer>
     )
 }
 

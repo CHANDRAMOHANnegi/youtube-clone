@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import axios from '../../../../axios';
 import { Link } from 'react-router-dom'
+import { ThemeContext } from '../../../../_context/themeContext';
 
 
 function SideVideo(props) {
 
-    const [SideVideos, setSideVideos] = useState([])
+    const [SideVideos, setSideVideos] = useState([]);
+
+    const context = useContext(ThemeContext);
+    const { isLightTheme, light, dark } = context;
+    const theme = isLightTheme ? light : dark;
 
     useEffect(() => {
         const requestBody = `{
@@ -35,7 +40,7 @@ function SideVideo(props) {
         }).then(response => {
             // console.log(response);
             if (response.data) {
-                // console.log(response.data)
+                console.log(response.data)
 
                 let sidevideos = response.data.data.getVideos;
 
@@ -46,7 +51,7 @@ function SideVideo(props) {
                 alert('Failed to get Videos')
             }
         });
-    }, [])
+    }, [props.videoId])
 
     const sideVideoItem = SideVideos.map((video, index) => {
 
@@ -62,10 +67,10 @@ function SideVideo(props) {
 
             <div style={{ width: '50%' }}>
                 <a href={`/video/${video.id}`} style={{ color: 'gray' }}>
-                    <span style={{ fontSize: '1rem', color: 'black' }}>{video.title}  </span><br />
-                    <span>{video.writer.firstname + " " + video.writer.lastname}</span><br />
-                    <span>{video.views}</span><br />
-                    <span>{minutes} : {seconds}</span><br />
+                    <span style={{ fontSize: '1rem',color:theme.color }}>{video.title}  </span><br />
+                    <span style={{color:theme.color}}>{video.writer.firstname + " " + video.writer.lastname}</span><br />
+                    <span style={{color:theme.color}}>{video.views}</span><br />
+                    <span style={{color:theme.color}}>{minutes} : {seconds}</span><br />
                 </a>
             </div>
         </div>

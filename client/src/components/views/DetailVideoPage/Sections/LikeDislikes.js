@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Tooltip, Icon } from 'antd';
 import axios from '../../../../axios';
+import { ThemeContext } from '../../../../_context/themeContext';
 
 function LikeDislikes(props) {
 
@@ -12,10 +13,16 @@ function LikeDislikes(props) {
 
     // console.log(props);
 
+    const context = useContext(ThemeContext);
+    const { isLightTheme, light, dark } = context;
+    const theme = isLightTheme ? light : dark;
+
+    const { userId, videoId, commentId } = props;
+
     if (props.video) {
-        variable = { videoId: props.videoId, userId: props.userId }
+        variable = { videoId: videoId, userId: userId }
     } else {
-        variable = { commentId: props.commentId, userId: props.userId }
+        variable = { commentId: commentId, userId: userId }
     }
 
     useEffect(() => {
@@ -33,9 +40,9 @@ function LikeDislikes(props) {
                 userId
         }}`;
 
-        axios.post('/', {
-            query: requestBody,
-        }).then(response => {
+            axios.post('/', {
+                query: requestBody,
+            }).then(response => {
                 // console.log('getLikes', response)
                 if (response.data) {
                     //How many likes does this video or comment have 
@@ -49,27 +56,36 @@ function LikeDislikes(props) {
                 } else {
                     alert('Failed to get likes');
                 }
-            })
+            });
 
-            // Axios.post('/api/like/getDislikes', variable);
-            //     .then(response => {
-            //         console.log('getDislike', response.data)
-            //         if (response.data.success) {
-            //             //How many likes does this video or comment have 
-            //             setDislikes(response.data.dislikes.length)
+            const requestBody1 = `{
+                getDislikes(likeInput:{
+                    userId:"${variable.userId}",
+                    videoId:"${variable.videoId}",
+                    commentId:"${variable.commentId}"
+                }){
+                    userId
+            }}`;
+            axios.post('/', {
+                query: requestBody1,
+            }).then(response => {
+                // console.log('getdisLikes', response)
+                if (response.data) {
+                    //How many dislikes does this video or comment have 
+                    setDislikes(response.data.data.getDislikes.length)
+                    //if I already click this dislike button or not 
+                    response.data.data.getDislikes.map(dislike => {
+                        if (dislike.userId === props.userId) {
+                            setDislikeAction('disliked')
+                        }
+                    })
+                } else {
+                    alert('Failed to get dislike');
+                }
+            });
 
-            //             //if I already click this like button or not 
-            //             response.data.dislikes.map(dislike => {
-            //                 if (dislike.userId === props.userId) {
-            //                     setDislikeAction('disliked')
-            //                 }
-            //             })
-            //         } else {
-            //             alert('Failed to get dislikes')
-            //         }
-            //     })
         }
-    }, [variable]);
+    }, [variable, props.userId]);
 
 
     const onLike = () => {
@@ -170,20 +186,22 @@ function LikeDislikes(props) {
             <span key="comment-basic-like">
                 <Tooltip title="Like">
                     <Icon type="like"
+                       style={{color:theme.color}}
                         theme={LikeAction === 'liked' ? 'filled' : 'outlined'}
                         onClick={onLike} />
                 </Tooltip>
-                <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Likes}</span>
+                <span style={{ paddingLeft: '8px', cursor: 'auto', color: theme.color }}>{Likes}</span>
             </span>&nbsp;&nbsp;
             <span key="comment-basic-dislike">
                 <Tooltip title="Dislike">
                     <Icon
                         type="dislike"
+                        style={{color:theme.color}}
                         theme={DislikeAction === 'disliked' ? 'filled' : 'outlined'}
                         onClick={onDisLike}
                     />
                 </Tooltip>
-                <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Dislikes}</span>
+                <span style={{ paddingLeft: '8px', cursor: 'auto', color: theme.color }}>{Dislikes}</span>
             </span>
         </React.Fragment>
     )

@@ -12,6 +12,7 @@ class ThemeContextProvider extends Component {
             color: "#282c34",
             linkColor: "#61dafb",
             logoBackground: "red",
+            
             border: 'rgba(0,0,0,.2)',
         },
         dark: {

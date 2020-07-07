@@ -31,6 +31,7 @@ module.exports = buildSchema(`
         getSubscriptionVideos(subscriberId:String!):[Video]
 
         getLikes(likeInput:LikeInput):[Like]
+        getDislikes(likeInput:LikeInput):[Like]
         
         subscribeNumber(subscribeInput:SubscribeInput):Int
 

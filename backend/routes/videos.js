@@ -8,17 +8,17 @@ const User = require('../database/models').User;
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/')
+        cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}_${file.originalname}`)
+        cb(null, `${Date.now()}_${file.originalname}`);
     },
     fileFilter: (req, file, cb) => {
-        const ext = path.extname(file.originalname)
+        const ext = path.extname(file.originalname);
         if (ext !== '.mp4') {
             return cb(res.status(400).end('only jpg, png, mp4 is allowed'), false);
         }
-        cb(null, true)
+        cb(null, true);
     }
 })
 
@@ -71,20 +71,20 @@ router.post("/thumbnail", (req, res) => {
 });
 
 
-router.get("/getVideos", (req, res) => {
-    console.log('=================>');
+// router.get("/getVideos", (req, res) => {
+//     console.log('=================>');
 
-    Video.findAll({
-        include:
-            { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
-    }).then(data => {
-        // console.log(JSON.stringify(data, null, 2));
-        return res.status(200).send(JSON.stringify(data, null, 2));
-    }).catch(err => {
-        console.log('?????????????????????', err);
-        return res.status(400).send(err);
-    });
-});
+//     Video.findAll({
+//         include:
+//             { model: User, as: 'writer', attributes: ['firstname', 'lastname', 'image'] }
+//     }).then(data => {
+//         // console.log(JSON.stringify(data, null, 2));
+//         return res.status(200).send(JSON.stringify(data, null, 2));
+//     }).catch(err => {
+//         console.log('?????????????????????', err);
+//         return res.status(400).send(err);
+//     });
+// });
 
 router.post("/uploadVideo", (req, res) => {
     console.log("><<><><><><><", req.body);
@@ -101,37 +101,37 @@ router.post("/uploadVideo", (req, res) => {
 });
 
 
-router.post("/getVideo", (req, res) => {
-    Video.findOne({ "_id": req.body.videoId })
-        .populate('writer')
-        .exec((err, video) => {
-            if (err) return res.status(400).send(err);
-            res.status(200).json({ success: true, video })
-        })
-});
+// router.post("/getVideo", (req, res) => {
+//     Video.findOne({ "_id": req.body.videoId })
+//         .populate('writer')
+//         .exec((err, video) => {
+//             if (err) return res.status(400).send(err);
+//             res.status(200).json({ success: true, video })
+//         })
+// });
 
 
-router.post("/getSubscriptionVideos", (req, res) => {
+// router.post("/getSubscriptionVideos", (req, res) => {
 
-    //Need to find all of the Users that I am subscribing to From Subscriber Collection 
+//     //Need to find all of the Users that I am subscribing to From Subscriber Collection 
 
-    Subscriber.find({ 'userFrom': req.body.userFrom })
-        .exec((err, subscribers) => {
-            if (err) return res.status(400).send(err);
+//     Subscriber.find({ 'userFrom': req.body.userFrom })
+//         .exec((err, subscribers) => {
+//             if (err) return res.status(400).send(err);
 
-            let subscribedUser = [];
-            subscribers.map((subscriber, i) => {
-                subscribedUser.push(subscriber.userTo)
-            })
+//             let subscribedUser = [];
+//             subscribers.map((subscriber, i) => {
+//                 subscribedUser.push(subscriber.userTo)
+//             })
 
-            //Need to Fetch all of the Videos that belong to the Users that I found in previous step. 
-            Video.find({ writer: { $in: subscribedUser } })
-                .populate('writer')
-                .exec((err, videos) => {
-                    if (err) return res.status(400).send(err);
-                    res.status(200).json({ success: true, videos })
-                })
-        })
-});
+//             //Need to Fetch all of the Videos that belong to the Users that I found in previous step. 
+//             Video.find({ writer: { $in: subscribedUser } })
+//                 .populate('writer')
+//                 .exec((err, videos) => {
+//                     if (err) return res.status(400).send(err);
+//                     res.status(200).json({ success: true, videos })
+//                 })
+//         })
+// });
 
 module.exports = router;
