@@ -103,6 +103,7 @@ function LandingPage() {
                             <Typography variant="body2" color="textSecondary" component="p">
                                 <Box style={{ marginLeft: '50px' }} >{video.writer.firstname + " " + video.writer.lastname} </Box>
                                 <Box>
+                                    <span>{" "} </span>
                                     {/* <span style={{ marginLeft: '3rem' }}>
                                         {video.views ? video.views : 0} views</span> -  */}
                                     <span> {moment(video.createdAt).format("MMM Do YY")}
@@ -146,7 +147,7 @@ function LandingPage() {
             // backgroundColor: theme.backgroundColor,
             color: theme.color
         }}>
-            <Title level={2}  style={{  color: theme.color}}> Recommended </Title>
+            <Title level={2} style={{ color: theme.color }}> Recommended </Title>
             <hr />
             <Row gutter={16}>{renderCards}</Row>
         </div>

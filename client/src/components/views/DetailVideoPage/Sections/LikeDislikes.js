@@ -11,8 +11,7 @@ function LikeDislikes(props) {
     const [LikeAction, setLikeAction] = useState(null)
     const [DislikeAction, setDislikeAction] = useState(null)
     let variable = {};
-
-    // console.log(props);
+ 
 
     const context = useContext(ThemeContext);
     const { isLightTheme, light, dark } = context;
@@ -27,8 +26,6 @@ function LikeDislikes(props) {
     }
 
     useEffect(() => {
-
-        // console.log(variable);
 
         if (variable.videoId || variable.commentId) {
 
@@ -45,7 +42,7 @@ function LikeDislikes(props) {
                 query: requestBody,
             }).then(response => {
                 // console.log('getLikes', response)
-                if (response.data) {
+                if (response.data.data.getLikes) {
                     //How many likes does this video or comment have 
                     setLikes(response.data.data.getLikes.length)
                     //if I already click this like button or not 
@@ -71,7 +68,7 @@ function LikeDislikes(props) {
                 query: requestBody1,
             }).then(response => {
                 // console.log('getdisLikes', response)
-                if (response.data) {
+                if (response.data.data.getDislikes) {
                     //How many dislikes does this video or comment have 
                     setDislikes(response.data.data.getDislikes.length)
                     //if I already click this dislike button or not 

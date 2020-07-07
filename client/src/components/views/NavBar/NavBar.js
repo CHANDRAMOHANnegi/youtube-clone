@@ -25,9 +25,7 @@ function NavBar() {
       (context) => {
         const { isLightTheme, light, dark } = context;
         const theme = isLightTheme ? light : dark;
-
-        console.log(context, authContext);
-
+ 
         return <nav className="menu"
           style={{
             position: 'fixed',

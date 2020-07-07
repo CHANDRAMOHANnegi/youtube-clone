@@ -6,12 +6,9 @@ const Upload = require('../../../../images/upload.png');
 
 function RightMenu(props) {
 
-  console.log(props);
-
-  
   const { setUser } = props.authContext;
  
-  const { isAuthenticated, userData } = props.authContext&&props.authContext.authData;
+  const { isAuthenticated, userData } =props.authContext.authData;
 
   const logoutHandler = () => {
 

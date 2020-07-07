@@ -12,19 +12,14 @@ const { TextArea } = Input;
 function Comments(props) {
 
     const context = useContext(AuthContext);
-    // console.log(context);
 
     const { userData, isAuthenticated } = context.authData;
 
     const [Comment, setComment] = useState("")
     const handleChange = (e) => {
 
-        // console.log(context);
-
         setComment(e.currentTarget.value)
     }
-
-    // console.log(Comment);
 
     const onSubmit = (e) => {
         e.preventDefault();

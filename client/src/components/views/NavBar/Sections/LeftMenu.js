@@ -6,10 +6,6 @@ import { Link } from 'react-router-dom';
 
 function LeftMenu(props) {
 
-
-  console.log(props);
-  
-
   const { isLightTheme, light, dark } = props.themeContext;
   const { isAuthenticated } = props.authContext.authData;
 
